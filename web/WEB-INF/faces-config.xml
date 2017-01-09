@@ -14,7 +14,7 @@
 		<var>msg</var>
 	</resource-bundle>
 </application>
-<navigation-rule>
+    <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>books</from-outcome>
@@ -22,4 +22,5 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+
 </faces-config>

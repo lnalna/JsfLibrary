@@ -1,5 +1,6 @@
-package ru.javabegin.training.web.validators.LoginValidator;
+package ru.javabegin.training.web.validators;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -15,11 +16,14 @@ public class LoginValidator implements Validator{
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         if(value.toString().length()< 5){
-            ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.trainig.web.nls.messages",FacesContext.getCurrentInstance().getViewRoot().getLocale());
+            
+            Locale locale = new Locale("ru");
+            ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages",locale);
             FacesMessage message = new FacesMessage(bundle.getString("login_length_error"));
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
         }        
+             
     }
     
 }
