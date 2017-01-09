@@ -1,6 +1,6 @@
 package ru.javabegin.training.web.validators;
 
-//import java.util.Locale;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -15,15 +15,38 @@ public class LoginValidator implements Validator{
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
-        if(value.toString().length()< 5){
+        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages",FacesContext.getCurrentInstance().getViewRoot().getLocale());
+         
+        try {
+            String newValue = value.toString();
+         
+         
+            if(newValue.length()< 5){
+                throw new IllegalArgumentException(bundle.getString("login_length_error"));
+            }
             
-  //          Locale locale = new Locale("ru");
-            ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages",FacesContext.getCurrentInstance().getViewRoot().getLocale());
-            FacesMessage message = new FacesMessage(bundle.getString("login_length_error"));
+            if(!Character.isLetter(newValue.charAt(0))){
+                throw new IllegalArgumentException(bundle.getString("first_letter_error"));
+            }
+            
+            if(getTestArray().contains(newValue)) {
+                throw new IllegalArgumentException(bundle.getString("used_name"));
+            }
+            
+        } catch (IllegalArgumentException e){
+            FacesMessage message = new FacesMessage(e.getMessage());
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);
-        }        
+        }
              
     }
-    
+
+    private ArrayList<String> getTestArray() {
+        ArrayList<String> list = new ArrayList<String>();// заглушка, желательно делать запрос в базу данных для проверки существующего имени
+        list.add("username");
+        list.add("login");
+        return list;
+    }    
 }
+
+
