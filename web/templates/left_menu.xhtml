@@ -14,10 +14,12 @@
             
             <h4>#{msg.genres}</h4>
             
-            <h:dataTable value="#{genres.genreList}" var="g">
+            <h:dataTable value="#{genres.genreList}" var="g" styleClass="genres">
             
                 <h:column>
-                    #{g.name}
+                    <h:link value="#{g.name}">
+                        <f:param name="genre_id" value="#{g.id}" />
+                    </h:link>
                 </h:column>
             
             </h:dataTable>

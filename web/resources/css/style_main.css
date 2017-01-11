@@ -1,9 +1,4 @@
-ul.nav a, ul.nav a:visited { 
-    padding: 5px 5px 5px 15px;
-    display: block; 
-    text-decoration: none;
-    color: #000;
-}
+
 body {
     font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
     background-color: #EEE;
@@ -79,18 +74,20 @@ a:hover, a:active, a:focus {
 }
 
 
-ul.nav {
-    list-style: none; 
 
-    margin-bottom: 15px; 
-}
-ul.nav li {
-
-}
-ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
+.genres a:hover, a:active, a:focus {
     background-color: #FFFFFF;
     color: #999;
 }
+
+.genres a, a:visited { 
+    padding: 3px 3px 3px 15px;
+    display: block; 
+    text-decoration: none;
+    color: #000;
+    
+}
+
 
 
 
