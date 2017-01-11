@@ -26,7 +26,7 @@ public class Genres implements Serializable{
             conn = Database.getConnection();
             
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from genre order by name");
+            rs = stmt.executeQuery("select * from library.genre order by name");
             while(rs.next()){
                 Genre genre = new Genre();
                 genre.setName(rs.getString("name"));
