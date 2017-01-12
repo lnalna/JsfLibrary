@@ -29,6 +29,7 @@ public class SearchController implements Serializable{
     private ArrayList<Book> currentBookList;//текущий список книг для отображения
     
     public SearchController(){
+        fillBooksAll();
         
         ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
         searchList.put(bundle.getString("author_name"), searchType.AUTHOR);
@@ -80,6 +81,14 @@ public class SearchController implements Serializable{
                 Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    private void fillBooksAll(){
+        fillBooksBySQL("select * from library.book "
+                    + "inner join library.author on "
+                    + "library.book.author_id=library.author.id "
+                    + "inner join library.publisher on "
+                    + "library.book.publisher_id=library.publisher.id");
     }
     
     public SearchType getSearchType(){
