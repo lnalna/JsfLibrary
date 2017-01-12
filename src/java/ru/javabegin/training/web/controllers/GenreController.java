@@ -20,7 +20,7 @@ public class GenreController implements Serializable{
     private ArrayList<Genre> genreList;
     
     public GenreController(){
-        
+        fillGenresAll();
     }
     
     private void fillGenresAll(){
