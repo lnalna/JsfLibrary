@@ -91,6 +91,19 @@ public class SearchController implements Serializable{
                     + "library.book.publisher_id=library.publisher.id");
     }
     
+    public void fillBooksByGenre(){
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        Integer genreId = Integer.valueOf(params.get("genre_id"));
+        
+        fillBooksBySQL("select * from library.book "
+                + "inner join library.author on "
+                + "library.book.author_id=library.author.id "
+                + "inner join library.publisher on "
+                + "library.book.publisher_id=library.publisher.id"
+                + " where genre_id=" + genreId);
+        
+    }
+    
     public SearchType getSearchType(){
         return searchType;
     }
