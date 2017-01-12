@@ -88,7 +88,9 @@ public class SearchController implements Serializable{
                     + "inner join library.author on "
                     + "library.book.author_id=library.author.id "
                     + "inner join library.publisher on "
-                    + "library.book.publisher_id=library.publisher.id");
+                    + "library.book.publisher_id=library.publisher.id "
+                    + "inner join library.genre on "
+                    + "library.book.genre_id=library.genre.id");
     }
     
     public void fillBooksByGenre(){
@@ -99,7 +101,9 @@ public class SearchController implements Serializable{
                 + "inner join library.author on "
                 + "library.book.author_id=library.author.id "
                 + "inner join library.publisher on "
-                + "library.book.publisher_id=library.publisher.id"
+                + "library.book.publisher_id=library.publisher.id "
+                + "inner join library.genre on "
+                + "library.book.genre_id=library.genre.id"
                 + " where genre_id=" + genreId);
         
     }
