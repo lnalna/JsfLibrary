@@ -111,4 +111,8 @@ public class SearchController implements Serializable{
     public Map<String, SearchType> getSearchList() {
         return searchList;
     }
+    
+    public ArrayList<Book> getCurrentBookList(){
+        return currentBookList;
+    }
 }
