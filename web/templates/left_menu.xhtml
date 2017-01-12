@@ -14,7 +14,7 @@
             
             <h4>#{msg.genres}</h4>
             
-            <h:dataTable value="#{genres.genreList}" var="g" styleClass="genres">
+            <h:dataTable value="#{genreController.genreList}" var="g" styleClass="genres">
             
                 <h:column>
                     <h:link value="#{g.name}">
