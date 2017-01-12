@@ -108,6 +108,44 @@ public class SearchController implements Serializable{
         
     }
     
+    public byte[] getImage(int id){
+        
+        Statement stmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        byte[] image = null;
+        
+                
+        try {
+            conn = Database.getConnection();
+            stmt = conn.createStatement();
+            
+            rs = stmt.executeQuery("select image from library.book where id=" + id);
+            while(rs.next()){
+                image = rs.getBytes("image");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            
+            try{
+                if (stmt != null){
+                    stmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                if (conn != null){
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return image;
+    }
+    
     public SearchType getSearchType(){
         return searchType;
     }
