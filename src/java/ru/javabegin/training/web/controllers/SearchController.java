@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 public class SearchController implements Serializable{
     
     private SearchType searchType;
+    private String searchString;
     private static Map<String, SearchType> searchList = new HashMap<String, SearchType>();//хранит все виды поисков (по автору, по названию)
     private ArrayList<Book> currentBookList;//текущий список книг для отображения
     
@@ -108,6 +109,28 @@ public class SearchController implements Serializable{
         
     }
     
+    public void fillBooksBySearch(){
+        
+        if (searchString.trim().length() == 0){
+            fillBooksAll();
+            return;
+        }
+        
+        StringBuilder sql = new StringBuilder("select * from library.book "
+                + "inner join library.author on library.book.author_id=library.author.id "
+                + "inner join library.genre on library.book.genre_id=library.genre.id "
+                + "inner join library.publisher on library.book.publisher_id=library.publisher.id ");
+
+        if (searchType == SearchType.AUTHOR) {
+            sql.append("where lower(library.author.fio) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
+
+        } else if (searchType == SearchType.TITLE) {
+            sql.append("where lower(library.book.name) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
+        }
+        
+        fillBooksBySQL(sql.toString());
+    }
+    
     public byte[] getImage(int id){
         
         Statement stmt = null;
@@ -183,6 +206,15 @@ public class SearchController implements Serializable{
         letters[32] = 'Я';
 
         return letters;
+    }
+    
+    
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
     
     public SearchType getSearchType(){
