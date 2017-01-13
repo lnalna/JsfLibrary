@@ -13,18 +13,16 @@
         <ui:composition>
             
             <h4>#{msg.genres}</h4>
-            
-            <h:dataTable value="#{genreController.genreList}" var="g" styleClass="genres">
-            
-                <h:column>
-                    <h:form>
+
+            <h:form styleClass="genres">            
+                <ui:repeat value="#{genreController.genreList}" var="g">            
+                
                         <h:commandLink action="#{searchController.fillBooksByGenre()}" value="#{g.name}">
                             <f:param name="genre_id" value="#{g.id}" />
-                        </h:commandLink>
-                    </h:form>                    
-                </h:column>
-            
-            </h:dataTable>
+                        </h:commandLink>                   
+                    
+                </ui:repeat>
+            </h:form>
             
         </ui:composition>
     </h:body>
