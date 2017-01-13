@@ -20,8 +20,10 @@
             </div>
             
             <div class="welcome">
-                <h5>#{msg.welcome}, #{user.username}</h5>
-                <a href="#">#{msg.exit}</a>
+                <h:form>
+                    <h5>#{msg.welcome}, #{user.username}</h5>
+                    <h:commandLink action="#{loginController.exit()}" value="#{msg.exit}"/>
+                </h:form>
             </div>
             
             <div class="search_div">
