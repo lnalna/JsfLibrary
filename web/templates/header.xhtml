@@ -36,6 +36,12 @@
                 </h:form>
             </div>
             
+            <div class="letters">
+                <ui:repeat value="#{searchController.russianLetters}" var="letter">
+                    <a href="#">#{letter}</a>
+                </ui:repeat>
+            </div>
+            
         </ui:composition>
     </h:body>
 </html>
