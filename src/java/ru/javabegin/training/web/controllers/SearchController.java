@@ -221,6 +221,10 @@ public class SearchController implements Serializable{
         return searchType;
     }
     
+    public void setSearchType(SearchType searchType) {
+        this.searchType = searchType;
+    }
+    
     public Map<String, SearchType> getSearchList() {
         return searchList;
     }

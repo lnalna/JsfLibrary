@@ -29,8 +29,7 @@
             <div class="search_div">
                 <h:form styleClass="search_form">
                     <h:inputText id="search_string" styleClass="search_string" value="#{searchController.searchString}"/>
-                    <h:commandButton value="#{msg.search}" styleClass="search_button" action="
-                                     #{searchController.fillBooksBySearch()}"/>
+                    <h:commandButton value="#{msg.search}" styleClass="search_button" action="#{searchController.fillBooksBySearch()}"/>
                     
                     <h:selectOneMenu value="#{searchController.searchType}">
                         <f:selectItems value="${searchController.searchList}"/>
