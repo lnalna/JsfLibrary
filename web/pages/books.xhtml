@@ -54,12 +54,14 @@
                <div class="pager">
                     <h:form rendered="#{searchController.totalBooksCount>searchController.booksOnPage}">
                         #{msg.pager}
-
-                        <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber" >
-                            <h:commandLink value="#{pageNumber}" action="#{searchController.selectPage()}" styleClass="#{pageNumber == searchController.selectedPageNumber ? 'selected_page':''}">
-                                <f:param name="page_number" value="#{pageNumber}" />
+                        
+                        <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
+                            <h:commandLink value="#{pageNumber}" action="#{searchController.selectPage()}"
+                                           styleClass="#{pageNumber == searchController.selectedPageNumber ? 'selected_page':''}">
+                                <f:param name="page_number" value="#{pageNumber}"/>
                             </h:commandLink>
                         </ui:repeat>
+                        
                         
                     </h:form>
 
