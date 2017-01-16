@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
       >
     <h:head>
         <title>Facelet Title</title>
@@ -49,6 +50,20 @@
                     </h:column>
                     
                 </h:dataTable>
+                
+                <div class="pager">
+                    <h:form rendered="#{searchController.totalBooksCount>searchController.booksOnPage}">
+                    #{msg.pager}
+                    
+                        <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
+                            <h:commandLink value="#{pageNumber}" action="#{searchController.selectPage()}"
+                                           styleClass="#{pageNumber == searchController.selectedPageNumber ? 'select_page':''}">
+                                                    <f:param name="page_number" value="#{pageNumber}"/>
+                            </h:commandLink>
+                            
+                        </ui:repeat>
+                    </h:form>
+                </div>
                      
                 
             </ui:define>
