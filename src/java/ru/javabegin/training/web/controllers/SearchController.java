@@ -60,6 +60,7 @@ public class SearchController implements Serializable{
             conn = Database.getConnection();
             stmt = conn.createStatement();
             
+          //запрос выполняется без limit для подсчета строк - количества книг  
             rs = stmt.executeQuery(sqlBuilder.toString());
             rs.last();
             
@@ -71,6 +72,7 @@ public class SearchController implements Serializable{
                 sqlBuilder.append(" limit ").append(selectedPageNumber * booksOnPage - booksOnPage).append(",").append(booksOnPage);
             }
             
+            //запрос выполняется с limit 
             rs = stmt.executeQuery(sqlBuilder.toString());
             
             currentBookList = new ArrayList<Book>();
