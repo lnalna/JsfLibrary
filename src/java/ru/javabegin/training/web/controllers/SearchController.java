@@ -149,6 +149,10 @@ public class SearchController implements Serializable{
                 + "library.book.genre_id=library.genre.id"
                 + " where genre_id=" + genreId);
         
+        // ищем по жанру, букву очищаем, страница будет первая
+        selectedLetter = ' ';
+        selectedPageNumber = 1;
+        
     }
     
     public void fillBooksBySearch(){
@@ -171,6 +175,11 @@ public class SearchController implements Serializable{
         }
         
         fillBooksBySQL(sql.toString());
+        
+        //ищем по названию или автору, букву сбрасываем, жанр сбрасываем, страницу сбрасываем
+        selectedLetter =' ';
+        selectedGenreId = -1;
+        selectedPageNumber = 1;
     }
     
     public void fillBooksByLetter() {
@@ -183,7 +192,18 @@ public class SearchController implements Serializable{
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id "
                 + " where lcase(left(library.book.name,1))='" + searchLetter + "' ");
+        
+        //ищем по букве, жанр сбрасываем, страница первая
+        selectedGenreId = -1;
+        selectedPageNumber = 1;
 
+    }
+    
+    public String selectPage(){
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        selectedPageNumber = Integer.valueOf(params.get("page_number"));
+        fillBooksBySQL(currentSql);
+        return "books";
     }
     
     public byte[] getImage(int id){
