@@ -131,6 +131,19 @@ public class SearchController implements Serializable{
         fillBooksBySQL(sql.toString());
     }
     
+    public void fillBooksByLetter() {
+
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String searchLetter = params.get("letter");
+
+        fillBooksBySQL("select * from library.book "
+                + "inner join library.author on library.book.author_id=library.author.id "
+                + "inner join library.genre on library.book.genre_id=library.genre.id "
+                + "inner join library.publisher on library.book.publisher_id=library.publisher.id "
+                + " where lcase(left(library.book.name,1))='" + searchLetter + "' ");
+
+    }
+    
     public byte[] getImage(int id){
         
         Statement stmt = null;

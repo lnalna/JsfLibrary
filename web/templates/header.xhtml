@@ -39,9 +39,15 @@
             </div>
             
             <div class="letters">
-                <ui:repeat value="#{searchController.russianLetters}" var="letter">
-                    <a href="#">#{letter}</a>
-                </ui:repeat>
+                <h:form>
+                     <ui:repeat value="#{searchController.russianLetters}" var="letter">
+                         
+                         <h:commandLink action="#{searchController.fillBooksByLetter()}" value="#{letter}">
+                             <f:param name="letter" value="#{letter}" />
+                         </h:commandLink>
+                    
+                    </ui:repeat>
+                </h:form>
             </div>
             
         </ui:composition>
