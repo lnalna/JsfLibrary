@@ -65,8 +65,10 @@ public class SearchController implements Serializable{
             
             totalBooksCount = rs.getRow();
             
+            fillPageNumbers(totalBooksCount, booksOnPage);
+            
             if (totalBooksCount > booksOnPage){
-                sqlBuilder.append("limit").append(selectedPageNumber * booksOnPage).append(",").append(booksOnPage);
+                sqlBuilder.append(" limit ").append(selectedPageNumber * booksOnPage - booksOnPage).append(",").append(booksOnPage);
             }
             
             rs = stmt.executeQuery(sqlBuilder.toString());
@@ -108,21 +110,23 @@ public class SearchController implements Serializable{
         }
     }
     
-    private void fillPageNumbers(long totalBooksCount, int booksCountOnPage){
-        
+    private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
+
         int pageCount = 0;
-        
-        if (totalBooksCount%2==0){
-            pageCount = (int)totalBooksCount/booksCountOnPage; 
+
+        if(totalBooksCount%2 != 0) {
+
+            pageCount = totalBooksCount > 0 ? (int) ((totalBooksCount / booksCountOnPage) + 1) : 0;
         }
-        else{
-            pageCount = ((int)totalBooksCount/booksOnPage)+1;
+        else {
+            pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage)  : 0;
         }
-        
+
         pageNumbers.clear();
-        for (int i = 1; i<= pageCount; i++){
+        for (int i = 1; i <= pageCount; i++) {
             pageNumbers.add(i);
         }
+
     }
         
     
