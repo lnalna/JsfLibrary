@@ -47,6 +47,10 @@ public class SearchController implements Serializable{
     
     private void fillBooksBySQL(String sql){
         
+        StringBuilder sqlBuilder = new StringBuilder(sql);
+        
+        currentSql = sql;
+        
         Statement stmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -55,9 +59,21 @@ public class SearchController implements Serializable{
         try {
             conn = Database.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+            
+            rs = stmt.executeQuery(sqlBuilder.toString());
+            rs.last();
+            
+            totalBooksCount = rs.getRow();
+            
+            if (totalBooksCount > booksOnPage){
+                sqlBuilder.append("limit").append(selectedPageNumber * booksOnPage).append(",").append(booksOnPage);
+            }
+            
+            rs = stmt.executeQuery(sqlBuilder.toString());
             
             currentBookList = new ArrayList<Book>();
+            
+            System.out.println(sqlBuilder);
             
             while (rs.next()) {
                 Book book = new Book();
@@ -91,6 +107,24 @@ public class SearchController implements Serializable{
             }
         }
     }
+    
+    private void fillPageNumbers(long totalBooksCount, int booksCountOnPage){
+        
+        int pageCount = 0;
+        
+        if (totalBooksCount%2==0){
+            pageCount = (int)totalBooksCount/booksCountOnPage; 
+        }
+        else{
+            pageCount = ((int)totalBooksCount/booksOnPage)+1;
+        }
+        
+        pageNumbers.clear();
+        for (int i = 1; i<= pageCount; i++){
+            pageNumbers.add(i);
+        }
+    }
+        
     
     private void fillBooksAll(){
         fillBooksBySQL("select * from library.book "
@@ -253,4 +287,53 @@ public class SearchController implements Serializable{
     public ArrayList<Book> getCurrentBookList(){
         return currentBookList;
     }
+    
+    public ArrayList<Integer> getPageNumbers(){
+        return pageNumbers;
+    }
+    
+    public void setPageNumbers(ArrayList<Integer> pageNumbers){
+        this.pageNumbers = pageNumbers;
+    }
+
+    public int getBooksOnPage() {
+        return booksOnPage;
+    }
+
+    public void setBooksOnPage(int booksOnPage) {
+        this.booksOnPage = booksOnPage;
+    }
+
+    public int getSelectedGenreId() {
+        return selectedGenreId;
+    }
+
+    public void setSelectedGenreId(int selectedGenreId) {
+        this.selectedGenreId = selectedGenreId;
+    }
+
+    public char getSelectedLetter() {
+        return selectedLetter;
+    }
+
+    public void setSelectedLetter(char selectedLetter) {
+        this.selectedLetter = selectedLetter;
+    }
+
+    public long getSelectedPageNumber() {
+        return selectedPageNumber;
+    }
+
+    public void setSelectedPageNumber(long selectedPageNumber) {
+        this.selectedPageNumber = selectedPageNumber;
+    }
+
+    public long getTotalBooksCount() {
+        return totalBooksCount;
+    }
+
+    public void setTotalBooksCount(long totalBooksCount) {
+        this.totalBooksCount = totalBooksCount;
+    }
+    
 }
