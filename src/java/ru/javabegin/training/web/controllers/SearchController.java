@@ -24,10 +24,18 @@ import java.util.logging.Logger;
 @SessionScoped
 public class SearchController implements Serializable{
     
-    private SearchType searchType;
-    private String searchString;
+    private int booksOnPage = 2;//количество книг на странице
+    private int selectedGenreId;//выбранный жанр
+    private char selectedLetter;//выбранная буква алфавита
+    private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
+    private long totalBooksCount;//общее количество книг
+    private ArrayList<Integer> pageNumbers = new ArrayList<Integer>();//общее количество страниц
+    private SearchType searchType;//выбранный тип поиска
+    private String searchString;//поисковая строка
     private static Map<String, SearchType> searchList = new HashMap<String, SearchType>();//хранит все виды поисков (по автору, по названию)
     private ArrayList<Book> currentBookList;//текущий список книг для отображения
+    private String currentSql;//последний выполненный sql без добавления limit
+    
     
     public SearchController(){
         fillBooksAll();
