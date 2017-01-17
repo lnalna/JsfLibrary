@@ -144,7 +144,7 @@ public class SearchController implements Serializable{
     
     public void fillBooksByGenre(){
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        Integer genreId = Integer.valueOf(params.get("genre_id"));
+        selectedGenreId = Integer.valueOf(params.get("genre_id"));
         
         fillBooksBySQL("select * from library.book "
                 + "inner join library.author on "
@@ -153,7 +153,7 @@ public class SearchController implements Serializable{
                 + "library.book.publisher_id=library.publisher.id "
                 + "inner join library.genre on "
                 + "library.book.genre_id=library.genre.id"
-                + " where genre_id=" + genreId);
+                + " where genre_id=" + selectedGenreId);
         
         // ищем по жанру, букву очищаем, страница будет первая
         selectedLetter = ' ';
