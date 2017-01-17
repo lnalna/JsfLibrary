@@ -191,13 +191,13 @@ public class SearchController implements Serializable{
     public void fillBooksByLetter() {
 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String searchLetter = params.get("letter");
+        selectedLetter = params.get("letter").charAt(0);
 
         fillBooksBySQL("select * from library.book "
                 + "inner join library.author on library.book.author_id=library.author.id "
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id "
-                + " where lcase(left(library.book.name,1))='" + searchLetter + "' ");
+                + " where lcase(left(library.book.name,1))='" + selectedLetter + "' order by library.book.name");
         
         //ищем по букве, жанр сбрасываем, страница первая
         selectedGenreId = -1;
