@@ -13,17 +13,15 @@
         
         <ui:composition template="/templates/library_template.xhtml">
             
-            <ui:define name="books_count">
-                #{msg.book_count} #{searchController.totalBooksCount}
-            </ui:define>
-            
+                        
             <ui:define name="title">
                 #{msg.book_list}
             </ui:define>
             
             
             <ui:define name="content">
-                                
+                <p><strong> #{msg.book_count} #{searchController.totalBooksCount}</strong></p>
+                    
                 <h:dataTable value="#{searchController.currentBookList}" var="b" cellspacing="10px" columnClasses="col1,
                   col2, col3">
                     
