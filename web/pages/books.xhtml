@@ -26,18 +26,24 @@
                   col2, col3">
                     
                     <h:column>
-                        <h:graphicImage value="/ShowImage?id=#{b.id}" width="120" height="160"/>                        
+                        <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
+                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="120" height="160"/>
+                        </h:outputLink>
                     </h:column>
                     
                     <h:column>
                         
                         <div>
-                            <p> <a href="#">#{b.name}</a></p>
+                            <p><h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">#{b.name}</h:outputLink></p>                            
                             <p><strong>#{msg.author_name}: </strong>#{b.author}</p>
                             <p><strong>#{msg.page_count}:</strong>#{b.pageCount} #{msg.pages}</p>
                             <p><strong>#{msg.publisher}</strong>#{b.publisher}</p>
                             <p><strong>#{msg.publish_year}</strong>#{b.publishDate} г.</p>
                             <p><strong>#{msg.isbn}</strong>#{b.isbn}</p>
+                            <p><h:graphicImage library="images" name="book.gif" />
+                                <h:outputLink styleClass="content_link" value="#{request.contextPath}/PdfContent?id=#{b.id}"
+                                              target="_blank">#{msg.read}</h:outputLink>
+                            </p>
                         </div>
                         
                     </h:column>

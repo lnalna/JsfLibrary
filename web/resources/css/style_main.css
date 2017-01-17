@@ -204,6 +204,14 @@ a:hover, a:active, a:focus {
     width: 100px;
 }
 
+.col2 a.content_link{
+    color:red;
+    font-size: 11px;
+    text-decoration: underline;
+    margin-left: 5px;
+    font-weight: bold
+}
+
 .col2{
     vertical-align: top;
     width: 240px;

@@ -212,6 +212,45 @@ public class SearchController implements Serializable{
         return "books";
     }
     
+    public byte[] getContent(int id) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+
+
+        byte[] content = null;
+        try {
+            conn = Database.getConnection();
+            stmt = conn.createStatement();
+
+            rs = stmt.executeQuery("select content from library.book where id=" + id);
+            while (rs.next()) {
+                content = rs.getBytes("content");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Book.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Book.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return content;
+
+    }
+    
     public byte[] getImage(int id){
         
         Statement stmt = null;
