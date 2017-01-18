@@ -167,11 +167,8 @@ public class SearchController implements Serializable{
                 + "library.book.publisher_id=library.publisher.id "
                 + "inner join library.genre on "
                 + "library.book.genre_id=library.genre.id"
-                + " where genre_id=" + selectedGenreId);
-        
-        // ищем по жанру, букву очищаем, страница будет первая
-        selectedLetter = ' ';
-        selectedPageNumber = 1;
+                + " where genre_id=" + selectedGenreId);      
+           
         
     }
     
@@ -196,12 +193,8 @@ public class SearchController implements Serializable{
             sql.append("where lower(library.book.name) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
         }
         
-        fillBooksBySQL(sql.toString());
+        fillBooksBySQL(sql.toString());        
         
-        //ищем по названию или автору, букву сбрасываем, жанр сбрасываем, страницу сбрасываем
-        selectedLetter =' ';
-        selectedGenreId = -1;
-        selectedPageNumber = 1;
     }
     
     public void fillBooksByLetter() {
@@ -216,10 +209,7 @@ public class SearchController implements Serializable{
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id "
                 + " where lcase(left(library.book.name,1))='" + selectedLetter + "' order by library.book.name");
-        
-        //ищем по букве, жанр сбрасываем, страница первая
-        selectedGenreId = -1;
-        selectedPageNumber = 1;
+             
 
     }
     
