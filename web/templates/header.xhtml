@@ -39,7 +39,7 @@
             </div>
             
             <div class="letters">
-                <h:form>
+                <h:form id="lettersForm">
                      <ui:repeat value="#{searchController.russianLetters}" var="letter">
                          
                          <h:commandLink action="#{searchController.fillBooksByLetter()}" value="#{letter}" styleClass="

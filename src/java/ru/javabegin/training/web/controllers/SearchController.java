@@ -156,6 +156,8 @@ public class SearchController implements Serializable{
     
     public void fillBooksByGenre(){
         
+        imitateLoading();
+        
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
        submitValues(' ', 1, Integer.valueOf(params.get("genre_id")), false);
@@ -409,4 +411,11 @@ public class SearchController implements Serializable{
         this.totalBooksCount = totalBooksCount;
     }
     
+    private void imitateLoading() {
+        try {
+            Thread.sleep(1000);// имитация загрузки процесса
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -14,7 +14,7 @@
         <ui:composition template="/templates/library_template.xhtml">
             
             <ui:define name="books_count">
-                #{msg.book_count} #{searchController.totalBooksCount}
+                <h:outputText value="#{msg.book_count} #{searchController.totalBooksCount}" id="booksCount"/>
             </ui:define>  
             
             <ui:define name="title">
@@ -24,7 +24,7 @@
             
             <ui:define name="content">
                                     
-                <h:dataTable value="#{searchController.currentBookList}" var="b" cellspacing="10px" columnClasses="col1,
+                <h:dataTable id="booksList" value="#{searchController.currentBookList}" var="b" cellspacing="10px" columnClasses="col1,
                   col2, col3">
                     
                     <h:column>

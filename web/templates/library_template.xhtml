@@ -7,8 +7,14 @@
     <h:head>
         <title><ui:insert name="title"/></title>
         <h:outputStylesheet library="css" name="style_main.css" />
+        <h:outputScript library="js" name="library.js" target="head"/>
     </h:head>
     <h:body>
+        
+        <div id="loading_wrapper">
+            <p>#{msg.loading}...</p>
+        </div>
+        
         <div class="container">
             
             <div class="header">
@@ -30,7 +36,7 @@
                     <p><strong><ui:insert name="books_count"/></strong></p>
                     
                     <div class="pager">
-                        <ui:insert name="paginator"/>
+                        <h:panelGroup id="pages1" layout="block"><ui:insert name="paginator"/></h:panelGroup>
                     </div>
                     
                     <div class="content_books">
@@ -40,7 +46,7 @@
                     </div>
                     
                     <div class="pager">
-                        <ui:insert name="paginator"/>
+                        <h:panelGroup id="pages2" layout="block"> <ui:insert name="paginator"/> </h:panelGroup>
                     </div>
                     
                 </div>

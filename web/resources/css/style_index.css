@@ -34,11 +34,18 @@ body {
 }
 
 .login_div{
-    width:350px;
+    width:400px;
     border: 1px solid #eaeaea;
     margin: 0 auto;
     padding:10px;
-    height: 150px;
+    height: 100px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.login_div p{
+    text-align: left;
+
 }
 
 .footer{
@@ -48,7 +55,7 @@ body {
 }
 
 .content{
-    height:200px;
+    height:150px;
 
 }
 
