@@ -65,9 +65,10 @@
                         #{msg.pager}
                         
                         <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
-                            <h:commandLink value="#{pageNumber}" action="#{searchController.selectPage()}"
-                                           styleClass="#{pageNumber == searchController.selectedPageNumber ? 'selected_page':''}">
+                            <h:commandLink value="#{pageNumber}" styleClass="#{pageNumber == searchController.selectedPageNumber ? 'selected_page':''}">
                                 <f:param name="page_number" value="#{pageNumber}"/>
+                                <f:ajax onevent="showProgress" event="click" render=":genresList :booksList :lettersForm :pages1 
+                                        :pages2 :booksCount" listener="#{searchController.selectPage()}"/>
                             </h:commandLink>
                         </ui:repeat>
                         

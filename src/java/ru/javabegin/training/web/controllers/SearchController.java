@@ -220,6 +220,9 @@ public class SearchController implements Serializable{
     }
     
     public void selectPage(){
+        
+        imitateLoading();
+        
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedPageNumber = Integer.valueOf(params.get("page_number"));
         requestFromPager = true;
