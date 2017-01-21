@@ -176,6 +176,8 @@ public class SearchController implements Serializable{
     
     public void fillBooksBySearch(){
         
+        imitateLoading();
+        
         submitValues(' ', 1, -1, false);
         
         if (searchString.trim().length() == 0){
