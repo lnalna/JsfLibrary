@@ -201,6 +201,8 @@ public class SearchController implements Serializable{
     
     public void fillBooksByLetter() {
 
+        imitateLoading();
+        
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
         
