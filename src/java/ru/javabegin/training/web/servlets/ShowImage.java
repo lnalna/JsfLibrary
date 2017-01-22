@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.javabegin.training.web.controllers.SearchController;
+import ru.javabegin.training.web.controllers.BookListController;
 
 @WebServlet(name = "ShowImage",
 urlPatterns = {"/ShowImage"})
@@ -33,9 +33,9 @@ public class ShowImage extends HttpServlet{
         try{
             int id = Integer.valueOf(request.getParameter("id"));
             
-            SearchController searchController = (SearchController)request.getSession(false).getAttribute("searchController");
+            BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
             
-            byte[] image = searchController.getImage(id);
+            byte[] image = bookListController.getImage(id);
             response.setContentLength(image.length);
             out.write(image);
         }catch (Exception ex){
@@ -61,7 +61,7 @@ public class ShowImage extends HttpServlet{
 
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Show image servlet";
     }
     
 }

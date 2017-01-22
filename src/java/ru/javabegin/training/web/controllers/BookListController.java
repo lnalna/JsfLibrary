@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 @ManagedBean(eager = true)
 @SessionScoped
-public class SearchController implements Serializable{
+public class BookListController implements Serializable{
     
     private boolean requestFromPager;
     private int booksOnPage = 2;//количество книг на странице
@@ -38,7 +38,7 @@ public class SearchController implements Serializable{
     private String currentSql;//последний выполненный sql без добавления limit
     
     
-    public SearchController(){
+    public BookListController(){
         fillBooksAll();
         
         ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
@@ -99,7 +99,7 @@ public class SearchController implements Serializable{
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (stmt != null){
@@ -112,7 +112,7 @@ public class SearchController implements Serializable{
                     conn.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -422,7 +422,7 @@ public class SearchController implements Serializable{
         try {
             Thread.sleep(1000);// имитация загрузки процесса
         } catch (InterruptedException ex) {
-            Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

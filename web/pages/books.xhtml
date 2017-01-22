@@ -14,7 +14,7 @@
         <ui:composition template="/templates/library_template.xhtml">
             
             <ui:define name="books_count">
-                <h:outputText value="#{msg.book_count} #{searchController.totalBooksCount}" id="booksCount"/>
+                <h:outputText value="#{msg.book_count} #{bookListController.totalBooksCount}" id="booksCount"/>
             </ui:define>  
             
             <ui:define name="title">
@@ -24,7 +24,7 @@
             
             <ui:define name="content">
                                     
-                <h:dataTable id="booksList" value="#{searchController.currentBookList}" var="b" cellspacing="10px" columnClasses="col1,
+                <h:dataTable id="booksList" value="#{bookListController.currentBookList}" var="b" cellspacing="10px" columnClasses="col1,
                   col2, col3">
                     
                     <h:column>
@@ -61,14 +61,15 @@
             </ui:define>
                 
                <ui:define name="paginator" >
-                    <h:form rendered="#{searchController.totalBooksCount>searchController.booksOnPage}">
+                   <h:form rendered="#{bookListController.totalBooksCount >  bookListController.booksOnPage}">
                         #{msg.pager}
                         
-                        <ui:repeat value="#{searchController.pageNumbers}" var="pageNumber">
-                            <h:commandLink value="#{pageNumber}" styleClass="#{pageNumber == searchController.selectedPageNumber ? 'selected_page':''}">
+                        <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
+                            <h:commandLink value="#{pageNumber}" styleClass="#{pageNumber == 
+                                                    bookListController.selectedPageNumber ? 'selected_page':''}">
                                 <f:param name="page_number" value="#{pageNumber}"/>
                                 <f:ajax onevent="showProgress" event="click" render=":genresList :booksList :lettersForm :pages1 
-                                        :pages2 :booksCount" listener="#{searchController.selectPage()}"/>
+                                        :pages2 :booksCount" listener="#{bookListController.selectPage()}"/>
                             </h:commandLink>
                         </ui:repeat>
                         
