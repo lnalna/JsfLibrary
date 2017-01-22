@@ -1,8 +1,6 @@
 package ru.javabegin.training.web.controllers;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.ResourceBundle;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,7 +31,6 @@ public class BookListController implements Serializable{
     private ArrayList<Integer> pageNumbers = new ArrayList<Integer>();//общее количество страниц
     private SearchType searchType;//выбранный тип поиска
     private String searchString;//поисковая строка
-    private static Map<String, SearchType> searchList = new HashMap<String, SearchType>();//хранит все виды поисков (по автору, по названию)
     private ArrayList<Book> currentBookList;//текущий список книг для отображения
     private String currentSql;//последний выполненный sql без добавления limit
     
@@ -41,9 +38,7 @@ public class BookListController implements Serializable{
     public BookListController(){
         fillBooksAll();
         
-        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        searchList.put(bundle.getString("author_name"), searchType.AUTHOR);
-        searchList.put(bundle.getString("book_name"), searchType.TITLE);
+        
     }
     
     private void fillBooksBySQL(String sql){
@@ -362,10 +357,7 @@ public class BookListController implements Serializable{
         this.searchType = searchType;
     }
     
-    public Map<String, SearchType> getSearchList() {
-        return searchList;
-    }
-    
+        
     public ArrayList<Book> getCurrentBookList(){
         return currentBookList;
     }
