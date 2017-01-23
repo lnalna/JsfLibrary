@@ -95,3 +95,16 @@ body {
     position:relative;
     top:1px;
 }
+.locales{
+    width: 100%;
+    float:left;
+    margin:0 auto;
+    text-align: center;
+    clear: both;
+    height: 40px;
+}
+
+.locales a{
+    margin-right: 15px;
+    font-size: 10px;
+}

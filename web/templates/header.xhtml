@@ -20,23 +20,16 @@
             </div>
             
             <div class="welcome">
-                <h:form>
+                
+                <ui:include src="/templates/locales.xhtml"/>
                     
-                    <p>
-                        
-                        <h:commandLink action="#{localChanger.changeLocale('en')}">
-                            <h:graphicImage library="images" name="eng.png" title="#{msg.english}"/>
-                        </h:commandLink>
-                        
-                        <h:commandLink action="#{localChanger.changeLocale('ru')}">
-                            <h:graphicImage library="images" name="rus.png" title="#{msg.russian}"/>
-                        </h:commandLink>
-                    </p>
                     
                     <p><h5>#{msg.welcome}, #{user.username}</h5></p>
                     
-                    <h:commandLink action="#{loginController.exit()}" value="#{msg.exit}"/>
-                </h:form>
+                    <h:form>
+                         <h:commandLink action="#{loginController.exit()}" value="#{msg.exit}"/>
+                    </h:form>
+                
             </div>
             
             <div class="search_div">
