@@ -12,11 +12,12 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class SearchTypeController {
     
-    private Map<String, SearchType> searchList = new HashMap<String, SearchType>();//хранит все виды поисков ( по автору, по назвнию)
+    private static Map<String, SearchType> searchList = new HashMap<String, SearchType>();//хранит все виды поисков ( по автору, по назвнию)
     
     public SearchTypeController(){
         
         ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        searchList.clear();
         searchList.put(bundle.getString("author_name"), SearchType.AUTHOR);
         searchList.put(bundle.getString("book_name"), SearchType.TITLE);
     }

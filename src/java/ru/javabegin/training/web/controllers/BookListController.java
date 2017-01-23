@@ -15,6 +15,7 @@ import ru.javabegin.training.web.beans.Book;
 import ru.javabegin.training.web.db.Database;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.event.ValueChangeEvent;
 
 
 
@@ -408,6 +409,14 @@ public class BookListController implements Serializable{
 
     public void setTotalBooksCount(long totalBooksCount) {
         this.totalBooksCount = totalBooksCount;
+    }
+    
+    public void searchStringChanged(ValueChangeEvent e){
+        searchString = e.getNewValue().toString();
+    }
+    
+    public void searchTypeChanged(ValueChangeEvent e){
+        searchType  = (SearchType) e.getNewValue();
     }
     
     private void imitateLoading() {
