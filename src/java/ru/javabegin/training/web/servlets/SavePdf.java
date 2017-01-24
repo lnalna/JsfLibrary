@@ -2,6 +2,7 @@ package ru.javabegin.training.web.servlets;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +16,19 @@ public class SavePdf extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
         
-        response.setContentType("application/pdf");
+        response.setContentType("application/pdf; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         
         OutputStream outputStream =  response.getOutputStream();
         try{
             int id = Integer.valueOf(request.getParameter("id"));
+            //Boolean save = Boolean.valueOf(request.getParameter("save"));
+            String filename = request.getParameter("filename");
+            filename = URLEncoder.encode(filename, "UTF-8");
             BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
             byte[] content = bookListController.getContent(id);
-            response.setHeader("Content-Disposition", "attachment;filename=file.pdf");
+            response.setContentLength(content.length);
+            response.setHeader("Content-Disposition","attachment; filename*=UTF-8''"+filename+".pdf");
             outputStream.write(content);
             
         } catch(Exception ex){
