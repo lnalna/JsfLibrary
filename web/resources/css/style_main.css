@@ -224,6 +224,14 @@ a:hover, a:active, a:focus {
     font-weight: bold
 }
 
+.col2 a.save_link{
+    color: #3333ff;
+    font-size: 11px;
+    text-decoration: underline;
+    margin-left: 5px;
+    font-weight: bold
+}
+
 .col2{
     vertical-align: top;
     width: 240px;
