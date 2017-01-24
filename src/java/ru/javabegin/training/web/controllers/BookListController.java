@@ -3,6 +3,7 @@ package ru.javabegin.training.web.controllers;
 import java.util.Map;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -300,6 +301,64 @@ public class BookListController implements Serializable{
             }
         }
         return image;
+    }
+    
+    public String updateBooks(){
+        
+        imitateLoading();
+        
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        
+        try{
+            conn = Database.getConnection();
+            prepStmt = conn.prepareStatement("update library.book set name=?, isbn=?, page_count=?, publish_year=?, description=? where id=?");
+            
+            for(Book book : currentBookList){
+                prepStmt.setString(1, book.getName());
+                prepStmt.setString(2, book.getIsbn());
+                //prepStmt.setString(3, book.getAuthor);
+                prepStmt.setInt(3, book.getPageCount());
+                prepStmt.setInt(4, book.getPublishDate());
+                prepStmt.setString(5, book.getDescription());
+                //prepStmt.setString(6, book.getPublisher());
+                prepStmt.setLong(6, book.getId());
+                prepStmt.addBatch();
+            }
+            
+            prepStmt.executeBatch();
+        } catch(SQLException ex){
+            Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try{
+                if (prepStmt != null){
+                    prepStmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+                if (conn != null){
+                    conn.close();
+                }
+            } catch (SQLException ex){
+                Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        switchEditMode();
+        
+        return "books";
+    }
+    
+    private boolean editMode;
+    
+    public boolean isEditMode(){
+        return editMode;
+    }
+    
+    public void switchEditMode(){
+        editMode = !editMode;
     }
     
     public Character[] getRussianLetters() {
