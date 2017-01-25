@@ -316,6 +316,9 @@ public class BookListController implements Serializable{
             prepStmt = conn.prepareStatement("update library.book set name=?, isbn=?, page_count=?, publish_year=?, description=? where id=?");
             
             for(Book book : currentBookList){
+                
+                if (!book.isEdit()) continue;
+                
                 prepStmt.setString(1, book.getName());
                 prepStmt.setString(2, book.getIsbn());
          //         prepStmt.setString(3, book.getAuthor());
@@ -348,7 +351,7 @@ public class BookListController implements Serializable{
             }
         }
         
-        switchEditMode();
+        cancelEdit();
         
         return "books";
     }
@@ -359,8 +362,16 @@ public class BookListController implements Serializable{
         return editMode;
     }
     
-    public void switchEditMode(){
-        editMode = !editMode;
+    public void showEdit(){
+        editMode = true;
+    }
+    
+    public void cancelEdit(){
+        editMode = false;
+        for(Book book : currentBookList){
+            book.setEdit(false);
+        }
+        
     }
     
     public Character[] getRussianLetters() {

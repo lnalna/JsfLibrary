@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Book implements Serializable{
     
+    private boolean edit;
     private long id;
     private String name;
     private byte[] content;//pdf файл будем загружать в это поле в нужный момент для просмотра
@@ -103,6 +104,14 @@ public class Book implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public boolean isEdit(){
+        return edit;
+    }
+    
+    public void setEdit(boolean edit){
+        this.edit = edit;
     }
     
     

@@ -34,7 +34,7 @@
                             <f:ajax onevent="showProgress" execute="@form" render="@form"/>                        
                         </h:commandLink>
                         
-                        <h:commandLink action="#{bookListController.switchEditMode}" rendered="#{!bookListController.editMode}">
+                        <h:commandLink action="#{bookListController.showEdit}" rendered="#{!bookListController.editMode}">
                             <h:graphicImage library="images" name="edit.jpg"/>
                             <h:outputText value="#{msg.edit}"/>
                             <f:ajax onevent="showProgress" execute="@form" render="@form"/>
@@ -42,10 +42,12 @@
                         
                         <h:commandButton action="#{bookListController.updateBooks}" 
                                          rendered="#{bookListController.editMode}" value="#{msg.Save}">
+                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>
                         </h:commandButton>
                         
-                        <h:commandButton immediate="true" action="#{bookListController.switchEditMode}"
+                        <h:commandButton immediate="true" action="#{bookListController.cancelEdit}"
                                          rendered="#{bookListController.editMode}" value="#{msg.Cancel}">
+                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>
                         </h:commandButton>
                         
                     </h:panelGroup>
@@ -55,7 +57,7 @@
                     
                     <h:column>
                         <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
-                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="120" height="160"/>
+                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="160" height="220"/>
                         </h:outputLink>
                     </h:column>
                     
@@ -63,35 +65,38 @@
                         
                         <div>
                             <p>
-                                <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank">
+                                <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank" rendered="#{!b.edit}">
                                     <h:outputText value="#{b.name}"/>                                        
                                     <f:param name="id" value="#{b.id}"/>                                  
                                 </h:outputLink>
-                            </p>                            
+                                
+                                <h:inputText value="#{b.name}" styleClass="name_edit" rendered="#{b.edit}"/>
+                            </p>       
+                            
                             <p>
                                 <strong>#{msg.author_name}: </strong>
-                                <h:outputText value="#{b.author}" rendered="#{!bookListController.editMode}"/>
-                                <h:inputText value="#{b.author}" styleClass="name_edit" rendered="#{bookListController.editMode}"/>
+                                <h:outputText value="#{b.author}" rendered="#{!b.edit}"/>
+                                <h:inputText value="#{b.author}" styleClass="name_edit" rendered="#{b.edit}"/>
                             </p>
                             <p>
                                 <strong>#{msg.page_count}</strong>
-                                <h:outputText value="#{b.pageCount} #{msg.pages}" rendered="#{!bookListController.editMode}"/>
-                                <h:inputText value="#{b.pageCount}" styleClass="pages_edit" rendered="#{bookListController.editMode}"/>
+                                <h:outputText value="#{b.pageCount} #{msg.pages}" rendered="#{!b.edit}"/>
+                                <h:inputText value="#{b.pageCount}" styleClass="pages_edit" rendered="#{b.edit}"/>
                             </p>
                             <p>
                                 <strong>#{msg.publisher}</strong>
-                                <h:outputText value="#{b.publisher}" rendered="#{!bookListController.editMode}"/>
-                                <h:inputText value="#{b.publisher}" styleClass="publisher_edit" rendered="#{bookListController.editMode}"/>
+                                <h:outputText value="#{b.publisher}" rendered="#{!b.edit}"/>
+                                <h:inputText value="#{b.publisher}" styleClass="publisher_edit" rendered="#{b.edit}"/>
                             </p>
                             <p>
                                 <strong>#{msg.publish_year}</strong>
-                                <h:outputText value="#{b.publishDate} г." rendered="#{!bookListController.editMode}"/>
-                                <h:inputText value="#{b.publishDate}" styleClass="publish_edit" rendered="#{bookListController.editMode}"/>
+                                <h:outputText value="#{b.publishDate} г." rendered="#{!b.edit}"/>
+                                <h:inputText value="#{b.publishDate}" styleClass="publisher_edit" rendered="#{b.edit}"/>
                             </p>
                             <p>
                                 <strong>#{msg.isbn}</strong>
-                                <h:outputText value="#{b.isbn}" rendered="#{!bookListController.editMode}"/>
-                                <h:inputText value="#{b.isbn}" styleClass="name_edit" rendered="#{bookListController.editMode}"/>
+                                <h:outputText value="#{b.isbn}" rendered="#{!b.edit}"/>
+                                <h:inputText value="#{b.isbn}" styleClass="name_edit" rendered="#{b.edit}"/>
                             </p>
                             
                             <p>
@@ -118,11 +123,15 @@
                     <h:column>
                         <div class="book_details">
                             <p><strong>#{msg.description}</strong></p>
-                            <p><h:outputText value="#{b.description}" rendered="#{!bookListController.editMode}"/>
-                                <h:inputTextarea value="#{b.description}" styleClass="descr_edit" rendered="#{bookListController.editMode}"/>
+                            <p><h:outputText value="#{b.description}" rendered="#{!b.edit}"/>
+                                <h:inputTextarea value="#{b.description}" styleClass="descr_edit" rendered="#{b.edit}"/>
                                 
                             </p>                            
                         </div>
+                    </h:column>
+                    
+                    <h:column>
+                        <h:selectBooleanCheckbox value="#{b.edit}" rendered="#{!bookListController.editMode}"/>
                     </h:column>
                     
                 </h:dataTable>
