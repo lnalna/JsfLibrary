@@ -316,18 +316,20 @@ public class BookListController implements Serializable{
             prepStmt = conn.prepareStatement("update library.book set name=?, isbn=?, page_count=?, publish_year=?, description=? where id=?");
             
             for(Book book : currentBookList){
-                prepStmt.setString(1, book.getName());
-                prepStmt.setString(2, book.getIsbn());
-                //prepStmt.setString(3, book.getAuthor);
-                prepStmt.setInt(3, book.getPageCount());
-                prepStmt.setInt(4, book.getPublishDate());
-                prepStmt.setString(5, book.getDescription());
+//                prepStmt.setString(1, book.getName());
+         //       prepStmt.setString(2, book.getIsbn());
+                  prepStmt.setString(3, book.getAuthor());
+           //     prepStmt.setInt(3, book.getPageCount());
+          //      prepStmt.setInt(4, book.getPublishDate());
+           //     prepStmt.setString(5, book.getDescription());
                 //prepStmt.setString(6, book.getPublisher());
-                prepStmt.setLong(6, book.getId());
+           //     prepStmt.setLong(6, book.getId());
                 prepStmt.addBatch();
             }
             
             prepStmt.executeBatch();
+            
+            
         } catch(SQLException ex){
             Logger.getLogger(BookListController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

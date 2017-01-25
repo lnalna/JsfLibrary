@@ -359,3 +359,15 @@ a:hover, a:active, a:focus {
     height: 40px;
     float:left;
 }
+
+.name_edit{
+    width: 100%;
+}
+
+.pages_edit{
+    width: 100%;
+}
+
+.publisher_edit{
+    width: 100%;
+}
