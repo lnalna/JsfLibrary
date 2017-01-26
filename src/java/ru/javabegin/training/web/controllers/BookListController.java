@@ -32,7 +32,7 @@ public class BookListController implements Serializable{
     private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
     private long totalBooksCount;//общее количество книг
     private ArrayList<Integer> pageNumbers = new ArrayList<Integer>();//общее количество страниц
-    private SearchType searchType;//выбранный тип поиска
+    private SearchType selectedSearchType = SearchType.TITLE;//хранит выбранный тип поиска, по умолчанию - по названию
     private String searchString;//поисковая строка
     private ArrayList<Book> currentBookList;//текущий список книг для отображения
     private String currentSql;//последний выполненный sql без добавления limit
@@ -197,10 +197,10 @@ public class BookListController implements Serializable{
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id ");
 
-        if (searchType == SearchType.AUTHOR) {
+        if (selectedSearchType == SearchType.AUTHOR) {
             sql.append("where lower(library.author.fio) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
 
-        } else if (searchType == SearchType.TITLE) {
+        } else if (selectedSearchType == SearchType.TITLE) {
             sql.append("where lower(library.book.name) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
         }
         
@@ -433,11 +433,11 @@ public class BookListController implements Serializable{
     }
     
     public SearchType getSearchType(){
-        return searchType;
+        return selectedSearchType;
     }
     
     public void setSearchType(SearchType searchType) {
-        this.searchType = searchType;
+        this.selectedSearchType = searchType;
     }
     
         
@@ -498,7 +498,7 @@ public class BookListController implements Serializable{
     }
     
     public void searchTypeChanged(ValueChangeEvent e){
-        searchType  = (SearchType) e.getNewValue();
+        selectedSearchType  = (SearchType) e.getNewValue();
     }
     
     private void imitateLoading() {
