@@ -70,7 +70,7 @@
                                     <f:param name="id" value="#{b.id}"/>                                  
                                 </h:outputLink>
                                 
-                                <h:inputText value="#{b.name}" styleClass="name_edit" rendered="#{b.edit}"/>
+                                <h:inputText value="#{b.name}" styleClass="name_edit" rendered="#{bookListController.editMode and b.edit}"/>
                             </p>       
                             
                             <p>
