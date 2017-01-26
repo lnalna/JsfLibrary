@@ -26,6 +26,7 @@ public class BookListController implements Serializable{
     
     private boolean requestFromPager;
     private int booksOnPage = 2;//количество книг на странице
+    int pageCount = 0;
     private int selectedGenreId;//выбранный жанр
     private char selectedLetter;//выбранная буква алфавита
     private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
@@ -114,11 +115,20 @@ public class BookListController implements Serializable{
         }
     }
     
+    public void booksOnPageChanged(ValueChangeEvent e){
+        imitateLoading();
+        cancelEdit();
+        requestFromPager = false;
+        booksOnPage = Integer.parseInt(e.getNewValue().toString());
+        selectedPageNumber = 1;
+        fillBooksBySQL(currentSql);
+    }
+    
     private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
 
-        int pageCount = 0;
+        
 
-        if(totalBooksCount%2 != 0) {
+        if(totalBooksCount % booksCountOnPage != 0) {
 
             pageCount = totalBooksCount > 0 ? (int) ((totalBooksCount / booksCountOnPage) + 1) : 0;
         }
