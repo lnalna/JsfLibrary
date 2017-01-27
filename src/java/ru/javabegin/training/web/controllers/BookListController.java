@@ -122,7 +122,7 @@ public class BookListController implements Serializable{
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="подсчет количества страниц">
-    public void booksCountOnPageChanged(ValueChangeEvent e){
+    public void changeBooksCountOnPage(ValueChangeEvent e){
         imitateLoading();
         cancelEditModeView();
         pageSelected = false;
