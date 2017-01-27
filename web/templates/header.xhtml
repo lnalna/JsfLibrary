@@ -27,7 +27,7 @@
                     <p><h5>#{msg.welcome}, #{user.username}</h5></p>
                     
                     <h:form>
-                         <h:commandLink action="#{loginController.exit()}" value="#{msg.exit}"/>
+                        <h:commandLink action="#{user.logout()}" value="#{msg.exit}"/>
                     </h:form>
                 
             </div>
