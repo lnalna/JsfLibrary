@@ -30,8 +30,8 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>USER</role-name>
-            <role-name>ADMIN</role-name>
+            <role-name>user</role-name>
+            <role-name>admin</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description/>
@@ -40,19 +40,19 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>jdbc-realm</realm-name>
         <form-login-config>
             <form-login-page>/index.xhtml</form-login-page>
             <form-error-page>/index.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>
-        <description>USER - обычный пользователь</description>
-        <role-name>USER</role-name>
+        <description>user - обычный пользователь</description>
+        <role-name>user</role-name>
     </security-role>
     <security-role>
-        <description>ADMIN - администратор системы</description>
-        <role-name>ADMIN</role-name>
+        <description>admin - администратор системы</description>
+        <role-name>admin</role-name>
     </security-role>
     <resource-ref>
         <res-ref-name>jdbc/Library</res-ref-name>
