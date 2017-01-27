@@ -141,8 +141,8 @@
                <ui:define name="paginator" >
                    <h:form>          
                        
-                       <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.booksOnPage}"
-                                        valueChangeListener="#{bookListController.booksOnPageChanged}">
+                       <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.booksCountOnPage}"
+                                        valueChangeListener="#{bookListController.booksCountOnPageChanged}">
                            <f:selectItem itemValue="1"/>
                            <f:selectItem itemValue="2"/>
                            <f:selectItem itemValue="3"/>

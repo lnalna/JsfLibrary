@@ -37,7 +37,7 @@ public class BookListController implements Serializable{
     
     //для постраничности    
     private boolean pageSelected;//запрос со страницы requestFromPages
-    private int booksOnPage = 2;//количество книг на странице
+    private int booksCountOnPage = 2;//количество отображаемых книг на одной странице
     int pageCount = 0;
     
     
@@ -78,11 +78,11 @@ public class BookListController implements Serializable{
             
             totalBooksCount = rs.getRow();
             
-            fillPageNumbers(totalBooksCount, booksOnPage);
+            fillPageNumbers(totalBooksCount, booksCountOnPage);
             
             }
-            if (totalBooksCount > booksOnPage){
-                sqlBuilder.append(" limit ").append(selectedPageNumber * booksOnPage - booksOnPage).append(",").append(booksOnPage);
+            if (totalBooksCount > booksCountOnPage){
+                sqlBuilder.append(" limit ").append(selectedPageNumber * booksCountOnPage - booksCountOnPage).append(",").append(booksCountOnPage);
             }
             
             //запрос выполняется с limit 
@@ -125,11 +125,11 @@ public class BookListController implements Serializable{
         }
     }
     
-    public void booksOnPageChanged(ValueChangeEvent e){
+    public void booksCountOnPageChanged(ValueChangeEvent e){
         imitateLoading();
         cancelEdit();
         pageSelected = false;
-        booksOnPage = Integer.parseInt(e.getNewValue().toString());
+        booksCountOnPage = Integer.parseInt(e.getNewValue().toString());
         selectedPageNumber = 1;
         fillBooksBySQL(currentSqlNoLimit);
     }
@@ -463,12 +463,12 @@ public class BookListController implements Serializable{
         this.pageNumbers = pageNumbers;
     }
 
-    public int getBooksOnPage() {
-        return booksOnPage;
+    public int getBooksCountOnPage() {
+        return booksCountOnPage;
     }
 
-    public void setBooksOnPage(int booksOnPage) {
-        this.booksOnPage = booksOnPage;
+    public void setBooksCountOnPage(int booksCountOnPage) {
+        this.booksCountOnPage = booksCountOnPage;
     }
 
     public int getSelectedGenreId() {
