@@ -33,6 +33,7 @@ public class BookListController implements Serializable{
     private SearchType selectedSearchType = SearchType.TITLE;//хранит выбранный тип поиска, по умолчанию - по названию
     private int selectedGenreId;//выбранный жанр
     private String currentSearchString;//хранит поисковую строку
+    private String currentSqlNoLimit;//последний выполненный sql без добавления limit
     
     
     
@@ -46,7 +47,7 @@ public class BookListController implements Serializable{
     
     
     
-    private String currentSql;//последний выполненный sql без добавления limit
+    
     
     
     public BookListController(){
@@ -59,7 +60,7 @@ public class BookListController implements Serializable{
         
         StringBuilder sqlBuilder = new StringBuilder(sql);
         
-        currentSql = sql;
+        currentSqlNoLimit = sql;
         
         Statement stmt = null;
         ResultSet rs = null;
@@ -132,7 +133,7 @@ public class BookListController implements Serializable{
         requestFromPager = false;
         booksOnPage = Integer.parseInt(e.getNewValue().toString());
         selectedPageNumber = 1;
-        fillBooksBySQL(currentSql);
+        fillBooksBySQL(currentSqlNoLimit);
     }
     
     private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
@@ -244,7 +245,7 @@ public class BookListController implements Serializable{
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedPageNumber = Integer.valueOf(params.get("page_number"));
         requestFromPager = true;
-        fillBooksBySQL(currentSql);
+        fillBooksBySQL(currentSqlNoLimit);
     }
     
     public byte[] getContent(int id) {
