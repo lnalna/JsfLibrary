@@ -35,9 +35,8 @@ public class BookListController implements Serializable{
     private String currentSearchString;//хранит поисковую строку
     private String currentSqlNoLimit;//последний выполненный sql без добавления limit
     
-    
-    
-    private boolean requestFromPager;
+    //для постраничности    
+    private boolean pageSelected;//запрос со страницы requestFromPages
     private int booksOnPage = 2;//количество книг на странице
     int pageCount = 0;
     
@@ -71,9 +70,8 @@ public class BookListController implements Serializable{
             conn = Database.getConnection();
             stmt = conn.createStatement();
             
-            System.out.println(requestFromPager);
-            
-            if (!requestFromPager) {
+                        
+            if (!pageSelected) {
           //запрос выполняется без limit для подсчета строк - количества книг  
             rs = stmt.executeQuery(sqlBuilder.toString());
             rs.last();
@@ -130,7 +128,7 @@ public class BookListController implements Serializable{
     public void booksOnPageChanged(ValueChangeEvent e){
         imitateLoading();
         cancelEdit();
-        requestFromPager = false;
+        pageSelected = false;
         booksOnPage = Integer.parseInt(e.getNewValue().toString());
         selectedPageNumber = 1;
         fillBooksBySQL(currentSqlNoLimit);
@@ -170,7 +168,7 @@ public class BookListController implements Serializable{
         this.selectedLetter = selectedLetter;
         this.selectedPageNumber = selectedPageNumber;
         this.selectedGenreId = selectedGenreId;
-        this.requestFromPager = requestFromPager;
+        this.pageSelected = requestFromPager;
     }
     
     public void fillBooksByGenre(){
@@ -244,7 +242,7 @@ public class BookListController implements Serializable{
         
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedPageNumber = Integer.valueOf(params.get("page_number"));
-        requestFromPager = true;
+        pageSelected = true;
         fillBooksBySQL(currentSqlNoLimit);
     }
     
