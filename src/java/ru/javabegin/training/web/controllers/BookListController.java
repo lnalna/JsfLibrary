@@ -41,21 +41,12 @@ public class BookListController implements Serializable{
     private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
     private long totalBooksCount;//общее количество книг всего, нужно для подсчета количества страниц
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //отображение режима редактирования
+    private boolean editModeView;
     
     
     public BookListController(){
-        fillBooksAll();
-        
-        
+        fillBooksAll();       
     }
     
     private void fillBooksBySQL(String sql){
@@ -130,7 +121,7 @@ public class BookListController implements Serializable{
     
     public void booksCountOnPageChanged(ValueChangeEvent e){
         imitateLoading();
-        cancelEdit();
+        cancelEditModeView();
         pageSelected = false;
         booksCountOnPage = Integer.parseInt(e.getNewValue().toString());
         selectedPageNumber = 1;
@@ -374,23 +365,22 @@ public class BookListController implements Serializable{
             }
         }
         
-        cancelEdit();
+        cancelEditModeView();
         
         return "books";
     }
     
-    private boolean editMode;
-    
-    public boolean isEditMode(){
-        return editMode;
+      
+    public boolean isEditModeView(){
+        return editModeView;
     }
     
-    public void showEdit(){
-        editMode = true;
+    public void showEditModeView(){
+        editModeView = true;
     }
     
-    public void cancelEdit(){
-        editMode = false;
+    public void cancelEditModeView(){
+        editModeView = false;
         for(Book book : currentBookList){
             book.setEdit(false);
         }
