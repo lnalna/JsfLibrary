@@ -24,17 +24,28 @@ import javax.faces.event.ValueChangeEvent;
 @SessionScoped
 public class BookListController implements Serializable{
     
+    private ArrayList<Book> currentBookList;//текущий список книг для отображения
+    private ArrayList<Integer> pageNumbers = new ArrayList<Integer>();//количество страниц для постраничности
+    
+    
+    //критерии поиска
+    private char selectedLetter;//выбранная буква алфавита, по умолчанию не выбрана ни одна буква
+    private SearchType selectedSearchType = SearchType.TITLE;//хранит выбранный тип поиска, по умолчанию - по названию
+    private int selectedGenreId;//выбранный жанр
+    private String currentSearchString;//хранит поисковую строку
+    
+    
+    
     private boolean requestFromPager;
     private int booksOnPage = 2;//количество книг на странице
     int pageCount = 0;
-    private int selectedGenreId;//выбранный жанр
-    private char selectedLetter;//выбранная буква алфавита
+    
+    
     private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
     private long totalBooksCount;//общее количество книг
-    private ArrayList<Integer> pageNumbers = new ArrayList<Integer>();//общее количество страниц
-    private SearchType selectedSearchType = SearchType.TITLE;//хранит выбранный тип поиска, по умолчанию - по названию
-    private String searchString;//поисковая строка
-    private ArrayList<Book> currentBookList;//текущий список книг для отображения
+    
+    
+    
     private String currentSql;//последний выполненный sql без добавления limit
     
     
@@ -187,7 +198,7 @@ public class BookListController implements Serializable{
         
         submitValues(' ', 1, -1, false);
         
-        if (searchString.trim().length() == 0){
+        if (currentSearchString.trim().length() == 0){
             fillBooksAll();
             return;
         }
@@ -198,10 +209,10 @@ public class BookListController implements Serializable{
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id ");
 
         if (selectedSearchType == SearchType.AUTHOR) {
-            sql.append("where lower(library.author.fio) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
+            sql.append("where lower(library.author.fio) like '%" + currentSearchString.toLowerCase() + "%' order by library.book.name ");
 
         } else if (selectedSearchType == SearchType.TITLE) {
-            sql.append("where lower(library.book.name) like '%" + searchString.toLowerCase() + "%' order by library.book.name ");
+            sql.append("where lower(library.book.name) like '%" + currentSearchString.toLowerCase() + "%' order by library.book.name ");
         }
         
         fillBooksBySQL(sql.toString());        
@@ -425,11 +436,11 @@ public class BookListController implements Serializable{
     
     
     public String getSearchString() {
-        return searchString;
+        return currentSearchString;
     }
 
     public void setSearchString(String searchString) {
-        this.searchString = searchString;
+        this.currentSearchString = searchString;
     }
     
     public SearchType getSearchType(){
@@ -494,7 +505,7 @@ public class BookListController implements Serializable{
     }
     
     public void searchStringChanged(ValueChangeEvent e){
-        searchString = e.getNewValue().toString();
+        currentSearchString = e.getNewValue().toString();
     }
     
     public void searchTypeChanged(ValueChangeEvent e){
