@@ -49,6 +49,7 @@ public class BookListController implements Serializable{
         fillBooksAll();       
     }
     
+//<editor-fold defaultstate="collapsed" desc="нахождение книг по запросу fillBooksBySQL">
     private void fillBooksBySQL(String sql){
         
         StringBuilder sqlBuilder = new StringBuilder(sql);
@@ -64,22 +65,22 @@ public class BookListController implements Serializable{
             conn = Database.getConnection();
             stmt = conn.createStatement();
             
-                        
+            
             if (!pageSelected) {
-          //запрос выполняется без limit для подсчета строк - количества книг  
-            rs = stmt.executeQuery(sqlBuilder.toString());
-            rs.last();
-            
-            totalBooksCount = rs.getRow();
-            
-            fillPageNumbers(totalBooksCount, booksCountOnPage);
-            
+                //запрос выполняется без limit для подсчета строк - количества книг
+                rs = stmt.executeQuery(sqlBuilder.toString());
+                rs.last();
+                
+                totalBooksCount = rs.getRow();
+                
+                fillPageNumbers(totalBooksCount, booksCountOnPage);
+                
             }
             if (totalBooksCount > booksCountOnPage){
                 sqlBuilder.append(" limit ").append(selectedPageNumber * booksCountOnPage - booksCountOnPage).append(",").append(booksCountOnPage);
             }
             
-            //запрос выполняется с limit 
+            //запрос выполняется с limit
             rs = stmt.executeQuery(sqlBuilder.toString());
             
             currentBookList = new ArrayList<Book>();
@@ -118,7 +119,9 @@ public class BookListController implements Serializable{
             }
         }
     }
+//</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="подсчет количества страниц">
     public void booksCountOnPageChanged(ValueChangeEvent e){
         imitateLoading();
         cancelEditModeView();
@@ -129,34 +132,37 @@ public class BookListController implements Serializable{
     }
     
     private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
-
+        
         int pageCount = 0;
-
+        
         if(totalBooksCount % booksCountOnPage != 0) {
-
+            
             pageCount = totalBooksCount > 0 ? (int) ((totalBooksCount / booksCountOnPage) + 1) : 0;
         }
         else {
             pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage)  : 0;
         }
-
+        
         pageNumbers.clear();
         for (int i = 1; i <= pageCount; i++) {
             pageNumbers.add(i);
         }
-
+        
     }
+//</editor-fold>
         
     
+//<editor-fold defaultstate="collapsed" desc="поиск всех книг fillBooksAll">
     private void fillBooksAll(){
         fillBooksBySQL("select * from library.book "
-                    + "inner join library.author on "
-                    + "library.book.author_id=library.author.id "
-                    + "inner join library.publisher on "
-                    + "library.book.publisher_id=library.publisher.id "
-                    + "inner join library.genre on "
-                    + "library.book.genre_id=library.genre.id");
+                + "inner join library.author on "
+                + "library.book.author_id=library.author.id "
+                + "inner join library.publisher on "
+                + "library.book.publisher_id=library.publisher.id "
+                + "inner join library.genre on "
+                + "library.book.genre_id=library.genre.id");
     }
+//</editor-fold>
     
     private void submitValues(Character selectedLetter, long selectedPageNumber, int selectedGenreId, boolean requestFromPager ) {
         this.selectedLetter = selectedLetter;
@@ -165,13 +171,15 @@ public class BookListController implements Serializable{
         this.pageSelected = requestFromPager;
     }
     
+//<editor-fold defaultstate="collapsed" desc="поиск по жанру fillBooksByGenre">
+    
     public void fillBooksByGenre(){
         
         imitateLoading();
         
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
-       submitValues(' ', 1, Integer.valueOf(params.get("genre_id")), false);
+        submitValues(' ', 1, Integer.valueOf(params.get("genre_id")), false);
         
         fillBooksBySQL("select * from library.book "
                 + "inner join library.author on "
@@ -180,11 +188,13 @@ public class BookListController implements Serializable{
                 + "library.book.publisher_id=library.publisher.id "
                 + "inner join library.genre on "
                 + "library.book.genre_id=library.genre.id"
-                + " where genre_id=" + selectedGenreId);      
-           
+                + " where genre_id=" + selectedGenreId);
+        
         
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public void fillBooksBySearch(){
         
         imitateLoading();
@@ -200,35 +210,38 @@ public class BookListController implements Serializable{
                 + "inner join library.author on library.book.author_id=library.author.id "
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id ");
-
+        
         if (selectedSearchType == SearchType.AUTHOR) {
             sql.append("where lower(library.author.fio) like '%" + currentSearchString.toLowerCase() + "%' order by library.book.name ");
-
+            
         } else if (selectedSearchType == SearchType.TITLE) {
             sql.append("where lower(library.book.name) like '%" + currentSearchString.toLowerCase() + "%' order by library.book.name ");
         }
         
-        fillBooksBySQL(sql.toString());        
+        fillBooksBySQL(sql.toString());
         
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public void fillBooksByLetter() {
-
+        
         imitateLoading();
         
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
         
         submitValues(selectedLetter, 1, -1, false);
-
+        
         fillBooksBySQL("select * from library.book "
                 + "inner join library.author on library.book.author_id=library.author.id "
                 + "inner join library.genre on library.book.genre_id=library.genre.id "
                 + "inner join library.publisher on library.book.publisher_id=library.publisher.id "
                 + " where lcase(left(library.book.name,1))='" + selectedLetter + "' order by library.book.name");
-             
-
+        
+        
     }
+//</editor-fold>
     
     public void selectPage(){
         
@@ -240,17 +253,18 @@ public class BookListController implements Serializable{
         fillBooksBySQL(currentSqlNoLimit);
     }
     
+//<editor-fold defaultstate="collapsed" desc="получение контента из таблицы  library.book  метод getContent ">
     public byte[] getContent(int id) {
         Statement stmt = null;
         ResultSet rs = null;
         Connection conn = null;
-
-
+        
+        
         byte[] content = null;
         try {
             conn = Database.getConnection();
             stmt = conn.createStatement();
-
+            
             rs = stmt.executeQuery("select content from library.book where id=" + id);
             while (rs.next()) {
                 content = rs.getBytes("content");
@@ -274,11 +288,13 @@ public class BookListController implements Serializable{
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
         return content;
-
+        
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="получение обложки из таблицы library.book  метод getImage">
     public byte[] getImage(int id){
         
         Statement stmt = null;
@@ -287,7 +303,7 @@ public class BookListController implements Serializable{
         
         byte[] image = null;
         
-                
+        
         try {
             conn = Database.getConnection();
             stmt = conn.createStatement();
@@ -316,7 +332,9 @@ public class BookListController implements Serializable{
         }
         return image;
     }
+//</editor-fold>
     
+//<editor-fold defaultstate="collapsed" desc="update таблицы library.book  метод updateBooks">
     public String updateBooks(){
         
         imitateLoading();
@@ -335,7 +353,7 @@ public class BookListController implements Serializable{
                 
                 prepStmt.setString(1, book.getName());
                 prepStmt.setString(2, book.getIsbn());
-         //         prepStmt.setString(3, book.getAuthor());
+                //         prepStmt.setString(3, book.getAuthor());
                 prepStmt.setInt(3, book.getPageCount());
                 prepStmt.setInt(4, book.getPublishDate());
                 prepStmt.setString(5, book.getDescription());
@@ -369,6 +387,7 @@ public class BookListController implements Serializable{
         
         return "books";
     }
+//</editor-fold>
     
       
     public boolean isEditModeView(){
@@ -427,10 +446,11 @@ public class BookListController implements Serializable{
     }
     
     
+//<editor-fold defaultstate="collapsed" desc="геттеры и сеттеры">
     public String getSearchString() {
         return currentSearchString;
     }
-
+    
     public void setSearchString(String searchString) {
         this.currentSearchString = searchString;
     }
@@ -443,7 +463,7 @@ public class BookListController implements Serializable{
         this.selectedSearchType = searchType;
     }
     
-        
+    
     public ArrayList<Book> getCurrentBookList(){
         return currentBookList;
     }
@@ -455,43 +475,43 @@ public class BookListController implements Serializable{
     public void setPageNumbers(ArrayList<Integer> pageNumbers){
         this.pageNumbers = pageNumbers;
     }
-
+    
     public int getBooksCountOnPage() {
         return booksCountOnPage;
     }
-
+    
     public void setBooksCountOnPage(int booksCountOnPage) {
         this.booksCountOnPage = booksCountOnPage;
     }
-
+    
     public int getSelectedGenreId() {
         return selectedGenreId;
     }
-
+    
     public void setSelectedGenreId(int selectedGenreId) {
         this.selectedGenreId = selectedGenreId;
     }
-
+    
     public char getSelectedLetter() {
         return selectedLetter;
     }
-
+    
     public void setSelectedLetter(char selectedLetter) {
         this.selectedLetter = selectedLetter;
     }
-
+    
     public long getSelectedPageNumber() {
         return selectedPageNumber;
     }
-
+    
     public void setSelectedPageNumber(long selectedPageNumber) {
         this.selectedPageNumber = selectedPageNumber;
     }
-
+    
     public long getTotalBooksCount() {
         return totalBooksCount;
     }
-
+    
     public void setTotalBooksCount(long totalBooksCount) {
         this.totalBooksCount = totalBooksCount;
     }
@@ -503,6 +523,7 @@ public class BookListController implements Serializable{
     public void searchTypeChanged(ValueChangeEvent e){
         selectedSearchType  = (SearchType) e.getNewValue();
     }
+//</editor-fold>
     
     private void imitateLoading() {
         try {
