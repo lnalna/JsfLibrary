@@ -37,12 +37,15 @@ public class BookListController implements Serializable{
     
     //для постраничности    
     private boolean pageSelected;//запрос со страницы requestFromPages
-    private int booksCountOnPage = 2;//количество отображаемых книг на одной странице
-    int pageCount = 0;
-    
-    
+    private int booksCountOnPage = 2;//количество отображаемых книг на одной странице, нужно для подсчета количества страниц
     private long selectedPageNumber = 1;//выбранный номер страницы в постраничной навигации
-    private long totalBooksCount;//общее количество книг
+    private long totalBooksCount;//общее количество книг всего, нужно для подсчета количества страниц
+    
+    
+    
+    
+    
+    
     
     
     
@@ -136,7 +139,7 @@ public class BookListController implements Serializable{
     
     private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
 
-        
+        int pageCount = 0;
 
         if(totalBooksCount % booksCountOnPage != 0) {
 
