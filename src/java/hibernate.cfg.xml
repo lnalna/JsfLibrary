@@ -46,5 +46,10 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Ivantanomlette#13</property>
+    <mapping resource="ru/javabegin/training/web/entity/Genre.hbm.xml"/>
+    <mapping resource="ru/javabegin/training/web/entity/Author.hbm.xml"/>
+    <mapping resource="ru/javabegin/training/web/entity/Publisher.hbm.xml"/>
+    <mapping resource="ru/javabegin/training/web/entity/Book.hbm.xml"/>
+    <mapping resource="ru/javabegin/training/web/entity/Groups.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
