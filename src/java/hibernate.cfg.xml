@@ -44,6 +44,9 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.connection.datasource">jdbc/Library</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Ivantanomlette#13</property>
     <mapping resource="ru/javabegin/training/web/entity/Genre.hbm.xml"/>
