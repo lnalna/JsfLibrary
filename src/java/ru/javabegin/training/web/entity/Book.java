@@ -13,6 +13,7 @@ public class Book  implements java.io.Serializable {
      private Long id;
      private Author author;
      private Genre genre;
+     private Publisher publisher;
      private String name;
      private byte[] content;
      private int pageCount;
@@ -27,28 +28,27 @@ public class Book  implements java.io.Serializable {
     }
 
 	
-    public Book(Author author, Genre genre, String name, byte[] content, int pageCount, String isbn, int publishYear, long publisherId) {
+    public Book(Author author, Genre genre, Publisher publisher, String name, int pageCount, String isbn, int publishYear) {
         this.author = author;
         this.genre = genre;
+        this.publisher = publisher;
+        this.name = name;
+        this.pageCount = pageCount;
+        this.isbn = isbn;
+        this.publishYear = publishYear;        
+    }
+    
+    public Book(Author author, Genre genre, Publisher publisher, String name, byte[] content, int pageCount, String isbn, int publishYear, byte[] image, String description) {
+        this.author = author;
+        this.genre = genre;
+        this.publisher = publisher;
         this.name = name;
         this.content = content;
         this.pageCount = pageCount;
         this.isbn = isbn;
         this.publishYear = publishYear;
-        this.publisherId = publisherId;
-    }
-    public Book(Author author, Genre genre, String name, byte[] content, int pageCount, String isbn, int publishYear, long publisherId, byte[] image, String description, String bookcol) {
-       this.author = author;
-       this.genre = genre;
-       this.name = name;
-       this.content = content;
-       this.pageCount = pageCount;
-       this.isbn = isbn;
-       this.publishYear = publishYear;
-       this.publisherId = publisherId;
-       this.image = image;
-       this.description = description;
-       this.bookcol = bookcol;
+        this.image = image;
+        this.description = description;
     }
    
     public Long getId() {
@@ -72,6 +72,15 @@ public class Book  implements java.io.Serializable {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+    
+    public Publisher getPublisher() {
+        return this.publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+    
     public String getName() {
         return this.name;
     }
@@ -140,7 +149,7 @@ public class Book  implements java.io.Serializable {
         this.edit = edit;
     }
     
-    public boolean getEdit(){
+    public boolean isEdit(){
         return edit;
     }
 
