@@ -9,6 +9,7 @@ package ru.javabegin.training.web.entity;
 public class Book  implements java.io.Serializable {
 
 
+     private boolean edit;
      private Long id;
      private Author author;
      private Genre genre;
@@ -135,7 +136,13 @@ public class Book  implements java.io.Serializable {
         this.bookcol = bookcol;
     }
 
-
+    public void setEdit(boolean edit){
+        this.edit = edit;
+    }
+    
+    public boolean getEdit(){
+        return edit;
+    }
 
 
 }
