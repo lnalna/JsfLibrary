@@ -139,7 +139,7 @@
             </ui:define>
                 
                <ui:define name="paginator" >
-                   <h:form>          
+                   <h:form rendered="false">          
                        
                        <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.booksCountOnPage}"
                                         valueChangeListener="#{bookListController.changeBooksCountOnPage}">
