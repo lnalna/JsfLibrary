@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ru.javabegin.training.web.filters;
 
 import java.io.IOException;
@@ -20,19 +24,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.http.HttpSession;
+import org.hibernate.SessionFactory;
+import ru.javabegin.training.web.entity.HibernateUtil;
 
-@WebFilter(filterName= "CheckSessionFilter", 
-urlPatterns= "/pages/*")
-public class CheckSessionFilter implements Filter {
+@WebFilter(filterName = "HibernateSession",
+urlPatterns = "/*")
+public class HibernateSession implements Filter {
 
+    private SessionFactory sessionFactory;
     private static final boolean debug = false;
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public CheckSessionFilter() {
+    public HibernateSession() {
     }
 
     private void doBeforeProcessing(RequestWrapper request, ResponseWrapper response)
@@ -40,7 +46,6 @@ public class CheckSessionFilter implements Filter {
         if (debug) {
             log("CheckSessionFilter:DoBeforeProcessing");
         }
-
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
 
@@ -128,49 +133,53 @@ public class CheckSessionFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
 
-        if (debug) {
-            log("CheckSessionFilter:doFilter()");
-        }
 
-        // Create wrappers for the request and response objects.
-        // Using these, you can extend the capabilities of the
-        // request and response, for example, allow setting parameters
-        // on the request before sending the request to the rest of the filter chain,
-        // or keep track of the cookies that are set on the response.
-        //
-        // Caveat: some servers do not handle wrappers very well for forward or
-        // include requests.
         RequestWrapper wrappedRequest = new RequestWrapper((HttpServletRequest) request);
         ResponseWrapper wrappedResponse = new ResponseWrapper((HttpServletResponse) response);
+        System.out.println("open session for " + wrappedRequest.getRequestURI());
+        sessionFactory.getCurrentSession().beginTransaction();
+        try {
 
-        doBeforeProcessing(wrappedRequest, wrappedResponse);
+            if (debug) {
+                log("CheckSessionFilter:doFilter()");
+            }
 
-        Throwable problem = null;
 
-        HttpSession session = wrappedRequest.getSession(false);
-        if (session == null || session.isNew()){                
-            wrappedResponse.sendRedirect(wrappedRequest.getContextPath() + "/index.xhtml");
-        } else {
+
+            doBeforeProcessing(wrappedRequest, wrappedResponse);
+
+
             chain.doFilter(wrappedRequest, wrappedResponse);
-        }
 
-        doAfterProcessing(wrappedRequest, wrappedResponse);
+            Throwable problem = null;
 
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
+            doAfterProcessing(wrappedRequest, wrappedResponse);
+
+
+            sessionFactory.getCurrentSession().getTransaction().commit();
+            System.out.println("close session for " + wrappedRequest.getRequestURI());
+
+            // If there was a problem, we want to rethrow it if it is
+            // a known type, otherwise log it.
+            if (problem != null) {
+                if (problem instanceof ServletException) {
+                    throw (ServletException) problem;
+                }
+                if (problem instanceof IOException) {
+                    throw (IOException) problem;
+                }
+                sendProcessingError(problem, response);
             }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
+                sessionFactory.getCurrentSession().getTransaction().rollback();
             }
-            sendProcessingError(problem, response);
         }
     }
 
@@ -200,6 +209,7 @@ public class CheckSessionFilter implements Filter {
      * Init method for this filter
      */
     public void init(FilterConfig filterConfig) {
+        sessionFactory = HibernateUtil.getSessionFactory();
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
@@ -216,7 +226,7 @@ public class CheckSessionFilter implements Filter {
         if (filterConfig == null) {
             return ("CheckSessionFilter()");
         }
-        StringBuffer sb = new StringBuffer("CheckSessionFilter(");
+        StringBuilder sb = new StringBuilder("CheckSessionFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
