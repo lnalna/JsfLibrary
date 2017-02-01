@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.javabegin.training.web.controllers.BookListController;
+import ru.javabegin.training.web.db.DataHelper;
 
 @WebServlet(name = "PdfContent",
 urlPatterns = {"/PdfContent"})
@@ -28,9 +29,9 @@ public class PdfContent extends HttpServlet {
         response.setContentType("application/pdf");
         OutputStream out = response.getOutputStream();
         try {
-            int id = Integer.valueOf(request.getParameter("id"));
-            BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
-            byte[] content = bookListController.getContent(id);
+            long id = Long.valueOf(request.getParameter("id"));
+            //BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
+            byte[] content = DataHelper.getInstance().getContent(id);
             response.setContentLength(content.length);
             out.write(content);
         } catch (Exception ex) {
