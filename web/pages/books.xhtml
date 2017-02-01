@@ -26,7 +26,7 @@
                 
                 <h:form id="booksForm">
                     
-                    <h:panelGroup id="admin_tools" rendered="#{request.isUserInRole('admin')}">
+                    <h:panelGroup id="admin_tools" rendered="#{request.isUserInRole('admin')}" >
                         
                         <h:commandLink rendered="#{!bookListController.editModeView}">
                             <h:graphicImage library="images" name="add.jpg"/>
@@ -84,7 +84,7 @@
                             </p>
                             <p>
                                     <h:panelGroup rendered="#{b.edit}">
-                                        <strong>#{msg.genre}: </strong>                                    
+                                        <strong>#{msg.genres}: </strong>                                    
                                         <h:selectOneMenu  value="#{b.genre}" converter="#{genreController}">
                                             <f:selectItems value="${genreController.selectItems}"/>
                                         </h:selectOneMenu>
@@ -121,10 +121,10 @@
                                               target="_blank">#{msg.read}
                                     </h:outputLink>
                                 
-                                    <h:graphicImage library="images" name="download.png"/>
+                                    
                                 
                                     <h:outputLink styleClass="save_link" value="#{request.contextPath}/SavePdf" target="_blank">
-                                
+                                        <h:graphicImage library="images" name="download.png"/>
                                         <h:outputText value="#{msg.download}"/>
                                         <f:param name="id" value="#{b.id}"/>
                                         <f:param name="filename" value="#{b.name}"/>
