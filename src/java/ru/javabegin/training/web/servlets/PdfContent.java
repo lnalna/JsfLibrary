@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ru.javabegin.training.web.controllers.BookListController;
+//import ru.javabegin.training.web.controllers.BookListController;
 import ru.javabegin.training.web.db.DataHelper;
 
 @WebServlet(name = "PdfContent",
