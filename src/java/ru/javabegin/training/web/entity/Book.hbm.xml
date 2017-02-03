@@ -14,7 +14,9 @@
         <many-to-one name="genre" class="ru.javabegin.training.web.entity.Genre" fetch="join">
             <column name="genre_id" not-null="true" />
         </many-to-one>
-        
+        <many-to-one name="publisher" class="ru.javabegin.training.web.entity.Publisher" fetch="join">
+            <column name="publisher_id" not-null="true" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" length="45" not-null="true" />
         </property>
@@ -30,9 +32,7 @@
         <property name="publishYear" type="int">
             <column name="publish_year" not-null="true" />
         </property>
-        <property name="publisherId" type="long">
-            <column name="publisher_id" not-null="true" />
-        </property>
+        
         <property name="image" type="binary">
             <column name="image" />
         </property>
