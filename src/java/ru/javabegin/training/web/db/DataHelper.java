@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 import ru.javabegin.training.web.entity.Author;
 import ru.javabegin.training.web.entity.Book;
 import ru.javabegin.training.web.entity.Genre;
+import ru.javabegin.training.web.entity.Publisher;
 
 /**
  *
@@ -49,6 +50,10 @@ public class DataHelper {
     
     public List<Author> getAllAuthors(){
         return getSession().createCriteria(Author.class).list();
+    }
+    
+    public List<Publisher> getAllPublishers(){
+        return getSession().createCriteria(Publisher.class).list();
     }
     
     public List<Book> getBooksByGenre(Long genreId){
