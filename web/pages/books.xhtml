@@ -14,7 +14,7 @@
         <ui:composition template="/templates/library_template.xhtml">
             
             <ui:define name="books_count">
-                <h:outputText value="#{msg.book_count} #{bookListController.currentBookList.size()}" id="booksCount"/>
+                <h:outputText value="#{msg.book_count} #{bookListController.pager.totalBooksCount}" id="booksCount"/>
             </ui:define>  
             
             <ui:define name="title">
@@ -155,9 +155,9 @@
             </ui:define>
                 
                <ui:define name="paginator" >
-                   <h:form rendered="false">          
+                   <h:form rendered="#{bookListController.pager.totalBooksCount>0}">          
                        
-                       <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.booksCountOnPage}"
+                       <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.pager.booksCountOnPage}"
                                         valueChangeListener="#{bookListController.changeBooksCountOnPage}">
                            <f:selectItem itemValue="1"/>
                            <f:selectItem itemValue="2"/>
@@ -172,12 +172,12 @@
                        
                         #{msg.pager}
                         
-                        <ui:repeat value="#{bookListController.pageNumbers}" var="pageNumber">
+                        <ui:repeat value="#{bookListController.pager.pageNumbers}" var="pageNumber">
                             
                             
-                            <h:outputText value="#{pageNumber}" rendered="#{pageNumber == bookListController.selectedPageNumber}" styleClass="selected_page"/>
+                            <h:outputText value="#{pageNumber}" rendered="#{pageNumber == bookListController.pager.selectedPageNumber}" styleClass="selected_page"/>
                             
-                            <h:commandLink value="#{pageNumber}" rendered="#{pageNumber != bookListController.selectedPageNumber}" styleClass="page_number">
+                            <h:commandLink value="#{pageNumber}" rendered="#{pageNumber != bookListController.pager.selectedPageNumber}" styleClass="page_number">
                                 <f:param name="page_number" value="#{pageNumber}"/>
                                 <f:ajax onevent="showProgress" event="click" render=":genresList booksForm:booksList :lettersForm :pages1 
                                         :pages2 :booksCount" listener="#{bookListController.selectPage()}"/>

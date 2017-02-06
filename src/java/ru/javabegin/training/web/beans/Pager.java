@@ -12,12 +12,13 @@ import java.util.ArrayList;
 /**
  *
  * @author nik
+ * @param <T>
  */
 public class Pager<T> {
     
     private int selectedPageNumber = 1;
     private int booksCountOnPage = 5;
-    private int totalBooksCount;
+    private Long totalBooksCount;
     
     private List<T> list;
     
@@ -37,11 +38,11 @@ public class Pager<T> {
         this.list = list;
     }
     
-    public void setTotalBooksCount(int totalBooksCount){
+    public void setTotalBooksCount(Long totalBooksCount){
         this.totalBooksCount = totalBooksCount;
     }
     
-    public int getTotalBooksCount(){
+    public Long getTotalBooksCount(){
         return totalBooksCount;
     }
     
