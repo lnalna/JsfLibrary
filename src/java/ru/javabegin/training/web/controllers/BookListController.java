@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.event.ValueChangeEvent;
 import ru.javabegin.training.web.db.DataHelper;
+import ru.javabegin.training.web.beans.Pager;
+
 
 
 
@@ -48,21 +50,25 @@ public class BookListController implements Serializable{
     //отображение режима редактирования
     private boolean editModeView;
     
+    //номер строки (номер книги в списке книг)
+    private transient int row = -1;
+    
+    private Pager<Book> pager = new Pager<Book>();
+    
     
     public BookListController(){
         fillBooksAll();       
     }
     
-    private void submitValues(Character selectedLetter, long selectedPageNumber, long selectedGenreId, boolean requestFromPager ) {
+    private void submitValues(Character selectedLetter, int selectedPageNumber, long selectedGenreId) {
         this.selectedLetter = selectedLetter;
-        this.selectedPageNumber = selectedPageNumber;
-        this.selectedGenreId = selectedGenreId;
-        this.pageSelected = requestFromPager;
+        pager.setSelectedPageNumber(selectedPageNumber);
+        this.selectedGenreId = selectedGenreId;        
     }
     
     //<editor-fold defaultstate="collapsed" desc="поиск всех книг fillBooksAll">
     private void fillBooksAll(){
-        currentBookList = DataHelper.getInstance().getAllBooks();
+        DataHelper.getInstance().getAllBooks(pager);
     }
 //</editor-fold>
     
@@ -70,14 +76,15 @@ public class BookListController implements Serializable{
     
     public String fillBooksByGenre(){
         
+        row = -1;
         //imitateLoading();
         
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         selectedGenreId = Long.valueOf(params.get("genre_id"));
         
-        submitValues(' ', 1, selectedGenreId, false);
-        currentBookList = DataHelper.getInstance().getBooksByGenre(selectedGenreId);
+        submitValues(' ', 1, selectedGenreId);
+        DataHelper.getInstance().getBooksByGenre(selectedGenreId, pager);
         
         return "books";
     }
@@ -87,14 +94,15 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public String fillBooksByLetter() {
         
+        row = -1;
         //imitateLoading();
         
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
         
-        submitValues(selectedLetter, 1, -1, false);
+        submitValues(selectedLetter, 1, -1);
         
-        currentBookList = DataHelper.getInstance().getBooksByLetter(selectedLetter);
+        DataHelper.getInstance().getBooksByLetter(selectedLetter, pager);
         
         return "books";        
     }
@@ -104,9 +112,10 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public String fillBooksBySearch(){
         
+        row = -1;
       //  imitateLoading();
         
-        submitValues(' ', 1, -1, false);
+        submitValues(' ', 1, -1);
         
         if (currentSearchString.trim().length() == 0){
             fillBooksAll();
@@ -115,9 +124,9 @@ public class BookListController implements Serializable{
         
         
         if (selectedSearchType == SearchType.AUTHOR) {
-            currentBookList = DataHelper.getInstance().getBooksByAuthor(currentSearchString);            
+            DataHelper.getInstance().getBooksByAuthor(currentSearchString, pager);            
         } else if (selectedSearchType == SearchType.TITLE) {
-            currentBookList = DataHelper.getInstance().getBooksByName(currentSearchString);
+            DataHelper.getInstance().getBooksByName(currentSearchString, pager);
         }
         
         return "books";
@@ -143,7 +152,7 @@ public class BookListController implements Serializable{
     
     public void cancelEditModeView(){
         editModeView = false;
-        for(Book book : currentBookList){
+        for(Book book : pager.getList()){
             book.setEdit(false);
         }
         
@@ -179,6 +188,11 @@ public class BookListController implements Serializable{
   //      booksCountOnPage = Integer.parseInt(e.getNewValue().toString());
   //      selectedPageNumber = 1;
   //      fillBooksBySQL(currentSqlNoLimit);
+        row = -1;
+        cancelEditModeView();
+        pager.setBooksCountOnPage(Integer.valueOf(e.getNewValue().toString()).intValue());
+        pager.setSelectedPageNumber(1);
+        DataHelper.getInstance().runCurrentCriteria();
     }
     
     private void fillPageNumbers(long totalBooksCount, int booksCountOnPage) {
@@ -202,7 +216,10 @@ public class BookListController implements Serializable{
 //</editor-fold>
         
     
-
+public int getRow(){
+    row +=1;
+    return row;
+}
     
     
     
@@ -220,6 +237,12 @@ public class BookListController implements Serializable{
    //     selectedPageNumber = Integer.valueOf(params.get("page_number"));
    //     pageSelected = true;
    //     fillBooksBySQL(currentSqlNoLimit);
+        
+        row = -1;
+        cancelEditModeView();
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
+        DataHelper.getInstance().runCurrentCriteria();
     }
     
 //<editor-fold defaultstate="collapsed" desc="получение контента из таблицы  library.book  метод getContent ">
@@ -328,6 +351,8 @@ public class BookListController implements Serializable{
     }
     
     
+    
+    
     public List<Book> getCurrentBookList(){
         return currentBookList;
     }
@@ -395,6 +420,10 @@ public class BookListController implements Serializable{
 
     public void setSelectedAuthorId(Long selectedAuthorId) {
         this.selectedAuthorId = selectedAuthorId;
+    }
+    
+    public Pager getPager(){
+        return pager;
     }
     
 //</editor-fold>
