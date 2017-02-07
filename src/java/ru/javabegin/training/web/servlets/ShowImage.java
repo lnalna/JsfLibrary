@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ru.javabegin.training.web.controllers.BookListController;
-//import ru.javabegin.training.web.db.DataHelper;
+import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.entity.Book;
 
 @WebServlet(name = "ShowImage",
@@ -33,18 +33,18 @@ public class ShowImage extends HttpServlet{
         OutputStream out = response.getOutputStream();
         
         try{
-            int index = Integer.valueOf(request.getParameter("index"));
+            long id = Integer.valueOf(request.getParameter("id"));
             
-            BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
+            //BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
             
-            byte[] image = ((Book)bookListController.getPager().getList().get(index)).getImage();
+            byte[] image = DataHelper.getInstance().getImage(id);
             response.setContentLength(image.length);
             out.write(image);
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
             out.close();
-        }
+}
         
     }
     

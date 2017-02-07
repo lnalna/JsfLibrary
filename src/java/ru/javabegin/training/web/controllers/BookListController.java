@@ -33,7 +33,7 @@ public class BookListController implements Serializable{
     private boolean editModeView;
     
     //номер строки (номер книги в списке книг)
-    private transient int row = -1;
+  //  private transient int row = -1;
     
   
     
@@ -58,7 +58,7 @@ public class BookListController implements Serializable{
     
     public String fillBooksByGenre(){
         
-        row = -1;
+    //    row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
@@ -75,7 +75,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public String fillBooksByLetter() {
         
-        row = -1;
+      //  row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
@@ -92,7 +92,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public String fillBooksBySearch(){
         
-        row = -1;
+      //  row = -1;
              
         submitValues(' ', 1, -1);
         
@@ -126,7 +126,7 @@ public class BookListController implements Serializable{
     }
     
     public void showEditModeView(){
-//        row=-1;
+     //   row=-1;
         editModeView = true;
     }
     
@@ -168,7 +168,7 @@ public class BookListController implements Serializable{
   //      booksCountOnPage = Integer.parseInt(e.getNewValue().toString());
   //      selectedPageNumber = 1;
   //      fillBooksBySQL(currentSqlNoLimit);
-        row = -1;
+    //    row = -1;
         cancelEditModeView();
         pager.setBooksCountOnPage(Integer.parseInt(e.getNewValue().toString()));
         pager.setSelectedPageNumber(1);
@@ -178,17 +178,17 @@ public class BookListController implements Serializable{
     
 //</editor-fold>
         public void selectPage() {
-        row = -1;
+    //    row = -1;
         cancelEditModeView();
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
         DataHelper.getInstance().runCurrentCriteria();
     }
-    
+/*    
 public int getRow(){
     row +=1;
     return row;
-}
+}*/
    
     
 //<editor-fold defaultstate="collapsed" desc="геттеры и сеттеры">

@@ -29,7 +29,7 @@ import org.hibernate.SessionFactory;
 import ru.javabegin.training.web.entity.HibernateUtil;
 
 @WebFilter(filterName = "HibernateSession",
-urlPatterns = {"/pages/*", "/PdfContent", "/SavePdf"})
+urlPatterns = {"/pages/*", "/PdfContent", "/SavePdf", "/ShowImage"})
 public class HibernateSession implements Filter {
 
     private SessionFactory sessionFactory;

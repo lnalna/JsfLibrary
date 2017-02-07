@@ -138,9 +138,16 @@ public class DataHelper {
         runCurrentCriteria();
     }
     
-   public byte[] getContent(Long id) {
+   public byte[] getContent(long id) {
         Criteria criteria = getSession().createCriteria(Book.class);
         criteria.setProjection(Property.forName("content"));
+        criteria.add(Restrictions.eq("id", id));
+        return (byte[]) criteria.uniqueResult();
+    }
+   
+   public byte[] getImage(long id) {
+        Criteria criteria = getSession().createCriteria(Book.class);
+        criteria.setProjection(Property.forName("image"));
         criteria.add(Restrictions.eq("id", id));
         return (byte[]) criteria.uniqueResult();
     }

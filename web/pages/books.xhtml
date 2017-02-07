@@ -56,9 +56,8 @@
                   col2, col3">
                     
                     <h:column>
-                        <h:outputLink  styleClass ="content_link" value="#{request.contextPath}/PdfContent" target="_blank">
-                            <h:graphicImage value="/ShowImage?index=#{bookListController.row}" width="160" height="220"/>
-                            <f:param name="id" value="#{b.id}"/>
+                        <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
+                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="160" height="220"/>
                         </h:outputLink>
                     </h:column>
                     

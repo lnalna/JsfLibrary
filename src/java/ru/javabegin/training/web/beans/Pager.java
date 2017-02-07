@@ -61,9 +61,9 @@ public class Pager<T> {
         int pageCount = 0;
 
         if (totalBooksCount % booksCountOnPage == 0) {
-            pageCount = booksCountOnPage > 0 ? (int) (totalBooksCount / booksCountOnPage) : 0;
+            pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage) : 0;
         } else {
-            pageCount = booksCountOnPage > 0 ? (int) (totalBooksCount / booksCountOnPage) + 1 : 0;
+            pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage) + 1 : 0;
         }
 
         pageNumbers.clear();
