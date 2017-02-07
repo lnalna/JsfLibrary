@@ -115,7 +115,9 @@ public class BookListController implements Serializable{
     
     //<editor-fold defaultstate="collapsed" desc="update таблицы library.book  метод updateBooks">
     public void updateBooks(){
-               
+         
+        DataHelper.getInstance().update();
+        
         cancelEditModeView();
         
     }

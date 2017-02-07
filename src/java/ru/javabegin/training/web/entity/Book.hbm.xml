@@ -8,13 +8,13 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="author" class="ru.javabegin.training.web.entity.Author" fetch="join">
+        <many-to-one name="author" class="ru.javabegin.training.web.entity.Author" fetch="join" lazy="false">
             <column name="author_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="genre" class="ru.javabegin.training.web.entity.Genre" fetch="join">
+        <many-to-one name="genre" class="ru.javabegin.training.web.entity.Genre" fetch="join" lazy="false">
             <column name="genre_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="publisher" class="ru.javabegin.training.web.entity.Publisher" fetch="join">
+        <many-to-one name="publisher" class="ru.javabegin.training.web.entity.Publisher" fetch="join" lazy="false">
             <column name="publisher_id" not-null="true" />
         </many-to-one>
         <property name="name" type="string">

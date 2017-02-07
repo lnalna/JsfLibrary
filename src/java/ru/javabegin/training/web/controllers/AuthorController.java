@@ -31,15 +31,21 @@ public class AuthorController implements Serializable, Converter{
     
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
     private Map<Long, Author> authorMap;
+    private List<Author> list;
     
     
     public AuthorController(){
         authorMap = new HashMap<Long, Author>();
+        list = DataHelper.getInstance().getAllAuthors();
         
-        for(Author author : DataHelper.getInstance().getAllAuthors()){
+        for(Author author : list){
             authorMap.put(author.getId(), author);
             selectItems.add(new SelectItem(author, author.getFio()));
         }
+    }
+    
+    public List<Author> getAuthorList(){
+        return list;
     }
     
     public List<SelectItem> getSelectItems(){

@@ -52,7 +52,6 @@ Contributor(s):
     <mapping resource="ru/javabegin/training/web/entity/Genre.hbm.xml"/>
     <mapping resource="ru/javabegin/training/web/entity/Author.hbm.xml"/>
     <mapping resource="ru/javabegin/training/web/entity/Publisher.hbm.xml"/>
-    <mapping resource="ru/javabegin/training/web/entity/Book.hbm.xml"/>
-    <mapping resource="ru/javabegin/training/web/entity/Groups.hbm.xml"/>
+    <mapping resource="ru/javabegin/training/web/entity/Book.hbm.xml"/>    
   </session-factory>
 </hibernate-configuration>

@@ -60,8 +60,10 @@ public class Author  implements java.io.Serializable {
         this.books = books;
     }
 
-
-
+    @Override
+    public boolean equals(Object obj){
+        return id.longValue() == ((Author)obj).getId().longValue();
+    }
 
 }
 
