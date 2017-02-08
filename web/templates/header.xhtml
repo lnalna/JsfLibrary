@@ -39,10 +39,9 @@
                         <f:ajax event="change"/>
                     </h:inputText>
                     
-                    <h:commandButton value="#{msg.search}" styleClass="search_button" >
+                    <h:commandButton value="#{msg.search}" styleClass="search_button" action="#{bookListController.fillBooksBySearch()}">
                         
-                        <f:ajax onevent="showProgress" execute="@form" render=":genresList booksForm:booksList @form :lettersForm :pages1
-                                :pages2 :booksCount" listener="#{bookListController.fillBooksBySearch()}"/>
+                        
                     </h:commandButton>
                 </h:form>    
                 <h:form styleClass="search_type">    

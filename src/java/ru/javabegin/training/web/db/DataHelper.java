@@ -120,9 +120,11 @@ public class DataHelper {
     
     public void getBooksByAuthor(String authorName, Pager pager) {
         currentPager = pager;
+            
         
         Criterion criterion = Restrictions.ilike("author.fio", authorName, MatchMode.ANYWHERE);
 
+        
         createBooksCountCriteria(criterion);
         runCountCriteria();
         
