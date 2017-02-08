@@ -30,22 +30,22 @@ public class AuthorController implements Serializable, Converter{
     
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
     private Map<Long, Author> authorMap;
-    private List<Author> list;
+    private List<Author> authorList;
     
     
     public AuthorController(){
         authorMap = new HashMap<Long, Author>();
-        list = DataHelper.getInstance().getAllAuthors();
-        Collections.sort(list, ListComparator.getInstance());
+        authorList = DataHelper.getInstance().getAllAuthors();
+        Collections.sort(authorList, ListComparator.getInstance());
         
-        for(Author author : list){
+        for(Author author : authorList){
             authorMap.put(author.getId(), author);
             selectItems.add(new SelectItem(author, author.getFio()));
         }
     }
     
     public List<Author> getAuthorList(){
-        return list;
+        return authorList;
     }
     
     public List<SelectItem> getSelectItems(){

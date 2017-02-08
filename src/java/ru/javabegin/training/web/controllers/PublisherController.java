@@ -12,28 +12,28 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
-import ru.javabegin.training.web.db.DataHelper;
-import ru.javabegin.training.web.entity.Genre;
 import ru.javabegin.training.web.comparators.ListComparator;
-
+import ru.javabegin.training.web.db.DataHelper;
+import ru.javabegin.training.web.entity.Publisher;
 
 @ManagedBean(eager = false)
 @ApplicationScoped
-public class GenreController implements Serializable, Converter {
+public class PublisherController implements Serializable, Converter {
 
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
-    private Map<Long, Genre> genreMap;
-    private List<Genre> genreList;
+    private Map<Long, Publisher> publisherMap;
+    private List<Publisher> publisherList;
 
-    public GenreController() {
+    public PublisherController() {
 
-        genreMap = new HashMap<Long, Genre>();
-        genreList = DataHelper.getInstance().getAllGenres();
-        Collections.sort(genreList, ListComparator.getInstance());
+        publisherMap = new HashMap<Long, Publisher>();
+        publisherList = DataHelper.getInstance().getAllPublishers();
+        
+        Collections.sort(publisherList, ListComparator.getInstance());
 
-        for (Genre genre : genreList) {
-            genreMap.put(genre.getId(), genre);
-            selectItems.add(new SelectItem(genre, genre.getName()));
+        for (Publisher publisher : publisherList) {
+            publisherMap.put(publisher.getId(), publisher);
+            selectItems.add(new SelectItem(publisher, publisher.getName()));
         }
 
     }
@@ -42,18 +42,17 @@ public class GenreController implements Serializable, Converter {
         return selectItems;
     }
 
-    // 
-    public List<Genre> getGenreList() {
-        return genreList;
+    public List<Publisher> getPublisherList() {
+        return publisherList;
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return genreMap.get(Long.valueOf(value));
+        return publisherMap.get(Long.valueOf(value));
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Genre) value).getId().toString();
+        return ((Publisher)value).getId().toString();
     }
 }

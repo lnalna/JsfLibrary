@@ -28,27 +28,30 @@
                     
                     <h:panelGroup id="admin_tools" rendered="#{request.isUserInRole('admin')}" >
                         
+                            
                         <h:commandLink rendered="#{!bookListController.editModeView}">
                             <h:graphicImage library="images" name="add.jpg"/>
-                            <h:outputText value="#{msg.add_book}"/>
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>                        
+                            <h:outputText value="#{msg.add_book}"/> 
+                            
                         </h:commandLink>
                         
-                        <h:commandLink action="#{bookListController.showEditModeView()}" rendered="#{!bookListController.editModeView}">
+                        <h:commandLink action="#{bookListController.showEditModeView()}" rendered="#{!bookListController.editModeView}" >
+                                                 
                             <h:graphicImage library="images" name="edit.jpg"/>
-                            <h:outputText value="#{msg.edit}"/>
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>
+                            <h:outputText value="#{msg.edit}"/>                            
+                             
                         </h:commandLink>
                         
                         <h:commandButton action="#{bookListController.updateBooks}" 
                                          rendered="#{bookListController.editModeView}" value="#{msg.Save}">
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>
+                             
                         </h:commandButton>
-                        
+                                              
                         <h:commandButton immediate="true" action="#{bookListController.cancelEditModeView()}"
                                          rendered="#{bookListController.editModeView}" value="#{msg.Cancel}">
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>
+                            
                         </h:commandButton>
+                             
                         
                     </h:panelGroup>
                                     
@@ -98,11 +101,17 @@
                                     <h:inputText value="#{b.pageCount}" styleClass="pages_edit" rendered="#{b.edit}"/>
                                 </p>
                             <p>
+                                <h:panelGroup rendered="#{b.edit}">
                                     <strong>#{msg.publisher}</strong> 
-                                    <h:outputText value="#{b.publisher.name}" rendered="#{!b.edit}"/>
-
-
-                                </p>
+                                    <h:selectOneMenu value="#{b.publisher}" converter="#{publisherController}">
+                                        <f:selectItems value="${publisherController.selectItems}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </p>
+                            <p>
+                                <strong>#{msg.publisher}</strong>
+                                <h:outputText value="#{b.publisher.name}" rendered="#{!b.edit}"/>
+                            </p>
                             <p>
                                     <strong>#{msg.publish_year}</strong> 
                                     <h:outputText value="#{b.publishYear} г." rendered="#{!b.edit}"/>
