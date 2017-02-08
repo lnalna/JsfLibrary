@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
 import ru.javabegin.training.web.entity.Author;
 import ru.javabegin.training.web.db.DataHelper;
+import ru.javabegin.training.web.comparators.ListComparator;
 
 
-/**
- *
- * @author nik
- */
 
 @ManagedBean(eager = false)
 @ApplicationScoped
@@ -37,6 +36,7 @@ public class AuthorController implements Serializable, Converter{
     public AuthorController(){
         authorMap = new HashMap<Long, Author>();
         list = DataHelper.getInstance().getAllAuthors();
+        Collections.sort(list, ListComparator.getInstance());
         
         for(Author author : list){
             authorMap.put(author.getId(), author);
