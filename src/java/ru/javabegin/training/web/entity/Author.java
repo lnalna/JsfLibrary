@@ -63,16 +63,13 @@ public class Author  implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 13 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (obj == null) {
             return false;
         }
@@ -80,7 +77,7 @@ public class Author  implements java.io.Serializable {
             return false;
         }
         final Author other = (Author) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;
