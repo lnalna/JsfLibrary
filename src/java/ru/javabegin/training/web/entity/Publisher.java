@@ -73,6 +73,13 @@ public class Publisher  implements java.io.Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
+
 }
 
 

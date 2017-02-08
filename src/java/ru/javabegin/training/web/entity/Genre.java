@@ -3,6 +3,7 @@ package ru.javabegin.training.web.entity;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -70,6 +71,13 @@ public class Genre  implements java.io.Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
 
 
 }
