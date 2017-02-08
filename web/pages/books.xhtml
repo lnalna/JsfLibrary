@@ -32,24 +32,24 @@
                         <h:commandLink rendered="#{!bookListController.editModeView}">
                             <h:graphicImage library="images" name="add.jpg"/>
                             <h:outputText value="#{msg.add_book}"/> 
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/> 
+                            
                         </h:commandLink>
                         
                         <h:commandLink action="#{bookListController.showEditModeView()}" rendered="#{!bookListController.editModeView}" >
                                                  
                             <h:graphicImage library="images" name="edit.jpg"/>
                             <h:outputText value="#{msg.edit}"/>                            
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/> 
+                             
                         </h:commandLink>
                         
                         <h:commandButton action="#{bookListController.updateBooks}" 
                                          rendered="#{bookListController.editModeView}" value="#{msg.Save}">
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/>  
+                              
                         </h:commandButton>
                                               
                         <h:commandButton immediate="true" action="#{bookListController.cancelEditModeView()}"
                                          rendered="#{bookListController.editModeView}" value="#{msg.Cancel}">
-                            <f:ajax onevent="showProgress" execute="@form" render="@form"/> 
+                            
                         </h:commandButton>
                              
                         

@@ -56,8 +56,9 @@ public class BookListController implements Serializable{
     
     //<editor-fold defaultstate="collapsed" desc="поиск по жанру fillBooksByGenre">
     
-    public String fillBooksByGenre(){
+    public void fillBooksByGenre(){
         
+        cancelEditModeView();
     //    row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -65,16 +66,16 @@ public class BookListController implements Serializable{
         selectedGenreId = Long.valueOf(params.get("genre_id"));
         
         submitValues(' ', 1, selectedGenreId);
-        DataHelper.getInstance().getBooksByGenre(selectedGenreId, pager);
-        
-        return "books";
+        DataHelper.getInstance().getBooksByGenre(selectedGenreId, pager);       
+       
     }
 //</editor-fold>
     
     
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
-    public String fillBooksByLetter() {
+    public void fillBooksByLetter() {
         
+        cancelEditModeView();
       //  row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -83,22 +84,22 @@ public class BookListController implements Serializable{
         submitValues(selectedLetter, 1, -1);
         
         DataHelper.getInstance().getBooksByLetter(selectedLetter, pager);
-        
-        return "books";        
+                
     }
 //</editor-fold>
     
     
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
-    public String fillBooksBySearch(){
-        
+    public void fillBooksBySearch(){
+       
+        cancelEditModeView();
       //  row = -1;
              
         submitValues(' ', 1, -1);
         
         if (currentSearchString.trim().length() == 0){
             fillBooksAll();
-            return "books";
+            
         }
         
         
@@ -108,8 +109,7 @@ public class BookListController implements Serializable{
             DataHelper.getInstance().getBooksByName(currentSearchString, pager);
         }
         
-        return "books";
-        
+            
     }
 //</editor-fold>
     
@@ -119,6 +119,8 @@ public class BookListController implements Serializable{
         DataHelper.getInstance().update();
         
         cancelEditModeView();
+        
+        DataHelper.getInstance().refreshList();
         
     }
 //</editor-fold>
@@ -174,7 +176,7 @@ public class BookListController implements Serializable{
         cancelEditModeView();
         pager.setBooksCountOnPage(Integer.parseInt(e.getNewValue().toString()));
         pager.setSelectedPageNumber(1);
-        DataHelper.getInstance().runCurrentCriteria();
+        DataHelper.getInstance().refreshList();
     }
     
     
@@ -184,7 +186,7 @@ public class BookListController implements Serializable{
         cancelEditModeView();
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         pager.setSelectedPageNumber(Integer.valueOf(params.get("page_number")));
-        DataHelper.getInstance().runCurrentCriteria();
+        DataHelper.getInstance().refreshList();
     }
 /*    
 public int getRow(){
