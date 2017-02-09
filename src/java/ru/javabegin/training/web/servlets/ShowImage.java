@@ -33,6 +33,7 @@ public class ShowImage extends HttpServlet{
         OutputStream out = response.getOutputStream();
         
         try{
+            /*
             long id = Integer.valueOf(request.getParameter("id"));
             
             //BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
@@ -40,6 +41,13 @@ public class ShowImage extends HttpServlet{
             byte[] image = DataHelper.getInstance().getImage(id);
             response.setContentLength(image.length);
             out.write(image);
+*/
+            long index = Integer.valueOf(request.getParameter("index"));
+            BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
+            byte[] image = ((Book)bookListController.getPager().getList().get((int)index)).getImage();
+            response.setContentLength(image.length);
+            out.write(image);
+            
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {

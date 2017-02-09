@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.javabegin.training.web.beans;
 
 
@@ -15,7 +10,11 @@ public class Pager {
     
     private static Pager pager;
     
-    //private int rowIndex;
+    private int rowIndex;
+    
+    private Pager(){
+        
+    }
     
     public static Pager getInstance(){
         if (pager == null){
@@ -52,7 +51,7 @@ public class Pager {
     }
     
     public void setList(List<Book> list){
-        //rowIndex = -1;
+        rowIndex = -1;
         this.list = list;
         
     }
@@ -73,16 +72,16 @@ public class Pager {
         this.selectedBook = selectedBook;
     }
     
-    /*
+    
     public int getRowIndex(){
         rowIndex+=1;
         return rowIndex;
-    }*/
+    }
     
-    /*
+    
     public void setRowIndex(int rowIndex){
         this.rowIndex = rowIndex;
-    }*/
+    }
     
     
 }

@@ -101,8 +101,8 @@ public class DataHelper {
         
         Criterion criterion = Restrictions.ilike("b.name", letter.toString(), MatchMode.START);
 
-       prepareCriterias(criterion);
-        populateList();
+         prepareCriterias(criterion);
+         populateList();
     }
     
     public void getBooksByAuthor(String authorName) {

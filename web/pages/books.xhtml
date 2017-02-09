@@ -62,14 +62,16 @@
                                   paginatorAlwaysVisible="false" emptyMessage="">
                     
                         <p:column styleClass="col1">
-                        <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
-                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="160" height="220"/>
-                        </h:outputLink>
+                            
+                            <h:outputLink styleClass="content_link" value="#{request.contextPath}/PdfContent" target="_blank">
+                                <h:graphicImage value="/ShowImage?index=#{bookListController.pager.rowIndex}" width="160" height="220"/>
+                                <f:param name="id" value="#{b.id}"/>
+                            </h:outputLink>
                         </p:column>
                     
                         <p:column styleClass="col2">
                         
-                        <div>
+                          <div>
                             <p>
                                 <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank" rendered="#{!b.edit}">
                                     <h:outputText value="#{b.name}"/>                                        
