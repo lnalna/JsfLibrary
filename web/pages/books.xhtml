@@ -56,7 +56,7 @@
                         
                     </h:panelGroup>
                                     
-                    <p:dataTable  lazy="true" var="b" value="#{bookListController.bookListModel}" id="bookList" styleClass="books_list"
+                    <p:dataTable  lazy="true" var="b" value="#{bookListController.bookListModel}" id="bookList" rowIndexVar="rowIndex" styleClass="books_list"
                                   paginator="true" rows="5" rowsPerPageTemplate="5,10,15" 
                                   paginatorTemplate="{RowsPerPageDropdown} {PageLinks}" 
                                   paginatorAlwaysVisible="false" emptyMessage="">
