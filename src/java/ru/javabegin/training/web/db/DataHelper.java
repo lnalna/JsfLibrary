@@ -34,6 +34,7 @@ public class DataHelper {
     private static DataHelper dataHelper;
     private DetachedCriteria bookListCriteria;
     private DetachedCriteria booksCountCriteria;
+    private DetachedCriteria currentCriteria;
     private Pager currentPager;
     private ProjectionList bookProjection;
     
@@ -119,17 +120,18 @@ public class DataHelper {
     }
     
     public void getBooksByAuthor(String authorName, Pager pager) {
-        currentPager = pager;
-            
+        currentPager = pager;            
         
         Criterion criterion = Restrictions.ilike("author.fio", authorName, MatchMode.ANYWHERE);
 
+        Criteria criteria = getSession().createCriteria(Book.class, "book").createAlias("book.author", "author");
+        Long total = (Long) criteria.add(criterion).setProjection(Projections.rowCount()).uniqueResult();
+        currentPager.setTotalBooksCount(total);
         
-        createBooksCountCriteria(criterion);
-        runCountCriteria();
-        
-        createBookListCriteria(criterion);
-        runBookListCriteria();
+        currentCriteria = DetachedCriteria.forClass(Book.class, "book").createAlias("book.author", "author");;
+        currentCriteria.add(criterion);
+
+        runCurrentCriteria();
     }
 
     
@@ -192,6 +194,12 @@ public class DataHelper {
         session.flush();
         session.close();
     }
+    
+    public void runCurrentCriteria() {
+        Criteria criteria = currentCriteria.addOrder(Order.asc("name")).getExecutableCriteria(getSession());
+        List<Book> list = criteria.setFirstResult(currentPager.getFrom()).setMaxResults(currentPager.getTo()).list();
+        currentPager.setList(list);
+    } 
     
     private void createBooksCountCriteria(Criterion criterion){
         booksCountCriteria = DetachedCriteria.forClass(Book.class, "b");
