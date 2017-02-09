@@ -7,35 +7,54 @@ package ru.javabegin.training.web.beans;
 
 
 import java.util.List;
-import java.util.ArrayList;
+import ru.javabegin.training.web.entity.Book;
 
-/**
- *
- * @author nik
- * @param <T>
- */
-public class Pager<T> {
+
+
+public class Pager {
     
-    private int selectedPageNumber = 1;
-    private int booksCountOnPage = 5;
+    private static Pager pager;
+    
+    //private int rowIndex;
+    
+    public static Pager getInstance(){
+        if (pager == null){
+            pager = new Pager();
+        }
+        
+        return pager;
+    }
+    
     private Long totalBooksCount;
+    private Book selectedBook;
+    private List<Book> list;
+    private int from;
+    private int to;
     
-    private List<T> list;
     
     public int getFrom(){
-        return selectedPageNumber * booksCountOnPage - booksCountOnPage;
+        return from;
+    }
+    public void setFrom(int from){
+        this.from = from;
     }
     
     public int getTo(){
-        return booksCountOnPage;
+        return to;
     }
     
-    public List<T> getList(){
+    public void setTo(int to){
+        this.to = to;
+    }
+    
+    public List<Book> getList(){
         return list;
     }
     
-    public void setList(List<T> list){
+    public void setList(List<Book> list){
+        //rowIndex = -1;
         this.list = list;
+        
     }
     
     public void setTotalBooksCount(Long totalBooksCount){
@@ -46,41 +65,24 @@ public class Pager<T> {
         return totalBooksCount;
     }
     
-    public void setSelectedPageNumber(int selectedPageNumber){
-        this.selectedPageNumber = selectedPageNumber;
+    public Book getSelectedBook(){
+        return selectedBook;
     }
     
-    public int getSelectedPageNumber(){
-        return selectedPageNumber;
+    public void setSelectedBook(Book selectedBook){
+        this.selectedBook = selectedBook;
     }
     
-    private List<Integer> pageNumbers = new ArrayList<Integer>();
+    /*
+    public int getRowIndex(){
+        rowIndex+=1;
+        return rowIndex;
+    }*/
     
-    public List<Integer> getPageNumbers() {// кол-во страниц для постраничности
-
-        int pageCount = 0;
-
-        if (totalBooksCount % booksCountOnPage == 0) {
-            pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage) : 0;
-        } else {
-            pageCount = totalBooksCount > 0 ? (int) (totalBooksCount / booksCountOnPage) + 1 : 0;
-        }
-
-        pageNumbers.clear();
-
-        for (int i = 1; i <= pageCount; i++) {
-            pageNumbers.add(i);
-        }
-
-        return pageNumbers;
-    }
-
-    public int getBooksCountOnPage() {
-        return booksCountOnPage;
-    }
-
-    public void setBooksCountOnPage(int booksCountOnPage) {
-        this.booksCountOnPage = booksCountOnPage;
-    }
+    /*
+    public void setRowIndex(int rowIndex){
+        this.rowIndex = rowIndex;
+    }*/
+    
     
 }
