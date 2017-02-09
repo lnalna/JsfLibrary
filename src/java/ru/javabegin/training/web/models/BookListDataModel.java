@@ -49,7 +49,7 @@ public class BookListDataModel extends LazyDataModel<Book> {
      
         dataHelper.populateList();
 
-        this.setRowCount(pager.getTotalBooksCount());  
+        this.setRowCount((int)pager.getTotalBooksCount());  
         
         return pager.getList();
     }
