@@ -226,4 +226,9 @@ public class DataHelper {
         runCountCriteria();
         runBookListCriteria();
     }
+    
+    public void populateList() {
+        runCountCriteria();
+        runBookListCriteria();
+    }
 }

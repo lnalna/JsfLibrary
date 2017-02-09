@@ -25,7 +25,7 @@ public class Pager {
         return pager;
     }
     
-    private Long totalBooksCount;
+    private int totalBooksCount;
     private Book selectedBook;
     private List<Book> list;
     private int from;
@@ -57,11 +57,11 @@ public class Pager {
         
     }
     
-    public void setTotalBooksCount(Long totalBooksCount){
+    public void setTotalBooksCount(int totalBooksCount){
         this.totalBooksCount = totalBooksCount;
     }
     
-    public Long getTotalBooksCount(){
+    public int getTotalBooksCount(){
         return totalBooksCount;
     }
     
