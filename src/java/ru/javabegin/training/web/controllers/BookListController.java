@@ -53,7 +53,7 @@ public class BookListController implements Serializable{
     }
     
     //<editor-fold defaultstate="collapsed" desc="поиск всех книг fillBooksAll">
-    private void fillBooksAll(){
+    public void fillBooksAll(){
        dataHelper.getAllBooks();
     }
 //</editor-fold>
