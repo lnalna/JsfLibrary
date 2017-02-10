@@ -20,7 +20,7 @@
                         <h:commandLink  value="#{g.name}"  styleClass="#{g.id == bookListController.selectedGenreId ? 'selected_link':''}">                                     
                            
                             <f:param name="genre_id" value="#{g.id}" />
-                            <f:ajax onevent="showProgress" event="click" render="booksForm:admin_tools booksForm:bookList @form :lettersForm 
+                            <f:ajax onevent="showProgress" event="click" render="booksForm:admin_tools booksForm:booksList @form :lettersForm 
                                      :booksCount" listener="#{bookListController.fillBooksByGenre()}"/>
                             
                         </h:commandLink>                   

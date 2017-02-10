@@ -80,7 +80,7 @@ public class BookListController implements Serializable{
     public void fillBooksByLetter() {
         
         cancelEditModeView();
-      //  row = -1;
+        row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
@@ -97,7 +97,7 @@ public class BookListController implements Serializable{
     public void fillBooksBySearch(){
        
         cancelEditModeView();
-      //  row = -1;
+        row = -1;
              
         submitValues(' ', -1);
         
@@ -134,7 +134,7 @@ public class BookListController implements Serializable{
     }
     
     public void showEditModeView(){
-     //   row=-1;
+        row=-1;
         editModeView = true;
     }
     
