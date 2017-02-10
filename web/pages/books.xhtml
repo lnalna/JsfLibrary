@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      >
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -55,16 +55,17 @@
                         
                     </h:panelGroup>
                                     
-                    <h:dataTable id="booksList" value="#{bookListController.pager.list}" var="b" cellspacing="10px" columnClasses="col1,
-                  col2, col3">
+                    <p:dataGrid lazy="true" var="b" value="#{bookListController.pager.list}" id="booksList" rowsPerPageTemplate="1,2,3,5,10"
+ paginatorTemplate="{RowsPerPageDropdown} {PageLinks}"
+ paginator="true" rows="5" columns="4">
                     
-                    <h:column>
-                        <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
-                            <h:graphicImage value="/ShowImage?id=#{b.id}" width="160" height="220"/>
-                        </h:outputLink>
-                    </h:column>
+                        <p:column styleClass="col1">
+                         <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.id}" target="_blank">
+                                <h:graphicImage value="/ShowImage?id=#{b.id}" width="160" height="220"/>
+                            </h:outputLink>
+                        </p:column>
                     
-                    <h:column>
+                        <p:column styleClass="col2">
                         
                         <div>
                             <p>
@@ -142,9 +143,9 @@
                             </p>
                         </div>
                         
-                    </h:column>
+                    </p:column>
                     
-                    <h:column>
+                        <p:column styleClass="col3">
                         <div class="book_details">
                             <p><strong>#{msg.description}</strong></p>
                             <p><h:outputText value="#{b.description}" rendered="#{!b.edit}"/>
@@ -152,51 +153,17 @@
                                 
                             </p>                            
                         </div>
-                    </h:column>
+                    </p:column>
                     
-                    <h:column>
+                    <p:column>
                         <h:selectBooleanCheckbox value="#{b.edit}" rendered="#{!bookListController.editModeView}"/>
-                    </h:column>
+                    </p:column>
                     
-                </h:dataTable>
+                </p:dataGrid>
                 </h:form>
             </ui:define>
                 
-               <ui:define name="paginator" >
-                   <h:form rendered="#{bookListController.pager.totalBooksCount>0}">          
-                       
-                       <h:selectOneMenu styleClass="books_on_page_dropdown" value="#{bookListController.pager.booksCountOnPage}"
-                                        valueChangeListener="#{bookListController.changeBooksCountOnPage}">
-                           <f:selectItem itemValue="1"/>
-                           <f:selectItem itemValue="2"/>
-                           <f:selectItem itemValue="3"/>
-                           <f:selectItem itemValue="4"/>
-                           <f:selectItem itemValue="5"/>
-                           <f:selectItem itemValue="10"/>
-                           <f:selectItem itemValue="15"/>
-                           <f:ajax event="change" execute="@form" onevent="showProgress" 
-                                   render=":booksForm :booksForm:booksList :pages1 :pages2 :genresList :lettersForm"/>
-                       </h:selectOneMenu>
-                       
-                        #{msg.pager}
-                        
-                        <ui:repeat value="#{bookListController.pager.pageNumbers}" var="pageNumber">
-                            
-                            
-                            <h:outputText value="#{pageNumber}" rendered="#{pageNumber == bookListController.pager.selectedPageNumber}" styleClass="selected_page"/>
-                            
-                            <h:commandLink value="#{pageNumber}" rendered="#{pageNumber != bookListController.pager.selectedPageNumber}" styleClass="page_number">
-                                <f:param name="page_number" value="#{pageNumber}"/>
-                                <f:ajax onevent="showProgress" event="click" render=":genresList booksForm:booksList :lettersForm :pages1 
-                                        :pages2 :booksCount" listener="#{bookListController.selectPage()}"/>
-                            </h:commandLink>
-                        </ui:repeat>
-                        
-                        
-                    </h:form>
-
-
-                </ui:define>                
+                              
             
         </ui:composition>
         
