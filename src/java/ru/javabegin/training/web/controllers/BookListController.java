@@ -38,7 +38,7 @@ public class BookListController implements Serializable{
     private boolean editModeView;
     
     //номер строки (номер книги в списке книг)
-  //  private transient int row = -1;
+    private transient int row = -1;
     
   
     
@@ -63,7 +63,7 @@ public class BookListController implements Serializable{
     public void fillBooksByGenre(){
         
         cancelEditModeView();
-    //    row = -1;
+        row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
@@ -169,11 +169,11 @@ public class BookListController implements Serializable{
     
 //</editor-fold>
        
-/*    
+    
 public int getRow(){
     row +=1;
     return row;
-}*/
+}
    
     
 //<editor-fold defaultstate="collapsed" desc="геттеры и сеттеры">

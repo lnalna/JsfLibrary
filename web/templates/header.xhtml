@@ -61,7 +61,7 @@
                          <h:commandLink  value="#{letter}" styleClass="
                                         #{letter == bookListController.selectedLetter ? 'selected_letter':''}">
                              <f:param name="letter" value="#{letter}" />
-                             <f:ajax onevent="showProgress" event="click" render=":genresList booksForm:booksList @form :lettersForm  
+                             <f:ajax onevent="showProgress" event="click" render=":genresList booksForm:bookList @form :lettersForm  
                                       :booksCount" listener="#{bookListController.fillBooksByLetter()}"/>
                          </h:commandLink>
                     
