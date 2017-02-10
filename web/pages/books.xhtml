@@ -79,14 +79,14 @@
                                     <f:param name="id" value="#{b.id}"/>                                  
                                 </h:outputLink>
                                 
-                                <h:inputText value="#{b.name}" styleClass="name_edit" rendered="#{b.edit}"/>
+                                <h:inputText value="#{b.name}" styleClass="name_edit" rendered="#{bookListController.editModeView}"/>
                             </p>       
                             
                             <p>
                                 <strong>#{msg.author_name}: </strong>
                                 <h:outputText value="#{b.author.fio}" rendered="#{!b.edit}"/>
                                 
-                                <h:selectOneMenu rendered="#{b.edit}" value="#{b.author}" converter="#{authorController}">
+                                <h:selectOneMenu rendered="#{bookListController.editModeView}" value="#{b.author}" converter="#{authorController}">
                                         <f:selectItems value="${authorController.selectItems}"/>
                                     </h:selectOneMenu>
                                 
