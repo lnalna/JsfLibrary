@@ -339,6 +339,13 @@ a:hover, a:active, a:focus {
 
 }
 
+.loading_wrapper{
+    width: 100%;
+    display: block;
+    text-align: center;
+    position: fixed;
+    display: none;
+}
 
 #loading_wrapper{
     width: 100%;
@@ -347,6 +354,8 @@ a:hover, a:active, a:focus {
     position: fixed;
     display: none;
 }
+
+
 
 #loading_wrapper p{
     background-color: #fde88e;

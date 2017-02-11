@@ -54,6 +54,7 @@ public class BookListController implements Serializable{
     
     //<editor-fold defaultstate="collapsed" desc="поиск всех книг fillBooksAll">
     public void fillBooksAll(){
+       
        dataHelper.getAllBooks();
     }
 //</editor-fold>
@@ -62,6 +63,7 @@ public class BookListController implements Serializable{
     
     public void fillBooksByGenre(){
         
+        imitateLoading();
         cancelEditModeView();
         row = -1;
                 
@@ -79,6 +81,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public void fillBooksByLetter() {
         
+        imitateLoading();
         cancelEditModeView();
         row = -1;
                 
@@ -96,6 +99,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public void fillBooksBySearch(){
        
+        imitateLoading();
         cancelEditModeView();
         row = -1;
              
@@ -240,6 +244,6 @@ public int getRow(){
     }
     
     public LazyDataModel<Book> getBookListModel(){
-        return bookListModel;
+       return bookListModel;
     }
 }
