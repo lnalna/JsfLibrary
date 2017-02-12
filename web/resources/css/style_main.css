@@ -339,22 +339,33 @@ a:hover, a:active, a:focus {
 
 }
 
- .loading_wrapper{
-    width: 100%;
-    display: block;
-    text-align: center;
-    position: fixed;
+.ui-datatable.books_list .ui-datatable-data tr,
+.ui-datatable.books_list .ui-datatable-data-empty tr,
+.ui-datatable.books_list .ui-datatable-data td,
+.ui-datatable.books_list .ui-datatable-data-empty td {
+    border-style: none;
+    white-space: normal;
+    padding:0;
+    background:none;
+}
+
+.books_list table thead tr {
     display: none;
+}
+
+.ui-datatable.books_list table{
+    border: none;
+    border-collapse: inherit;
+    
 }
 
 #loading_wrapper{
-    width: 100%;
-    display: block;
+    width: 100%;  
     text-align: center;
     position: fixed;
-    display: none;
+    display: block;
+    z-index: 1000;
 }
-
 
 
 #loading_wrapper p{

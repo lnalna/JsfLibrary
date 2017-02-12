@@ -1,0 +1,24 @@
+List of Plugins
+- jQuery UI Core
+- jQuery UI Widget
+- jQuery UI Mouse
+- jQuery UI Draggable
+- jQuery UI Droppable
+- jQuery UI Resizable
+- jQuery UI Selectable
+- jQuery UI Sortable
+- jQuery UI Effects
+- jQuery UI Datepicker
+- jQuery UI Slider
+- jQuery UI Position
+- Timepicker
+- MouseWheel
+- Masked Input
+- Rangy Text
+- Cursor Position
+- Browser
+
+Extensions
+- Added fix to autosize from https://github.com/jackmoore/autosize/issues/225
+- Added fix to timepicker from https://github.com/trentrichardson/jQuery-Timepicker-Addon/issues/848 (line 11548)
+- Added gotoToday selection fix. https://github.com/primefaces/primefaces/issues/1420 (line 14248)
