@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"      
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <f:view locale="#{localChanger.currentLocale}">  
     <h:head>
         <title>#{msg.welcome_title}</title>
@@ -11,6 +12,12 @@
         <h:outputScript library="js" name="library.js" target="head"/>
     </h:head>
     <h:body>
+        
+        
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="style_index.css"/>
+            <h:outputScript library="js" name="library.js" target="head"/>
+        </f:facet>
         
         <noscript>
             <h4><p>Включите JavaScript в вашем браузере, чтобы работать с нашим приложением</p></h4>
@@ -24,59 +31,89 @@
             
         </noscript>
         <div class="main">
-            
-            <div class="content">
-                <p class="title"><h:graphicImage library="images" name="lib.png"/></p>
-                <p class="title">#{msg.index_title}</p>
-            </div>
-            
-            <div class="login_div">
-                <p class="title">#{msg.input_info}</p>
 
-                <h:form styleClass="login_form" id="login_form">
-                    
-                    <table align="left" width="350">
-                        <tr><td width="100" align="left"><span style="color:red;">*</span>#{msg.input_name}</td>
-                            <td width="200"><h:inputText id="username" value="#{user.username}" required="true"
-                                             requiredMessage="#{msg.login_required}">
-                        <!--<f:validator validatorId="ru.javabegin.training.web.validators.LoginValidator"/>-->
-                        <!--<f:ajax event="keyup" render="loginError"/>-->
-                                </h:inputText>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left"><span style="color:red;">*</span> #{msg.input_password}</td>
-                            <td><h:inputSecret id="password" value="#{user.password}" required="true" redisplay="true"
-                                               requiredMessage="#{msg.password_required}">
-                                </h:inputSecret>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="middle">
-                                <h:commandButton action="#{user.login()}" value="#{msg.entry}" styleClass="
-                                             login_button" onclick="return checkValue(this.form, '#{msg.login_required}');">
-                            </h:commandButton>
-                            </td></tr>
-                        <tr><td colspan="2">
-                                <h:message id="loginError" for="login_form" styleClass="error"/>
-                                <h:message id="username_input" for="username" styleClass="error"/>
-                            </td>
-                            <td>                                
-                            </td>
-                        </tr>
-                    </table>  
-                    
-                </h:form>
+
+
                 <ui:include src="/templates/locales.xhtml"/>
 
+                <div class="content">
+                    <p class="title"><h:graphicImage library="images" name="lib.png" /></p>
+                    <p class="title"><h:outputText id="lib_title" value="#{msg.index_title}"/></p>
+                </div>
+
+
+
+
+                <h:panelGroup id="login_div" styleClass="login_div" layout="block">
+
+
+
+                    <h:form styleClass="login_form" id="login_form">
+
+
+
+
+
+                        <p:panelGrid id="grid" columns="3" columnClasses="col1, col2, col3" styleClass="login_grid"> 
+
+                            <span style="color:red;">*</span> #{msg.input_name}
+                            <p:inputText id="input_username" value="#{user.username}" required="true" requiredMessage="#{msg.login_required}"/>
+                            <p:message id="usernameReq" for="input_username" showDetail="true"   display="text"/>
+
+
+
+                            <span style="color:red;">*</span> #{msg.input_password}
+                            <p:password id="input_password" required="true" requiredMessage="#{msg.password_required}" value="#{user.password}" redisplay="true"/>
+                            <p:message id="passwordReq" for="input_password" showDetail="true"   display="text"/>
+
+
+
+
+
+                            <f:facet name="footer" >
+                                <p:panelGrid styleClass="login_button_ajax" columns="2" columnClasses="col1,col2">
+
+
+                                    <p:commandButton id="btnLogin" action="#{user.login()}" value="#{msg.entry}" styleClass="login_button" update="login_form" onclick="this.disabled=true;" oncomplete="this.disabled=
+                                                     true"/>
+
+                                    <p:ajaxStatus id="ajaxStatusPanel">  
+                                        <f:facet name="start">      
+
+                                            <h:graphicImage library="images" name="ajax_loading.gif"/> 
+
+                                        </f:facet>  
+
+                                        <f:facet name="complete">  
+                                            <h:outputText value="" />  
+                                        </f:facet>  
+                                    </p:ajaxStatus>  
+
+
+
+                                </p:panelGrid>
+
+                            </f:facet>
+
+
+
+
+
+                        </p:panelGrid>
+
+                        <p:message id="wrongPass" for="login_form" showDetail="true"   display="text"/>
+
+
+
+
+                    </h:form>
+
+
+
+
+                </h:panelGroup>
+
             </div>
-            
-            <div class="footer">
-                #{msg.author_info}
-            </div>
-            
-        </div>
     </h:body>
 </f:view>
 </html>

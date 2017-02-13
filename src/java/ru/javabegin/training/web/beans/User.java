@@ -1,6 +1,7 @@
 package ru.javabegin.training.web.beans;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -42,16 +43,29 @@ public class User implements Serializable {
     public String login(){
         
         try{
-            ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).login(username, password);
+             HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e) {
+            }
+
+            
+
+            if (request.getUserPrincipal()==null || (request.getUserPrincipal()!=null && !request.getUserPrincipal().getName().equals(username))) {
+                request.logout();
+                request.login(username, password);
+            }
             
             return "books";
             
         } catch (ServletException ex){
+            ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext context = FacesContext.getCurrentInstance();
-            FacesMessage message = new FacesMessage("Логин и пароль не подходят");
+            FacesMessage message = new FacesMessage(bundle.getString("login_error"));
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage("login_form", message);
+            context.addMessage("login_form", message);  
         }
         return "index";
     }
