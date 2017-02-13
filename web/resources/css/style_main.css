@@ -383,13 +383,48 @@ a:hover, a:active, a:focus {
 }
 
 .name_edit{
-    width: 100%;
-}
-
-.pages_edit{
-    width: 100%;
+    width: 150px;
 }
 
 .publisher_edit{
     width: 100%;
+}
+
+.date_edit{
+    width: 100%;
+}
+
+.small_edit{
+    width: 100px;
+    margin-left: 10px;
+}
+
+.descr_edit{
+    width: 100%;
+    height: 200px;
+}
+
+.edit_book_table{
+    width: 600px;
+    height: 100%;
+    
+}
+
+
+.button-update:enabled{
+    color: #1C4257;
+}
+
+.button-update:hover{
+    cursor: pointer;
+}
+
+.button-update:disabled{
+    cursor: progress;
+    color: #cccccc;
+}
+
+
+.edit_link{
+    margin:10px;
 }

@@ -19,7 +19,7 @@
             <h:form id="genresList" styleClass="genres">            
                 <ui:repeat value="#{genreController.genreList}" var="g">            
                 
-                        <p:commandLink update="booksForm:admin_tools booksForm:booksList @form :lettersForm 
+                        <p:commandLink update="booksForm:booksList @form :lettersForm 
                                      :booksCount" value="#{g.name}"  styleClass="#{g.id == bookListController.selectedGenreId ? 'selected_link':''}"
                                      actionListener="#{bookListController.fillBooksByGenre()}">                                     
                            

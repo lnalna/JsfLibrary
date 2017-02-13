@@ -7,13 +7,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import ru.javabegin.training.web.enums.SearchType;
 import java.util.Map;
+import java.util.ResourceBundle;
 import ru.javabegin.training.web.entity.Book;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.event.ValueChangeEvent;
 import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.beans.Pager;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import ru.javabegin.training.web.models.BookListDataModel;
 
 
@@ -23,7 +27,8 @@ import ru.javabegin.training.web.models.BookListDataModel;
 @SessionScoped
 public class BookListController implements Serializable{
     
-    
+    private DataTable dataTable;
+    private Book selectedBook;
     private DataHelper dataHelper =  DataHelper.getInstance();
     private LazyDataModel<Book> bookListModel;
     private Long selectedAuthorId;//текущий автор книги из списка при редактировании книги   
@@ -49,7 +54,8 @@ public class BookListController implements Serializable{
     
     private void submitValues(Character selectedLetter,  long selectedGenreId) {
         this.selectedLetter = selectedLetter;        
-        this.selectedGenreId = selectedGenreId;        
+        this.selectedGenreId = selectedGenreId;   
+        dataTable.setFirst(0);
     }
     
     //<editor-fold defaultstate="collapsed" desc="поиск всех книг fillBooksAll">
@@ -63,9 +69,9 @@ public class BookListController implements Serializable{
     
     public void fillBooksByGenre(){
         
-        imitateLoading();
-        cancelEditModeView();
-        row = -1;
+    //    imitateLoading();
+    //    cancelEditModeView();
+    //    row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
@@ -81,9 +87,9 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public void fillBooksByLetter() {
         
-        imitateLoading();
-        cancelEditModeView();
-        row = -1;
+  //      imitateLoading();
+  //      cancelEditModeView();
+  //      row = -1;
                 
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         selectedLetter = params.get("letter").charAt(0);
@@ -99,9 +105,9 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public void fillBooksBySearch(){
        
-        imitateLoading();
-        cancelEditModeView();
-        row = -1;
+  //      imitateLoading();
+  //      cancelEditModeView();
+  //      row = -1;
              
         submitValues(' ', -1);
         
@@ -124,12 +130,31 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="update таблицы library.book  метод updateBooks">
     public void updateBooks(){
          
-        dataHelper.update();
+        dataHelper.updateBook(selectedBook);
         
         cancelEditModeView();
         
         dataHelper.populateList();
         
+        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+
+        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
+
+        dataTable.setFirst(calcSelectedPage());
+        
+    }
+    
+    public void deleteBook() {
+        dataHelper.deleteBook(selectedBook);
+        dataHelper.populateList();
+
+//        RequestContext.getCurrentInstance().execute("dlgDeleteBook.hide()");
+        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("deleted")));
+
+        dataTable.setFirst(calcSelectedPage());
+
     }
 //</editor-fold>
     
@@ -144,12 +169,16 @@ public class BookListController implements Serializable{
     
     public void cancelEditModeView(){
         editModeView = false;
-        for(Book book : pager.getList()){
-            book.setEdit(false);
-        }
+        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+
         
     }
     
+    public void switchEditMode() {
+        editModeView = true;
+        RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
+
+    }
     
     
     //<editor-fold defaultstate="collapsed" desc="получение всего русского алфавита getRussianLetters">
@@ -170,6 +199,22 @@ public class BookListController implements Serializable{
         selectedSearchType  = (SearchType) e.getNewValue();
     }
       
+    private int calcSelectedPage() {
+        int page = dataTable.getPage();// текущий номер страницы (индексация с нуля)
+        
+        int leftBound = pager.getTo()*(page-1);
+        int rightBound = pager.getTo()*page;
+        
+        boolean goPrevPage = pager.getTotalBooksCount()>leftBound & pager.getTotalBooksCount() <= rightBound;
+                
+                
+        if (goPrevPage)        
+        {
+            page--;
+        }       
+        
+        return (page>0)?page*pager.getTo():0;
+    }
     
 //</editor-fold>
        
@@ -245,5 +290,21 @@ public int getRow(){
     
     public LazyDataModel<Book> getBookListModel(){
        return bookListModel;
+    }
+    
+    public void setSelectedBook(Book selectedBook) {
+        this.selectedBook = selectedBook;
+    }
+
+    public Book getSelectedBook() {
+        return selectedBook;
+    }
+
+    public DataTable getDataTable() {
+        return dataTable;
+    }
+
+    public void setDataTable(DataTable dataTable) {
+        this.dataTable = dataTable;
     }
 }

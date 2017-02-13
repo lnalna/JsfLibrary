@@ -2,6 +2,7 @@ package ru.javabegin.training.web.db;
 
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -166,22 +167,34 @@ public class DataHelper {
         pager.setTotalBooksCount(total);
     }
     
-    public void update(){
+    public void updateBook(Book book){
+        Query query = getSession().createQuery("update Book set name = :name, "
+                + " pageCount = :pageCount, "
+                + " isbn = :isbn, "
+                + " genre = :genre, "
+                + " author = :author, "
+                + " publishYear = :publishYear, "
+                + " publisher = :publisher, "
+                + " description = :description "
+                + " where id = :id");
         
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
+        query.setParameter("name", book.getName());
+        query.setParameter("pageCount", book.getPageCount());
+        query.setParameter("isbn", book.getIsbn());
+        query.setParameter("genre", book.getGenre());
+        query.setParameter("author", book.getAuthor());
+        query.setParameter("publishYear", book.getPublishYear());
+        query.setParameter("publisher", book.getPublisher());
+        query.setParameter("description", book.getDescription());
+        query.setParameter("id", book.getId());    
         
-        for (Object object : pager.getList()){
-            Book book = (Book)object;
-            if (book.isEdit()){
-                session.update(book);
-            }
-        }
-        
-        transaction.commit();
-        session.flush();
-        session.close();
+        int result = query.executeUpdate();
+    }
+    
+    public void deleteBook(Book book) {
+        Query query = getSession().createQuery("delete from Book where id = :id");
+        query.setParameter("id", book.getId());
+        int result = query.executeUpdate();
     }
     
     private void prepareCriterias(Criterion criterion) {
