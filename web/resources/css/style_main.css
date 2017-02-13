@@ -252,6 +252,11 @@ a:hover, a:active, a:focus {
     width: 350px;
 }
 
+.col4{
+    vertical-align: middle;
+    width: 20px;
+}
+
 .book_details p{
     font-size: 11px;
 }

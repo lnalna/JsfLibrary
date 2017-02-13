@@ -92,7 +92,7 @@
                     <p:dataTable  lazy="true" var="b" value="#{bookListController.bookListModel}" id="booksList" styleClass="books_list" 
                                   rowIndexVar="#{bookListController.pager.rowIndex}" 
                                                                     
-                                  paginator="true" rows="5" rowsPerPageTemplate="5,10,15" 
+                                  paginator="true" rows="5"  rowsPerPageTemplate="5,10,15" 
                                   paginatorTemplate="{RowsPerPageDropdown} {PageLinks}" 
                                   paginatorAlwaysVisible="false" emptyMessage="" binding="#{bookListController.dataTable}">
                     
@@ -167,33 +167,29 @@
                     </p:column>
                     
                         <p:column styleClass="col3">
-                        <div class="book_details">
-                            <p><strong>#{msg.description}</strong></p>
-                            <p><h:outputText value="#{b.description}"/>
-                                                                
-                            </p>                            
-                        </div>
-                    </p:column>
+                            <div class="book_details">
+                                <p><strong>#{msg.description}</strong></p>
+                                <p><h:outputText value="#{b.description}"/>
+
+                                </p>                            
+                            </div>
+                        </p:column>
                     
                     
 
 
-                        <p:column rendered="#{request.isUserInRole('admin')}">
+                        <p:column styleClass="col4" rendered="#{request.isUserInRole('admin')}">
                             
-                            <p:commandLink actionListener="#{bookListController.switchEditMode}" title="#{msg.edit}" 
-                                           update=":formEditBook:bookDetails" >  
+                            <p:commandLink actionListener="#{bookListController.switchEditMode}" title="#{msg.edit}" update=":formEditBook:bookDetails" >  
                                 <h:graphicImage library="images" name="edit.jpg" />
-                                <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}" />  
+                                <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>  
                             </p:commandLink> 
 
 
                             <p:commandLink title="#{msg.delete_book}" type="button" onclick="dlgDeleteBook.show()" >  
                                 <h:graphicImage library="images" name="delete.gif" />
-                                <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}" /> 
+                                <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/> 
                             </p:commandLink> 
-
-
-
                         </p:column>
                     
                     </p:dataTable>
