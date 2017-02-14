@@ -136,10 +136,10 @@ public class BookListController implements Serializable{
         
         dataHelper.populateList();
         
-        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+  //      RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
 
-        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
+ //       ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+   //     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
 
         dataTable.setFirst(calcSelectedPage());
         
@@ -176,7 +176,7 @@ public class BookListController implements Serializable{
     
     public void switchEditMode() {
         editModeView = true;
-        RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
+//        RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
 
     }
     

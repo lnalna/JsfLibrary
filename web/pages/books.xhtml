@@ -27,9 +27,9 @@
                 
                 <p:growl life="3000" id="growlMessage" globalOnly="true"/>
                 
-                <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false">
+                <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,50" height="800" width="800">
                     
-                    <h:form id="formEditBook" rendered="#{bookListController.editModeView}">
+                    <h:form id="formEditBook">
                     
                         <p:panelGrid id="bookDetails" columns="2" columnClasses="col1, col2" styleClass="edit_book_table">
                             
@@ -37,6 +37,14 @@
                             
                             <p:inputText id="inputBookName" value="#{bookListController.selectedBook.name}" required="true" 
                                requiredMessage="#{msg.required_field}" size="60"/>
+                            
+                            
+                            <strong>#{msg.author_name}: </strong>
+
+
+                            <h:selectOneMenu value="#{bookListController.selectedBook.author}" converter="#{authorController}">
+                                <f:selectItems value="${authorController.selectItems}"/>
+                            </h:selectOneMenu>
                             
                             <strong>#{msg.genres}: </strong>
                             
@@ -72,11 +80,13 @@
                             </p:panel>
 
 
+                            
 
-                            <p:commandButton styleClass="button-update" value="#{msg.save}"  onclick="this.disabled=true;" 
-                                update=":formEditBook :booksForm:booksList :booksCount :growlMessage" 
-                                action="#{bookListController.updateBook}"/>
-                            <p:commandButton action="#{bookListController.cancelEditModeView()}" value="#{msg.cancel}" 
+                            <p:commandLink actionListener="#{bookListController.updateBooks}" styleClass="button-update" title="#{msg.Save}"  type="button" onclick="PF('dlgEditBook').hide()" 
+                                update=":formEditBook:bookDetails :booksForm :booksForm:booksList :booksCount :growlMessage :genresList :lettersForm">
+                                <h:graphicImage library="images" name="edit.jpg" />
+                            </p:commandLink>    
+                            <p:commandButton action="#{bookListController.cancelEditModeView()}" value="#{msg.Cancel}" type="button" onclick="PF('dlgEditBook').hide()"
                                              immediate="true" global="false"/> 
                             
                         </p:panelGrid>
@@ -108,7 +118,7 @@
                         
                           <div>
                             <p>
-                                <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank" rendered="#{!b.edit}">
+                                <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank">
                                     <h:outputText value="#{b.name}"/>                                        
                                     <f:param name="id" value="#{b.id}"/>                                  
                                 </h:outputLink>
@@ -180,13 +190,13 @@
 
                         <p:column styleClass="col4" rendered="#{request.isUserInRole('admin')}">
                             
-                            <p:commandLink actionListener="#{bookListController.switchEditMode}" title="#{msg.edit}" update=":formEditBook:bookDetails" >  
+                            <p:commandLink actionListener="#{bookListController.switchEditMode}" type="button" onclick="PF('dlgEditBook').show()" title="#{msg.edit}" update=":formEditBook:bookDetails">  
                                 <h:graphicImage library="images" name="edit.jpg" />
                                 <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>  
                             </p:commandLink> 
 
 
-                            <p:commandLink title="#{msg.delete_book}" type="button" onclick="dlgDeleteBook.show()" >  
+                            <p:commandLink title="#{msg.delete_book}" type="button" onclick="PF('dlgDeleteBook').show()" >  
                                 <h:graphicImage library="images" name="delete.gif" />
                                 <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/> 
                             </p:commandLink> 
@@ -199,9 +209,9 @@
                         <h:panelGrid columns="2" style="margin:0 auto; width:150px;">
                             <p:commandButton id="btnDeletedBook" value="#{msg.yes}" action="#{bookListController.deleteBook}"
                                              styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-                                             update=":booksForm:booksList :booksCount :growlMessage" onclick="dlgDeleteBook.hide()"/>  
+                                             update=":booksForm:booksList :booksCount :growlMessage" onclick="PF('dlgDeleteBook').hide()"/>  
                             <p:commandButton value="#{msg.no}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-                                             onclick="dlgDeleteBook.hide()" type="button"/>       
+                                             onclick="PF('dlgDeleteBook').hide()" type="button"/>       
                         </h:panelGrid>
                     </p:confirmDialog> 
                     
