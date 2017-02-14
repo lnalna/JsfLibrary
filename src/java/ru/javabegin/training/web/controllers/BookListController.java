@@ -136,17 +136,21 @@ public class BookListController implements Serializable{
         
         dataHelper.populateList();
         
-  //      RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+   //     RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
 
- //       ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
-   //     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
+        ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
 
         dataTable.setFirst(calcSelectedPage());
+    //fillBooksBySearch();
         
     }
     
     public void deleteBook() {
         dataHelper.deleteBook(selectedBook);
+        
+        cancelEditModeView();
+        
         dataHelper.populateList();
 
 //        RequestContext.getCurrentInstance().execute("dlgDeleteBook.hide()");
@@ -154,6 +158,7 @@ public class BookListController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("deleted")));
 
         dataTable.setFirst(calcSelectedPage());
+    //    fillBooksBySearch();
 
     }
 //</editor-fold>
@@ -169,7 +174,7 @@ public class BookListController implements Serializable{
     
     public void cancelEditModeView(){
         editModeView = false;
-        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+    //    RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
 
         
     }

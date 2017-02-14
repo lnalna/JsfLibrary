@@ -82,11 +82,15 @@
 
                             
 
-                            <p:commandLink actionListener="#{bookListController.updateBooks}" styleClass="button-update" title="#{msg.Save}"  type="button" onclick="PF('dlgEditBook').hide()" 
+                           <p:commandLink actionListener="#{bookListController.updateBooks}" styleClass="button-update" title="#{msg.Save}"  type="button"  onclick="PF('dlgEditBook').hide()"
                                 update=":formEditBook  :booksForm:booksList :booksCount  :genresList :lettersForm :growlMessage">
                                 <h:graphicImage library="images" name="edit.jpg" />
                                 <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>
-                            </p:commandLink>    
+                            </p:commandLink> 
+                                
+                            
+                                
+                                
                             <p:commandButton action="#{bookListController.cancelEditModeView()}" value="#{msg.Cancel}" type="button" onclick="PF('dlgEditBook').hide()"
                                              immediate="true" global="false"/> 
                             
