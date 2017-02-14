@@ -25,7 +25,7 @@
             
             <ui:define name="content">
                 
-                
+                <p:growl life="3000" id="growlMessage" globalOnly="true"/> 
                 
                 <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,50" height="800" width="800">
                     
@@ -83,7 +83,7 @@
                             
 
                             <p:commandLink actionListener="#{bookListController.updateBooks}" styleClass="button-update" title="#{msg.Save}"  type="button" onclick="PF('dlgEditBook').hide()" 
-                                update=":formEditBook:bookDetails :booksForm :booksForm:booksList :booksCount  :genresList :lettersForm">
+                                update=":formEditBook  :booksForm:booksList :booksCount  :genresList :lettersForm :growlMessage">
                                 <h:graphicImage library="images" name="edit.jpg" />
                                 <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>
                             </p:commandLink>    
