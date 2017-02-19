@@ -3,7 +3,9 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet title</title>
         <h:outputStylesheet library="css" name="style_main.css"/>
@@ -11,15 +13,18 @@
     <h:body>
         <ui:composition>
             
-            <div class="locales">
-                <h:form>
+            
+            
+            <div class="lang">
+                <h:form style="display: inline;">
                     
-                    <h:commandLink action="#{localChanger.changeLocale('en')}">
-                        <h:graphicImage library="images" name="eng.png" title="#{msg.english}"/>
+                    <h:commandLink  actionListener="#{localeChanger.changeLocale('ru')}">
+                        <h:graphicImage styleClass="#{localeChanger.currentLocale == 'ru' ? 'active':''}" library="images" name="rus.png" title="#{msg.russian}" width="16" height="13"/>                        
                     </h:commandLink>
-                    
-                    <h:commandLink action="#{localChanger.changeLocale('ru')}">
-                        <h:graphicImage library="images" name="rus.png" title="#{msg.russian}"/>
+
+
+                    <h:commandLink actionListener="#{localeChanger.changeLocale('en')}">
+                        <h:graphicImage styleClass="#{localeChanger.currentLocale == 'en' ? 'active':''}"  library="images" name="usa.png" title="#{msg.english}" width="16" height="13"/>                        
                     </h:commandLink>
                 </h:form>
             </div>
