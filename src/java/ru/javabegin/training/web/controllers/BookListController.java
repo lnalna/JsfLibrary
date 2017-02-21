@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ValueChangeEvent;
+import org.primefaces.component.datagrid.DataGrid;
 import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.beans.Pager;
 import org.primefaces.model.LazyDataModel;
@@ -27,7 +28,7 @@ import ru.javabegin.training.web.models.BookListDataModel;
 @SessionScoped
 public class BookListController implements Serializable{
     
-    private DataTable dataTable;
+    private DataGrid dataTable;
     private Book selectedBook;
     private DataHelper dataHelper =  DataHelper.getInstance();
     private LazyDataModel<Book> bookListModel;
@@ -69,7 +70,7 @@ public class BookListController implements Serializable{
     
     public void fillBooksByGenre(){
         
-    //    imitateLoading();
+        imitateLoading();
     //    cancelEditModeView();
     //    row = -1;
                 
@@ -87,7 +88,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public void fillBooksByLetter() {
         
-  //      imitateLoading();
+        imitateLoading();
   //      cancelEditModeView();
   //      row = -1;
                 
@@ -105,7 +106,7 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="поиск по названию или автору  fillBooksBySearch">
     public void fillBooksBySearch(){
        
-  //      imitateLoading();
+        imitateLoading();
   //      cancelEditModeView();
   //      row = -1;
              
@@ -305,11 +306,11 @@ public int getRow(){
         return selectedBook;
     }
 
-    public DataTable getDataTable() {
+    public DataGrid getDataGrid() {
         return dataTable;
     }
 
-    public void setDataTable(DataTable dataTable) {
+    public void setDataGrid(DataGrid dataTable) {
         this.dataTable = dataTable;
     }
 }

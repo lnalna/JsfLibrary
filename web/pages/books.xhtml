@@ -28,7 +28,7 @@
                 
                 <div class="box-sh">
                     
-                    <h1><h:outputText id="booksCount" value="#{msg.book_count}:  #{bookListController.pager.totalBooksCount}"/></h1>
+                    <h1><h:outputText id="booksCount" value="#{msg.book_count}  #{bookListController.pager.totalBooksCount}"/></h1>
                     
                     <h:outputLink rendered="#{request.isUserInRole('admin')}" value="#"><h:outputText value="#{msg.add_book}"/></h:outputLink>
 
@@ -41,10 +41,10 @@
                 
                 
                 
-                <h:form id="booksForm">
+                <h:form id="booksForm" styleClass="books_list_out">
                     
-                                                        
-                    <p:dataGrid columns="2" lazy="true" var="b" value="#{bookListController.bookListModel}" id="booksList" 
+                    
+                    <p:dataGrid columns="2" lazy="true" var="b" value="#{bookListController.bookListModel}" id="booksList" layout="grid" 
                                 styleClass="books_list" paginator="true" rows="4" paginatorPosition="bottom" 
                                 rowsPerPageTemplate="4,10,20" paginatorTemplate="{RowsPerPageDropdown} {PageLinks}" 
                                 paginatorAlwaysVisible="false" emptyMessage="" binding="#{bookListController.dataGrid}">
@@ -106,6 +106,7 @@
                           </p:commandLink> 
                       </div>
                     </p:dataGrid>
+                    
                     
                     
                     <p:confirmDialog widgetVar="dlgDeleteBook" header="#{msg.confirm}" message="#{msg.delete_confirm}?" 

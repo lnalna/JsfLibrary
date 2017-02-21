@@ -116,8 +116,8 @@ body {
 .left-menu a:hover {background: #e9f6fc;}
 .left-menu a.selected_link {background: #e9f6fc;}
 
-.right-content { float: left; border-left: 1px solid #e5e5e5; width: 759px; min-height: 925px; padding-bottom: 34px;}
-.box-sh {padding-right: 40px; overflow: hidden; }
+.right-content { float: left; border-left: 1px solid #e5e5e5; width: 700px; min-height: 925px; padding-bottom: 34px;}
+.box-sh {padding-top: 40px; overflow: hidden; }
 .box-sh h1 {float: left; color: #7f7f7f; font-size: 30px; margin-left: 39px; margin-top: 28px;}
 .box-sh a {margin-top: 25px; float: right; background: #d5c39d; padding: 10px 15px 10px 15px; border-radius: 5px; margin-left: 6px; font-size: 14px; color: #fff; text-decoration: none;}
 
@@ -125,6 +125,7 @@ body {
 .item img {float: left; margin-right: 20px; margin-left: 19px;}
 .item .info {overflow: hidden;}
 .item .book_name {height: 40px;}
+.item .content_link{margin-top: 10px;}
 .item .info .title {color: #1091c6; font-size: 18px;}
 .item .info .title:hover {text-decoration: none;}
 .item .info span { color: #000; border-bottom: 1px solid #000; margin-top: 13px; margin-bottom: 13px; display: inline-block; }
@@ -179,6 +180,10 @@ body {
     text-align: center;
 }
 
+.books_list_out{
+    top:200px;
+    left:200px;
+}
 .books_list .ui-widget-content{
     border:0;
 }
@@ -189,6 +194,7 @@ body {
     text-decoration: none;
     color: white;
     box-shadow: inset -1px 2px 5px 0px #8a2c27;
+    margin-top: 10px;
 }
 
 .books_list .ui-paginator-page{
