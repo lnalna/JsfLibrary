@@ -18,13 +18,14 @@
             <div class="lang">
                 <h:form style="display: inline;">
                     
-                    <h:commandLink action="#{localChanger.changeLocale('en')}">
-                        <h:graphicImage library="images" name="eng.png" title="#{msg.english}"/>
+                    <h:commandLink  actionListener="#{localChanger.changeLocale('ru')}">
+                        <h:graphicImage styleClass="#{localChanger.currentLocale == 'ru' ? 'active':''}" library="images" name="rus.png" title="#{msg.russian}" width="16" height="13"/>                        
                     </h:commandLink>
-                    
-                    <h:commandLink action="#{localChanger.changeLocale('ru')}">
-                        <h:graphicImage library="images" name="rus.png" title="#{msg.russian}"/>
-                    </h:commandLink>
+
+
+                    <h:commandLink actionListener="#{localChanger.changeLocale('en')}">
+                        <h:graphicImage styleClass="#{localChanger.currentLocale == 'en' ? 'active':''}"  library="images" name="usa.png" title="#{msg.english}" width="16" height="13"/>                        
+</h:commandLink>
                 </h:form>
             </div>
         </ui:composition>
