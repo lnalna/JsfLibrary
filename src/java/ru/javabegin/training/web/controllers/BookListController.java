@@ -164,6 +164,16 @@ public class BookListController implements Serializable{
     }
 //</editor-fold>
     
+    public void rate(){
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        int bookIndex = Integer.parseInt(params.get("bookIndex"));
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String username = facesContext.getExternalContext().getUserPrincipal().getName();
+        
+        
+    }
+    
     public boolean isEditModeView(){
         return editModeView;
     }
