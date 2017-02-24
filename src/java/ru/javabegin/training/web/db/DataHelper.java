@@ -5,7 +5,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
@@ -16,10 +15,10 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import ru.javabegin.training.web.beans.Pager;
-import ru.javabegin.training.web.entity.Author;
-import ru.javabegin.training.web.entity.Book;
-import ru.javabegin.training.web.entity.Genre;
-import ru.javabegin.training.web.entity.Publisher;
+import ru.javabegin.training.web.entity.ext.AuthorExt;
+import ru.javabegin.training.web.entity.ext.BookExt;
+import ru.javabegin.training.web.entity.ext.GenreExt;
+import ru.javabegin.training.web.entity.ext.PublisherExt;
 import ru.javabegin.training.web.entity.HibernateUtil;
 
 
@@ -67,20 +66,20 @@ public class DataHelper {
         return sessionFactory.getCurrentSession();
     }
     
-     public List<Genre> getAllGenres(){
-        return getSession().createCriteria(Genre.class).list();
+     public List<GenreExt> getAllGenres(){
+        return getSession().createCriteria(GenreExt.class).list();
     }
     
-    public List<Author> getAllAuthors(){
-        return getSession().createCriteria(Author.class).list();
+    public List<AuthorExt> getAllAuthors(){
+        return getSession().createCriteria(AuthorExt.class).list();
     }
     
-     public Author getAuthor(long id){
-        return (Author) getSession().get(Author.class, id);
+     public AuthorExt getAuthor(long id){
+        return (AuthorExt) getSession().get(AuthorExt.class, id);
     }
     
-    public List<Publisher> getAllPublishers(){
-        return getSession().createCriteria(Publisher.class).list();
+    public List<PublisherExt> getAllPublishers(){
+        return getSession().createCriteria(PublisherExt.class).list();
     }
     
     public void getAllBooks(){
@@ -137,14 +136,14 @@ public class DataHelper {
     }
     
    public byte[] getContent(long id) {
-        Criteria criteria = getSession().createCriteria(Book.class);
+        Criteria criteria = getSession().createCriteria(BookExt.class);
         criteria.setProjection(Property.forName("content"));
         criteria.add(Restrictions.eq("id", id));
         return (byte[]) criteria.uniqueResult();
     }
    
    public byte[] getImage(long id) {
-        Criteria criteria = getSession().createCriteria(Book.class);
+        Criteria criteria = getSession().createCriteria(BookExt.class);
         criteria.setProjection(Property.forName("image"));
         criteria.add(Restrictions.eq("id", id));
         return (byte[]) criteria.uniqueResult();
@@ -153,11 +152,11 @@ public class DataHelper {
    
    private void runBookListCriteria() {
         Criteria criteria = bookListCriteria.getExecutableCriteria(getSession());
-        criteria.addOrder(Order.asc("b.name")).setProjection(bookProjection).setResultTransformer(Transformers.aliasToBean(Book.class));
+        criteria.addOrder(Order.asc("b.name")).setProjection(bookProjection).setResultTransformer(Transformers.aliasToBean(BookExt.class));
 
         criteria.setFirstResult(pager.getFrom()).setMaxResults(pager.getTo());
 
-        List<Book> list = criteria.list();
+        List<BookExt> list = criteria.list();
         pager.setList(list);
     }
    
@@ -167,7 +166,7 @@ public class DataHelper {
         pager.setTotalBooksCount(total);
     }
     
-    public void updateBook(Book book){
+    public void updateBook(BookExt book){
         Query query = getSession().createQuery("update Book set name = :name, "
                 + " pageCount = :pageCount, "
                 + " isbn = :isbn, "
@@ -191,33 +190,33 @@ public class DataHelper {
         int result = query.executeUpdate();
     }
     
-    public void deleteBook(Book book) {
+    public void deleteBook(BookExt book) {
         Query query = getSession().createQuery("delete from Book where id = :id");
         query.setParameter("id", book.getId());
         int result = query.executeUpdate();
     }
     
     private void prepareCriterias(Criterion criterion) {
-        bookListCriteria = DetachedCriteria.forClass(Book.class, "b");
+        bookListCriteria = DetachedCriteria.forClass(BookExt.class, "b");
         createAliases(bookListCriteria);
         bookListCriteria.add(criterion);
 
-        booksCountCriteria = DetachedCriteria.forClass(Book.class, "b");
+        booksCountCriteria = DetachedCriteria.forClass(BookExt.class, "b");
         createAliases(booksCountCriteria);
         booksCountCriteria.add(criterion);
     }
 
     private void prepareCriterias() {
-        bookListCriteria = DetachedCriteria.forClass(Book.class, "b");
+        bookListCriteria = DetachedCriteria.forClass(BookExt.class, "b");
         createAliases(bookListCriteria);
 
-        booksCountCriteria = DetachedCriteria.forClass(Book.class, "b");
+        booksCountCriteria = DetachedCriteria.forClass(BookExt.class, "b");
         createAliases(booksCountCriteria);
     }
     
     public void runCurrentCriteria() {
         Criteria criteria = currentCriteria.addOrder(Order.asc("name")).getExecutableCriteria(getSession());
-        List<Book> list = criteria.setFirstResult(currentPager.getFrom()).setMaxResults(currentPager.getTo()).list();
+        List<BookExt> list = criteria.setFirstResult(currentPager.getFrom()).setMaxResults(currentPager.getTo()).list();
         currentPager.setList(list);
     } 
     

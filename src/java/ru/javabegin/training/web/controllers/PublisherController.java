@@ -14,24 +14,24 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import ru.javabegin.training.web.comparators.ListComparator;
 import ru.javabegin.training.web.db.DataHelper;
-import ru.javabegin.training.web.entity.Publisher;
+import ru.javabegin.training.web.entity.ext.PublisherExt;
 
 @ManagedBean(eager = false)
 @ApplicationScoped
 public class PublisherController implements Serializable, Converter {
 
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
-    private Map<Long, Publisher> publisherMap;
-    private List<Publisher> publisherList;
+    private Map<Long, PublisherExt> publisherMap;
+    private List<PublisherExt> publisherList;
 
     public PublisherController() {
 
-        publisherMap = new HashMap<Long, Publisher>();
+        publisherMap = new HashMap<Long, PublisherExt>();
         publisherList = DataHelper.getInstance().getAllPublishers();
         
         Collections.sort(publisherList, ListComparator.getInstance());
 
-        for (Publisher publisher : publisherList) {
+        for (PublisherExt publisher : publisherList) {
             publisherMap.put(publisher.getId(), publisher);
             selectItems.add(new SelectItem(publisher, publisher.getName()));
         }
@@ -42,7 +42,7 @@ public class PublisherController implements Serializable, Converter {
         return selectItems;
     }
 
-    public List<Publisher> getPublisherList() {
+    public List<PublisherExt> getPublisherList() {
         return publisherList;
     }
 
@@ -53,6 +53,6 @@ public class PublisherController implements Serializable, Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Publisher)value).getId().toString();
+        return ((PublisherExt)value).getId().toString();
     }
 }

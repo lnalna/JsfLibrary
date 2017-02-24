@@ -1,6 +1,5 @@
 package ru.javabegin.training.web.controllers;
 
-import java.util.Map;
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ManagedBean;
@@ -8,7 +7,7 @@ import javax.faces.bean.SessionScoped;
 import ru.javabegin.training.web.enums.SearchType;
 import java.util.Map;
 import java.util.ResourceBundle;
-import ru.javabegin.training.web.entity.Book;
+import ru.javabegin.training.web.entity.ext.BookExt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -17,8 +16,6 @@ import org.primefaces.component.datagrid.DataGrid;
 import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.beans.Pager;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.context.RequestContext;
 import ru.javabegin.training.web.models.BookListDataModel;
 
 
@@ -29,9 +26,9 @@ import ru.javabegin.training.web.models.BookListDataModel;
 public class BookListController implements Serializable{
     
     private DataGrid dataTable;
-    private Book selectedBook;
+    private BookExt selectedBook;
     private DataHelper dataHelper =  DataHelper.getInstance();
-    private LazyDataModel<Book> bookListModel;
+    private LazyDataModel<BookExt> bookListModel;
     private Long selectedAuthorId;//текущий автор книги из списка при редактировании книги   
     //критерии поиска
     private char selectedLetter;//выбранная буква алфавита, по умолчанию не выбрана ни одна буква
@@ -164,15 +161,7 @@ public class BookListController implements Serializable{
     }
 //</editor-fold>
     
-    public void rate(){
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        int bookIndex = Integer.parseInt(params.get("bookIndex"));
-        
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        String username = facesContext.getExternalContext().getUserPrincipal().getName();
-        
-        
-    }
+    
     
     public boolean isEditModeView(){
         return editModeView;
@@ -304,15 +293,15 @@ public int getRow(){
         return pager;
     }
     
-    public LazyDataModel<Book> getBookListModel(){
+    public LazyDataModel<BookExt> getBookListModel(){
        return bookListModel;
     }
     
-    public void setSelectedBook(Book selectedBook) {
+    public void setSelectedBook(BookExt selectedBook) {
         this.selectedBook = selectedBook;
     }
 
-    public Book getSelectedBook() {
+    public BookExt getSelectedBook() {
         return selectedBook;
     }
 

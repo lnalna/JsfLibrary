@@ -6,12 +6,12 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import ru.javabegin.training.web.beans.Pager;
 import ru.javabegin.training.web.db.DataHelper;
-import ru.javabegin.training.web.entity.Book;
+import ru.javabegin.training.web.entity.ext.BookExt;
 
 
-public class BookListDataModel extends LazyDataModel<Book> {
+public class BookListDataModel extends LazyDataModel<BookExt> {
     
-    private List<Book> bookList;
+    private List<BookExt> bookList;
     private DataHelper dataHelper = DataHelper.getInstance();
     private Pager pager = Pager.getInstance();
     
@@ -20,9 +20,9 @@ public class BookListDataModel extends LazyDataModel<Book> {
     }
     
     @Override  
-    public Book getRowData(String rowKey) {      
+    public BookExt getRowData(String rowKey) {      
         
-        for(Book book : bookList) {  
+        for(BookExt book : bookList) {  
             if(book.getId().intValue() == Long.valueOf(rowKey).intValue())  
                 return book;  
         }  
@@ -31,13 +31,13 @@ public class BookListDataModel extends LazyDataModel<Book> {
     } 
     
     @Override  
-    public Object getRowKey(Book book) {  
+    public Object getRowKey(BookExt book) {  
         return book.getId();  
     }
     
     
     @Override
-    public List<Book> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+    public List<BookExt> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         
         pager.setFrom(first);
         pager.setTo(pageSize);

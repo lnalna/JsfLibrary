@@ -16,9 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Collection;
 import java.util.Collections;
-import ru.javabegin.training.web.entity.Author;
+import ru.javabegin.training.web.entity.ext.AuthorExt;
 import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.comparators.ListComparator;
 
@@ -29,22 +28,22 @@ import ru.javabegin.training.web.comparators.ListComparator;
 public class AuthorController implements Serializable, Converter{
     
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
-    private Map<Long, Author> authorMap;
-    private List<Author> authorList;
+    private Map<Long, AuthorExt> authorMap;
+    private List<AuthorExt> authorList;
     
     
     public AuthorController(){
-        authorMap = new HashMap<Long, Author>();
+        authorMap = new HashMap<Long, AuthorExt>();
         authorList = DataHelper.getInstance().getAllAuthors();
         Collections.sort(authorList, ListComparator.getInstance());
         
-        for(Author author : authorList){
-            authorMap.put(author.getId(), author);
-            selectItems.add(new SelectItem(author, author.getFio()));
+        for(AuthorExt authorExt : authorList){
+            authorMap.put(authorExt.getId(), authorExt);
+            selectItems.add(new SelectItem(authorExt, authorExt.getFio()));
         }
     }
     
-    public List<Author> getAuthorList(){
+    public List<AuthorExt> getAuthorList(){
         return authorList;
     }
     
@@ -59,7 +58,7 @@ public class AuthorController implements Serializable, Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Author)value).getId().toString();
+        return ((AuthorExt)value).getId().toString();
     }
     
 }

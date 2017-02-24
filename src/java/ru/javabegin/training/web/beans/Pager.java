@@ -2,7 +2,7 @@ package ru.javabegin.training.web.beans;
 
 
 import java.util.List;
-import ru.javabegin.training.web.entity.Book;
+import ru.javabegin.training.web.entity.ext.BookExt;
 
 
 
@@ -25,8 +25,8 @@ public class Pager {
     }
     
     private long totalBooksCount;
-    private Book selectedBook;
-    private List<Book> list;
+    private BookExt selectedBook;
+    private List<BookExt> list;
     private int from;
     private int to;
     
@@ -46,11 +46,11 @@ public class Pager {
         this.to = to;
     }
     
-    public List<Book> getList(){
+    public List<BookExt> getList(){
         return list;
     }
     
-    public void setList(List<Book> list){
+    public void setList(List<BookExt> list){
         rowIndex = -1;
         this.list = list;
         
@@ -64,11 +64,11 @@ public class Pager {
         return totalBooksCount;
     }
     
-    public Book getSelectedBook(){
+    public BookExt getSelectedBook(){
         return selectedBook;
     }
     
-    public void setSelectedBook(Book selectedBook){
+    public void setSelectedBook(BookExt selectedBook){
         this.selectedBook = selectedBook;
     }
     

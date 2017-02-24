@@ -13,7 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import ru.javabegin.training.web.db.DataHelper;
-import ru.javabegin.training.web.entity.Genre;
+import ru.javabegin.training.web.entity.ext.GenreExt;
 import ru.javabegin.training.web.comparators.ListComparator;
 
 
@@ -22,16 +22,16 @@ import ru.javabegin.training.web.comparators.ListComparator;
 public class GenreController implements Serializable, Converter {
 
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
-    private Map<Long, Genre> genreMap;
-    private List<Genre> genreList;
+    private Map<Long, GenreExt> genreMap;
+    private List<GenreExt> genreList;
 
     public GenreController() {
 
-        genreMap = new HashMap<Long, Genre>();
+        genreMap = new HashMap<Long, GenreExt>();
         genreList = DataHelper.getInstance().getAllGenres();
         Collections.sort(genreList, ListComparator.getInstance());
 
-        for (Genre genre : genreList) {
+        for (GenreExt genre : genreList) {
             genreMap.put(genre.getId(), genre);
             selectItems.add(new SelectItem(genre, genre.getName()));
         }
@@ -43,7 +43,7 @@ public class GenreController implements Serializable, Converter {
     }
 
     // 
-    public List<Genre> getGenreList() {
+    public List<GenreExt> getGenreList() {
         return genreList;
     }
 
@@ -54,6 +54,6 @@ public class GenreController implements Serializable, Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        return ((Genre) value).getId().toString();
+        return ((GenreExt) value).getId().toString();
     }
 }
