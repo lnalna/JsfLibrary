@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24.02.2017 17:35:49 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ru.javabegin.training.web.entity.Vote" table="vote" catalog="library" optimistic-lock="version">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="book" class="ru.javabegin.training.web.entity.Book" fetch="select">
+            <column name="book_id" not-null="true" />
+        </many-to-one>
+        <property name="value" type="java.lang.Integer">
+            <column name="value" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,5 +1,5 @@
 package ru.javabegin.training.web.entity;
-// Generated 29.01.2017 21:25:16 by Hibernate Tools 4.3.1
+// Generated 24.02.2017 17:35:47 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -47,7 +47,10 @@ public class Genre  implements java.io.Serializable {
     
     public void setBooks(Set books) {
         this.books = books;
-    }   
+    }
+
+
+
 
 }
 

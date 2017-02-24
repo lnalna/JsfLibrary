@@ -41,8 +41,9 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="library"/>
-  <table-filter match-name="author"/>  
-  <table-filter match-name="book"/>
   <table-filter match-name="publisher"/>
+  <table-filter match-name="vote"/>
+  <table-filter match-name="book"/>
   <table-filter match-name="genre"/>
+  <table-filter match-name="author"/>
 </hibernate-reverse-engineering>

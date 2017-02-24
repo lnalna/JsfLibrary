@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29.01.2017 21:25:17 by Hibernate Tools 4.3.1 -->
+<!-- Generated 24.02.2017 17:35:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="ru.javabegin.training.web.entity.Book" table="book" catalog="library" optimistic-lock="version">
         <id name="id" type="java.lang.Long">
@@ -9,7 +9,8 @@
             <generator class="identity" />
         </id>
         <many-to-one name="author" class="ru.javabegin.training.web.entity.Author" fetch="join" lazy="false">
-            <column name="author_id" not-null="true" />
+                
+        <column name="author_id" not-null="true" />
         </many-to-one>
         <many-to-one name="genre" class="ru.javabegin.training.web.entity.Genre" fetch="join" lazy="false">
             <column name="genre_id" not-null="true" />
@@ -17,11 +18,12 @@
         <many-to-one name="publisher" class="ru.javabegin.training.web.entity.Publisher" fetch="join" lazy="false">
             <column name="publisher_id" not-null="true" />
         </many-to-one>
+        
         <property name="name" type="string">
             <column name="name" length="45" not-null="true" />
         </property>
         <property name="content" type="binary">
-            <column name="content" not-null="true" />
+            <column name="content" />
         </property>
         <property name="pageCount" type="int">
             <column name="page_count" not-null="true" />
@@ -32,7 +34,9 @@
         <property name="publishYear" type="int">
             <column name="publish_year" not-null="true" />
         </property>
-        
+        <property name="publisherId" type="long">
+            <column name="publisher_id" not-null="true" />
+        </property>
         <property name="image" type="binary">
             <column name="image" />
         </property>
@@ -42,5 +46,17 @@
         <property name="bookcol" type="string">
             <column name="bookcol" length="45" />
         </property>
+        <property name="rating" type="java.lang.Integer">
+            <column name="rating" />
+        </property>
+        <property name="voteCount" type="java.lang.Long">
+            <column name="vote_count" />
+        </property>
+        <set name="votes" table="vote" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="book_id" not-null="true" />
+            </key>
+            <one-to-many class="ru.javabegin.training.web.entity.Vote" />
+        </set>
     </class>
 </hibernate-mapping>
