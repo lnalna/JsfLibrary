@@ -77,7 +77,33 @@ body {
 
 }
 
+.image-info{
+    float: left;
+    width: 150px;
 
+}
+
+.vote-count{
+    color:#b2b2b2;
+    margin-left: 5px;
+}
+
+.rating{
+    float:left;
+    margin-top:5px;
+    width: 78px;
+}
+
+.image-info table{
+    margin-left: 20px;
+    margin-top:0px;
+}
+
+.image-info td{
+    padding:0;
+    border:0;
+    vertical-align: bottom;
+}
 .search .ui-button{
     text-shadow: none;
     text-align: center;
