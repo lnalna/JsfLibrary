@@ -12,10 +12,12 @@ import ru.javabegin.training.web.entity.ext.BookExt;
 public class BookListDataModel extends LazyDataModel<BookExt> {
     
     private List<BookExt> bookList;
-    private DataHelper dataHelper = DataHelper.getInstance();
-    private Pager pager = Pager.getInstance();
+    private DataHelper dataHelper;
+    private Pager pager;
     
-    public BookListDataModel(){
+    public BookListDataModel(DataHelper dataHelper,Pager pager){
+        this.dataHelper = dataHelper;
+        this.pager = pager;
         
     }
     

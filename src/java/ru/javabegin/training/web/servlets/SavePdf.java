@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ru.javabegin.training.web.controllers.BookListController;
 //import ru.javabegin.training.web.controllers.BookListController;
 import ru.javabegin.training.web.db.DataHelper;
 
@@ -26,8 +27,8 @@ public class SavePdf extends HttpServlet{
             //Boolean save = Boolean.valueOf(request.getParameter("save"));
             String filename = request.getParameter("filename");
             filename = URLEncoder.encode(filename, "UTF-8");
-            //BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
-            byte[] content = DataHelper.getInstance().getContent(id);
+            BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
+            byte[] content = bookListController.getDataHelper().getContent(id);
             response.setContentLength(content.length);
             response.setHeader("Content-Disposition","attachment; filename*=UTF-8''"+filename+".pdf");
             outputStream.write(content);

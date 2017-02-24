@@ -26,14 +26,7 @@
                 <ui:include src="editBook.xhtml"/>
                 
                 
-                <div class="box-sh">
-                    
-                    <h1><h:outputText id="booksCount" value="#{msg.book_count}  #{bookListController.pager.totalBooksCount}"/></h1>
-                    
-                    <h:outputLink rendered="#{request.isUserInRole('admin')}" value="#"><h:outputText value="#{msg.add_book}"/></h:outputLink>
-
-
-                </div>
+                
                 
                 
                 
@@ -114,7 +107,7 @@
                         <h:panelGrid columns="2" style="margin:0 auto; width:150px;">
                             <p:commandButton id="btnDeletedBook" value="#{msg.yes}" action="#{bookListController.deleteBook}"
                                              styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-                                             update=":booksForm:booksList :booksCount " onclick="PF('dlgDeleteBook').hide()"/>  
+                                             update=":booksForm:booksList :booksCount" onclick="PF('dlgDeleteBook').hide()"/>  
                             <p:commandButton value="#{msg.no}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"
                                              onclick="PF('dlgDeleteBook').hide()" type="button"/>       
                         </h:panelGrid>
@@ -124,7 +117,20 @@
                 </h:form>
             </ui:define>
                 
-                             
+             <ui:define name="books_count">
+                
+                <div class="box-sh">
+
+                    <h1><p:outputLabel id="booksCount" value="#{msg.book_count}  #{bookListController.pager.totalBooksCount}" /></h1>
+
+
+
+                    <h:outputLink rendered="#{request.isUserInRole('admin')}" value="#"><h:outputText value="#{msg.add_book}"/></h:outputLink>
+
+
+                </div>
+                
+            </ui:define>                
             
         </ui:composition>
         

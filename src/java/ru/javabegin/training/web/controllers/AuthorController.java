@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ru.javabegin.training.web.controllers;
 
 import javax.faces.bean.ManagedBean;
@@ -17,24 +12,38 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import ru.javabegin.training.web.beans.Pager;
 import ru.javabegin.training.web.entity.ext.AuthorExt;
 import ru.javabegin.training.web.db.DataHelper;
 import ru.javabegin.training.web.comparators.ListComparator;
 
 
 
-@ManagedBean(eager = false)
-@ApplicationScoped
+@ManagedBean
+@SessionScoped
 public class AuthorController implements Serializable, Converter{
     
     private List<SelectItem> selectItems = new ArrayList<SelectItem>();
     private Map<Long, AuthorExt> authorMap;
     private List<AuthorExt> authorList;
     
+    private Pager pager;
+    private DataHelper dataHelper;
     
-    public AuthorController(){
+    @ManagedProperty(value = "#{bookListController}")
+    private BookListController bookListController;
+    
+    
+    @PostConstruct
+    public void init(){
+        pager = bookListController.getPager();
+        dataHelper = bookListController.getDataHelper();
+        
         authorMap = new HashMap<Long, AuthorExt>();
-        authorList = DataHelper.getInstance().getAllAuthors();
+        authorList = dataHelper.getAllAuthors();
         Collections.sort(authorList, ListComparator.getInstance());
         
         for(AuthorExt authorExt : authorList){
@@ -42,6 +51,8 @@ public class AuthorController implements Serializable, Converter{
             selectItems.add(new SelectItem(authorExt, authorExt.getFio()));
         }
     }
+    
+   
     
     public List<AuthorExt> getAuthorList(){
         return authorList;
@@ -59,6 +70,14 @@ public class AuthorController implements Serializable, Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         return ((AuthorExt)value).getId().toString();
+    }
+    
+    public BookListController getBookListController() {
+        return bookListController;
+    }
+
+    public void setBookListController(BookListController bookListController) {
+        this.bookListController = bookListController;
     }
     
 }

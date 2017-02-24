@@ -27,7 +27,8 @@ public class BookListController implements Serializable{
     
     private DataGrid dataTable;
     private BookExt selectedBook;
-    private DataHelper dataHelper =  DataHelper.getInstance();
+    private BookExt newBook;
+    private transient DataHelper dataHelper;
     private LazyDataModel<BookExt> bookListModel;
     private Long selectedAuthorId;//текущий автор книги из списка при редактировании книги   
     //критерии поиска
@@ -35,10 +36,13 @@ public class BookListController implements Serializable{
     private SearchType selectedSearchType = SearchType.TITLE;//хранит выбранный тип поиска, по умолчанию - по названию
     private long selectedGenreId;//выбранный жанр
     private String currentSearchString;//хранит поисковую строку
-    private Pager pager =  Pager.getInstance();   
+    private Pager pager;   
        
     //отображение режима редактирования
     private boolean editModeView;
+    //отображение режима добавления
+    private boolean addModeView;
+    
     
     //номер строки (номер книги в списке книг)
     private transient int row = -1;
@@ -47,8 +51,19 @@ public class BookListController implements Serializable{
     
     
     public BookListController(){
-        bookListModel = new BookListDataModel();       
+        pager = new Pager();
+        dataHelper = new DataHelper(pager);
+        bookListModel = new BookListDataModel(dataHelper, pager);
     }
+    
+    public DataHelper getDataHelper() {
+        return dataHelper;
+    }
+    
+    public Pager getPager(){
+        return pager;
+    }
+
     
     private void submitValues(Character selectedLetter,  long selectedGenreId) {
         this.selectedLetter = selectedLetter;        
@@ -80,7 +95,12 @@ public class BookListController implements Serializable{
        
     }
 //</editor-fold>
-    
+    public void fillBooksByRate() {
+
+        imitateLoading();
+        dataHelper.getBooksByRate();
+
+    }
     
     //<editor-fold defaultstate="collapsed" desc="поиск по букве fillBooksByLetter">
     public void fillBooksByLetter() {
@@ -161,10 +181,25 @@ public class BookListController implements Serializable{
     }
 //</editor-fold>
     
-    
+    public void rate() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        int bookIndex = Integer.parseInt(params.get("bookIndex"));
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        String username = facesContext.getExternalContext().getUserPrincipal().getName();
+
+        BookExt book = pager.getList().get(bookIndex);
+
+        dataHelper.rateBook(book, username);
+
+    }
     
     public boolean isEditModeView(){
         return editModeView;
+    }
+    
+    public boolean isAddMode() {
+        return addModeView;
     }
     
     public void showEditModeView(){
@@ -177,6 +212,10 @@ public class BookListController implements Serializable{
     //    RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
 
         
+    }
+    
+    public void cancelAddMode() {
+        addModeView = false;
     }
     
     public void switchEditMode() {
@@ -289,9 +328,7 @@ public int getRow(){
 //</editor-fold>
     
     
-    public Pager getPager(){
-        return pager;
-    }
+   
     
     public LazyDataModel<BookExt> getBookListModel(){
        return bookListModel;
@@ -311,5 +348,16 @@ public int getRow(){
 
     public void setDataGrid(DataGrid dataTable) {
         this.dataTable = dataTable;
+    }
+    
+    public BookExt getNewBook() {
+        if (newBook == null) {
+            newBook = new BookExt();
+        }
+        return newBook;
+    }
+
+    public void setNewBook(BookExt newBook) {
+        this.newBook = newBook;
     }
 }

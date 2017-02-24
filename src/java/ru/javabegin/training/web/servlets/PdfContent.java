@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import ru.javabegin.training.web.controllers.BookListController;
 //import ru.javabegin.training.web.controllers.BookListController;
 import ru.javabegin.training.web.db.DataHelper;
 
@@ -30,8 +31,8 @@ public class PdfContent extends HttpServlet {
         OutputStream out = response.getOutputStream();
         try {
             long id = Long.valueOf(request.getParameter("id"));
-            //BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
-            byte[] content = DataHelper.getInstance().getContent(id);
+            BookListController bookListController = (BookListController) request.getSession(false).getAttribute("bookListController");
+            byte[] content = bookListController.getDataHelper().getContent(id);
             response.setContentLength(content.length);
             out.write(content);
         } catch (Exception ex) {

@@ -33,9 +33,7 @@
         <property name="publishYear" type="int">
             <column name="publish_year" not-null="true" />
         </property>
-        <property name="publisherId" type="long">
-            <column name="publisher_id" not-null="true" />
-        </property>
+        
         <property name="image" type="binary">
             <column name="image" />
         </property>

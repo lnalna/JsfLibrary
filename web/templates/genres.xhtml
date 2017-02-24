@@ -20,8 +20,7 @@
 
                             <ui:repeat value="#{genreController.genreList}" var="g">                            
                                 <li>
-                                    <p:commandLink update="booksForm:booksList @form :lettersForm 
-                                                 :booksCount" value="#{g.name}"  styleClass="#{g.id == bookListController.selectedGenreId ? 'selected_link':''}"
+                                    <p:commandLink update="booksForm:booksList @form :lettersForm :booksCount" value="#{g.name}"  styleClass="#{g.id == bookListController.selectedGenreId ? 'selected_link':''}"
                                                  actionListener="#{bookListController.fillBooksByGenre()}">                                     
 
                                         <f:param name="genre_id" value="#{g.id}" />
