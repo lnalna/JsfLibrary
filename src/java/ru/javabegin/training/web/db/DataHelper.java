@@ -229,7 +229,8 @@ public class DataHelper {
 
 
         Query query = getSession().createQuery("select new map(round(avg(value)) as rating, count(value) as voteCount)  from Vote v where v.book.id=:id");
-        query.setParameter("id", book.getId());
+        long bookId = book.getId();
+        query.setParameter("id", bookId);
 
         List list = query.list();
 
@@ -245,9 +246,12 @@ public class DataHelper {
 
         query.setParameter("rating", rating);
         query.setParameter("voteCount", voteCount);
-        query.setParameter("id", book.getId());
+        long temp = book.getId();
+        query.setParameter("id", temp);
 
         int result = query.executeUpdate();
+        
+        
 
     }
 
