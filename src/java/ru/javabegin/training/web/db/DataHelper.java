@@ -103,6 +103,22 @@ public class DataHelper {
         populateList();
     }
     
+    public BookExt getBookById(int bookId){
+        getAllBooks();
+        
+        List<BookExt> list = pager.getList();
+        
+        BookExt temp = null;
+        
+        for(BookExt bookExt :list)
+            if(bookExt.getId()== bookId){
+                temp = bookExt;
+                break;
+            }
+            
+        return temp;
+    }
+    
     public void getBooksByLetter(Character letter) {
         
         Criterion criterion = Restrictions.ilike("b.name", letter.toString(), MatchMode.START);
@@ -165,6 +181,7 @@ public class DataHelper {
         List<BookExt> list = criteria.list();
         pager.setList(list);
     }
+  
    
     private void runCountCriteria(){
         Criteria criteria = booksCountCriteria.getExecutableCriteria(getSession());
@@ -219,7 +236,8 @@ public class DataHelper {
         HashMap<String, Object> map = (HashMap<String, Object>) list.get(0);
 
         long voteCount = Long.valueOf(map.get("voteCount").toString());
-        int rating = Long.valueOf(map.get("rating").toString()).intValue();
+     //   int rating =5;//(int) Long.valueOf(map.get("rating").toString()).intValue();
+        int rating = Double.valueOf(map.get("rating").toString()).intValue();
 
         query = getSession().createQuery("update Book set rating = :rating, "
                 + " voteCount = :voteCount"
@@ -275,6 +293,7 @@ public class DataHelper {
         criteria.createAlias("b.author", "author");
         criteria.createAlias("b.genre", "genre");
         criteria.createAlias("b.publisher", "publisher");
+     //   criteria.createAlias("b.id", "id");
     }
     
        

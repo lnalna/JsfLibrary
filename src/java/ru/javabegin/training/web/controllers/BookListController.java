@@ -188,7 +188,8 @@ public class BookListController implements Serializable{
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String username = facesContext.getExternalContext().getUserPrincipal().getName();
 
-        BookExt book = pager.getList().get(bookIndex);
+     //   BookExt book = pager.getList().get(bookIndex);
+          BookExt book = dataHelper.getBookById(bookIndex);
 
         dataHelper.rateBook(book, username);
 
