@@ -50,7 +50,7 @@
                               <p:panelGrid id="ratingPanel" columns="2">
                                   
                                   <p:rating id="rating" value="#{b.rating}" styleClass="rating" cancel="false" stars="5" 
-                                            onRate="rate([{name:'bookIndex', value:#{b.id}}])"/>
+                                            onRate="rate([{name:'bookIndex', value:#{b.id}}, {name:'currentRatingVoice', value:value}])"/>
                                   
                                   <p:outputLabel id="voteCount" value="(#{b.voteCount})" styleClass="vote-count"/>
                                   

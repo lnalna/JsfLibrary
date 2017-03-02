@@ -213,7 +213,7 @@ public class DataHelper {
         int result = query.executeUpdate();
     }
     
-     public void rateBook(Book book, String username) {
+     public void rateBook(Book book, String username, int currentRatingVoice) {
         Vote vote = new Vote();
         vote.setBook(book);
         vote.setUsername(username);
@@ -221,7 +221,7 @@ public class DataHelper {
         //здесь было бы правильно вставить рейтинг со страницы books.xhtml 
         //т.е значение, которому соответствует порядок звездочки
         //а не рейтинг текущей книги, который уже есть
-        vote.setValue(book.getRating());
+        vote.setValue(currentRatingVoice);
         //vote.setValue(4);
         getSession().save(vote);
 

@@ -21,6 +21,7 @@ import ru.javabegin.training.web.models.BookListDataModel;
 
 
 
+
 @ManagedBean(eager = true)
 @SessionScoped
 public class BookListController implements Serializable{
@@ -46,6 +47,8 @@ public class BookListController implements Serializable{
     
     //номер строки (номер книги в списке книг)
     private transient int row = -1;
+    
+  
     
   
     
@@ -184,6 +187,7 @@ public class BookListController implements Serializable{
     public void rate() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         int bookIndex = Integer.parseInt(params.get("bookIndex"));
+        int currentRatingVoice = Integer.parseInt(params.get("currentRatingVoice"));
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String username = facesContext.getExternalContext().getUserPrincipal().getName();
@@ -191,12 +195,13 @@ public class BookListController implements Serializable{
      //   BookExt book = pager.getList().get(bookIndex);
           BookExt book = dataHelper.getBookById(bookIndex);
 
-        dataHelper.rateBook(book, username);
+        dataHelper.rateBook(book, username, currentRatingVoice);
         
         
         dataHelper.populateList();
 
     }
+    
     
     public boolean isEditModeView(){
         return editModeView;
