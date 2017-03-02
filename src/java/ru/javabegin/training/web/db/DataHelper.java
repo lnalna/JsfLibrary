@@ -217,7 +217,12 @@ public class DataHelper {
         Vote vote = new Vote();
         vote.setBook(book);
         vote.setUsername(username);
+        
+        //здесь было бы правильно вставить рейтинг со страницы books.xhtml 
+        //т.е значение, которому соответствует порядок звездочки
+        //а не рейтинг текущей книги, который уже есть
         vote.setValue(book.getRating());
+        //vote.setValue(4);
         getSession().save(vote);
 
         updateBookRate(book);
@@ -251,6 +256,10 @@ public class DataHelper {
 
         int result = query.executeUpdate();
         
+        
+        //Если коммит будет срабатывать здесь, то каждый голос будет учитываться за один
+        //а не за два
+        sessionFactory.getCurrentSession().getTransaction().commit();
         
 
     }

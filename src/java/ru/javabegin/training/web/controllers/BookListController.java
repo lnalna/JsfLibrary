@@ -192,6 +192,9 @@ public class BookListController implements Serializable{
           BookExt book = dataHelper.getBookById(bookIndex);
 
         dataHelper.rateBook(book, username);
+        
+        
+        dataHelper.populateList();
 
     }
     
