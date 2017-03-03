@@ -1,6 +1,7 @@
 package ru.javabegin.training.web.beans;
 
 import java.io.Serializable;
+import static java.lang.Thread.sleep;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +86,19 @@ public class User implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         return result;
+    }
+    
+    public String goHome(){
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "/index.xhtml?faces-redirect=true";
+    }
+    
+    public String goBooks(){
+        return "/pages/books.xhtml?faces-redirect=true";
     }
     
 }
