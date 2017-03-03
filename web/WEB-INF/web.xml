@@ -70,5 +70,15 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/errorpages/expired.xhtml</location>
     </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorpages/empty.xhtml</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorpages/empty.xhtml</location>
+    </error-page>
+    
     
 </web-app>
