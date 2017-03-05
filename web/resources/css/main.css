@@ -308,3 +308,62 @@ body {
     font-size: 30px;
     color:#aeaeae;
 }
+
+edit_book_table td, .edit_book_table tr{
+    vertical-align: top;
+    text-shadow:0;
+    border:0;
+}
+
+.edit_book_table .ui-panelgrid-footer td{
+    text-align: right;
+}
+
+.edit_book_table .ui-panelgrid-footer td button{
+    margin-left:10px;    
+}
+
+.edit_book_table tbody{
+    border:1px solid #d6d6d6;
+    padding:30px;
+}
+
+.edit_book_table img{
+    border: none;
+}
+
+.ui-widget-header{
+    text-align: center;
+}
+
+.ui-dialog-title{
+    color:#000;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#editDialog{
+    width:800px !important;
+}
+
+.edit_book_table{
+    width:100%;
+}
+
+.edit_book_table .ui-widget-content{
+    border:0;
+}
+
+.fileupload-content{
+    display: none !important;
+}
+
+.ui-fileupload .start {
+    display: none !important;
+}
+.ui-fileupload .cancel {
+    display: none !important;
+}
+.ui-fileupload .progress {
+    display: none !important;
+}
