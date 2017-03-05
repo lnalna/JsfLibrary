@@ -69,9 +69,15 @@
                                 <h:outputText id="counter" />  
                             </p:panel>
 
+                            
                             <strong>#{msg.cover}</strong>
+                            <p:panel id="imagePanel">                                
+                                <p:graphicImage value="/ShowImage?id=#{bookListController.selectedBook.id}" width="100" height="147"/>                                    
+                            </p:panel>
+                            <strong>#{msg.cover_download}</strong>
                             <p:panel>
-                                <p:graphicImage value="/ShowImage?id=#{bookListController.selectedBook.id}" width="100" height="147"/>
+                                <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{imageController.handleFileUpload}" update="bookNewImage" sizeLimit="#{imageController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  
+                                 <p:graphicImage value="#{imageController.uploadedImage}" library="images" width="110" height="150" id="bookNewImage"/>
                             </p:panel>
                             
 
