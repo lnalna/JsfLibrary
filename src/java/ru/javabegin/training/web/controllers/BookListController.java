@@ -223,7 +223,8 @@ public class BookListController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(bundle.getString("updated")));
 
         dataTable.setFirst(calcSelectedPage());
-    //fillBooksBySearch();
+    
+        uploadedImage = null;
         
     }
     
