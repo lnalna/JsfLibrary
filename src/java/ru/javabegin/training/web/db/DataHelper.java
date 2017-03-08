@@ -190,7 +190,24 @@ public class DataHelper {
     }
     
     public void updateBook(BookExt book){
-        Query query = getSession().createQuery("update Book set name = :name, "
+        
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("update Book ");
+        queryBuilder.append("set name = :name, ");
+        queryBuilder.append("pageCount = :pageCount, ");
+        queryBuilder.append("isbn = :isbn, ");
+        queryBuilder.append("genre = :genre, ");
+        queryBuilder.append("author = :author, ");
+        queryBuilder.append("publishYear = :publishYear, ");
+        queryBuilder.append("publisher = :publisher, ");
+        
+        if(book.isImageEdited())
+            queryBuilder.append("image = :image, ");
+        
+        queryBuilder.append("description = :description ");
+        queryBuilder.append(" where id = :id");
+        
+       /* Query query = getSession().createQuery("update Book set name = :name, "
                 + " pageCount = :pageCount, "
                 + " isbn = :isbn, "
                 + " genre = :genre, "
@@ -199,6 +216,8 @@ public class DataHelper {
                 + " publisher = :publisher, "
                 + " description = :description "
                 + " where id = :id");
+*/
+       Query query = getSession().createQuery(queryBuilder.toString());
         
         query.setParameter("name", book.getName());
         query.setParameter("pageCount", book.getPageCount());
@@ -210,6 +229,9 @@ public class DataHelper {
         query.setParameter("description", book.getDescription());
         query.setParameter("id", book.getId());    
         
+        if (book.isImageEdited()){
+            query.setParameter("image", book.getImage());
+        }
         int result = query.executeUpdate();
     }
     
@@ -218,9 +240,7 @@ public class DataHelper {
         vote.setBook(book);
         vote.setUsername(username);
         
-        //здесь было бы правильно вставить рейтинг со страницы books.xhtml 
-        //т.е значение, которому соответствует порядок звездочки
-        //а не рейтинг текущей книги, который уже есть
+        //сейчас здесь правилно - вставляется рейтинг текущий номер звездочик
         vote.setValue(currentRatingVoice);
         //vote.setValue(4);
         getSession().save(vote);
