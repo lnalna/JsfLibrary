@@ -61,6 +61,16 @@
                             
                             <p:inputText id="inputPageCount" value="#{bookListController.selectedBook.pageCount}" required="true"/>
                             
+                            
+                            
+                            <h:outputLink value="#{request.contextPath}/PdfContent" target="_blank" styleClass="pdf-link">
+                                
+                                <p:outputLabel value="#{msg.show_pdf}"/>
+                                <f:param name="id" value="#{bookListController.selectedBook.id}"/>                            
+                            </h:outputLink>
+                            
+                            <p:outputLabel/>
+                            
                             <strong>#{msg.description} </strong>
                             
                             <p:panel >
