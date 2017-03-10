@@ -54,7 +54,7 @@ public class BookListController implements Serializable{
     //номер строки (номер книги в списке книг)
     private transient int row = -1;
     
-  
+      
     //Begin ImageController
     private final int IMAGE_MAX_SIZE = 204800;
     private byte[] uploadedImage;

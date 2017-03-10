@@ -13,7 +13,7 @@
     
     
     <h:body>
-        <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,400" height="990" width="800">
+        <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,400" height="1100" width="990">
                     
                     <h:form id="formEditBook">
                         
@@ -71,6 +71,18 @@
                             
                             <p:outputLabel/>
                             
+                            <strong>#{msg.content}</strong>
+                            <p:panel>
+                                <p:fileUpload  id="pdfUpload" label="#{msg.load_pdf}" fileUploadListener="#{contentController.handleFileUpload}" update="messages-pdf @form" allowTypes="/(\.|\/)(pdf)$/" multiple="false" auto="true" styleClass="pdf-upload"/> 
+                               
+                                <h:outputLink id="uploadedPdfLink" value="#{request.contextPath}/UploadedPdf"  target="_blank" styleClass="pdf-link" rendered="#{contentController.showContent}">                                                             
+                                    <p:outputLabel value="#{msg.show_uploaded_pdf}"/>
+                                </h:outputLink> 
+                                <p:messages id="messages-pdf" showDetail="true" for="formUploadPdf"/>
+                            </p:panel>
+                            
+                            
+                            
                             <strong>#{msg.description} </strong>
                             
                             <p:panel >
@@ -84,6 +96,7 @@
                             <p:panel id="imagePanel">                                
                                 <p:graphicImage value="/ShowImage?id=#{bookListController.selectedBook.id}" width="100" height="147"/>                                    
                             </p:panel>
+                            
                             <strong>#{msg.cover_download}</strong>
                             <p:panel>
                                 <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{bookListController.handleFileUpload}" update="bookNewImage" sizeLimit="#{bookListController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  

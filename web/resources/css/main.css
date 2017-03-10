@@ -367,3 +367,13 @@ edit_book_table td, .edit_book_table tr{
 .ui-fileupload .progress {
     display: none !important;
 }
+
+.pdf-link label{
+    color:blue;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pdf-upload div{
+    width:140px;
+}

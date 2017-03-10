@@ -194,6 +194,10 @@ public class DataHelper {
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append("update Book ");
         queryBuilder.append("set name = :name, ");
+        
+        if (book.isContentEdited())
+            queryBuilder.append("content = :content, ");
+        
         queryBuilder.append("pageCount = :pageCount, ");
         queryBuilder.append("isbn = :isbn, ");
         queryBuilder.append("genre = :genre, ");
@@ -220,6 +224,10 @@ public class DataHelper {
        Query query = getSession().createQuery(queryBuilder.toString());
         
         query.setParameter("name", book.getName());
+        
+        if (book.isContentEdited()){
+            query.setParameter("content", book.getContent());
+        }
         query.setParameter("pageCount", book.getPageCount());
         query.setParameter("isbn", book.getIsbn());
         query.setParameter("genre", book.getGenre());
