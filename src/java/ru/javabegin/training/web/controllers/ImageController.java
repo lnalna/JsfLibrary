@@ -21,6 +21,7 @@ public class ImageController implements Serializable{
     
     private final int IMAGE_MAX_SIZE = 204800;
     private byte[] uploadedImage;
+    private boolean showImage;
     
     @ManagedProperty(value = "#{bookListController}")
     private BookListController bookListController;
@@ -42,7 +43,14 @@ public class ImageController implements Serializable{
     }
     
     public void handleFileUpload(FileUploadEvent event){
-        uploadedImage = event.getFile().getContents().clone();
+        uploadedImage = event.getFile().getContents();
+        
+        if (uploadedImage != null){
+            showImage = true;
+            
+            bookListController.getSelectedBook().setImage(uploadedImage);
+            bookListController.getSelectedBook().setImageEdited(showImage);
+        }
     }
     
     private DefaultStreamedContent getStreamedContent(byte[] image){
@@ -84,5 +92,8 @@ public class ImageController implements Serializable{
     
     public byte[] getUploadedImageBytes(){
         return uploadedImage;
+    }
+    public boolean isShowImage(){
+        return showImage;
     }
 }

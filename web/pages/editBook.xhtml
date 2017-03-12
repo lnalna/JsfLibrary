@@ -99,8 +99,8 @@
                             
                             <strong>#{msg.cover_download}</strong>
                             <p:panel>
-                                <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{bookListController.handleFileUpload}" update="bookNewImage" sizeLimit="#{bookListController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  
-                                <p:graphicImage value="#{bookListController.uploadedImage}" library="images" width="110" height="150" id="bookNewImage"/>
+                                <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{imageController.handleFileUpload}" update="bookNewImage @form" sizeLimit="#{imageController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  
+                                <p:graphicImage value="#{imageController.uploadedImage}" library="images" width="110" height="150" id="bookNewImage" />
                             </p:panel>
                             
 

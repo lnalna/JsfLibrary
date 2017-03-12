@@ -55,63 +55,7 @@ public class BookListController implements Serializable{
     private transient int row = -1;
     
       
-    //Begin ImageController
-    private final int IMAGE_MAX_SIZE = 204800;
-    private byte[] uploadedImage;
-    private boolean imageEdited;
     
-    
-    public void handleFileUpload(FileUploadEvent event){
-        uploadedImage = event.getFile().getContents().clone();
-        
-        if (uploadedImage != null){
-          imageEdited = true;
-          selectedBook.setImage(uploadedImage);
-          selectedBook.setImageEdited(imageEdited);
-        }
-    }
-    
-  private DefaultStreamedContent getStreamedContent(byte[] image){
-        
-        if (image == null){
-            return null;
-        }
-        
-        InputStream inputStream = null;
-        
-        try {
-            inputStream = new ByteArrayInputStream(image);
-            return new DefaultStreamedContent(inputStream, "image/png");
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException ex){
-                Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-  
-  public StreamedContent getUploadedImage(){
-        return getStreamedContent(uploadedImage);
-    }
-  
-  public int getImageMaxSize(){
-        return IMAGE_MAX_SIZE;
-    }
-    
-    public byte[] getUploadedImageBytes(){
-        return uploadedImage;
-    }
-    
-    public void setImageEdited(boolean imageEdited) {
-        this.imageEdited = imageEdited;
-    }
-
-    public boolean isImageEdited() {
-        return imageEdited;
-    }
-    
-  //End ImageController  
     
     public BookListController(){
         pager = new Pager();
@@ -224,7 +168,7 @@ public class BookListController implements Serializable{
 
         dataTable.setFirst(calcSelectedPage());
     
-        uploadedImage = null;
+    //    uploadedImage = null;
         
     }
     
