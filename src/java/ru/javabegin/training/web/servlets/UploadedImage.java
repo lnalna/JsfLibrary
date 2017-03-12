@@ -34,23 +34,7 @@ public class UploadedImage extends HttpServlet {
             byte[] image = imageController.getUploadedImageBytes();
             response.setContentLength(image.length);
 
-            out.write(image);
-            
-            /*
-            
-            response.setContentType("image/jpeg");
-        OutputStream out = response.getOutputStream();
-        
-        try{
-            
-            long id = Integer.valueOf(request.getParameter("id"));
-             
-             BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
-             
-             byte[] image = bookListController.getDataHelper().getImage(id);
-             response.setContentLength(image.length);
-             out.write(image);
-            */
+            out.write(image);                      
             
         } catch (Exception ex) {
             ex.printStackTrace();
