@@ -25,7 +25,7 @@ public class UploadedImage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("image/png");
+        response.setContentType("image/jpeg");
         OutputStream out = response.getOutputStream();
         try {
 
@@ -35,6 +35,23 @@ public class UploadedImage extends HttpServlet {
             response.setContentLength(image.length);
 
             out.write(image);
+            
+            /*
+            
+            response.setContentType("image/jpeg");
+        OutputStream out = response.getOutputStream();
+        
+        try{
+            
+            long id = Integer.valueOf(request.getParameter("id"));
+             
+             BookListController bookListController = (BookListController)request.getSession(false).getAttribute("bookListController");
+             
+             byte[] image = bookListController.getDataHelper().getImage(id);
+             response.setContentLength(image.length);
+             out.write(image);
+            */
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

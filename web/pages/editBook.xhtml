@@ -13,7 +13,7 @@
     
     
     <h:body>
-        <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,400" height="1100" width="990">
+        <p:dialog modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" position="200,50" height="1200" width="990">
                     
                     <h:form id="formEditBook">
                         
@@ -100,7 +100,7 @@
                             <strong>#{msg.cover_download}</strong>
                             <p:panel>
                                 <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{imageController.handleFileUpload}" update="bookNewImage @form" sizeLimit="#{imageController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  
-                                <p:graphicImage value="#{imageController.uploadedImage}" library="images" width="110" height="150" id="bookNewImage" />
+                                <p:graphicImage value="/UploadedImage" library="images" width="110" height="150" id="bookNewImage" />
                             </p:panel>
                             
 
