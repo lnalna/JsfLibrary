@@ -155,8 +155,14 @@ public class BookListController implements Serializable{
     //<editor-fold defaultstate="collapsed" desc="update таблицы library.book  метод updateBooks">
     public void updateBooks(){
          
-        dataHelper.updateBook(selectedBook);
+        if (editModeView){
         
+            dataHelper.updateBook(selectedBook);
+        }
+        else if (addModeView){
+            dataHelper.addBook(selectedBook.getBook());
+        }
+            
         cancelEditModeView();
         
         dataHelper.populateList();
@@ -232,12 +238,36 @@ public class BookListController implements Serializable{
         addModeView = false;
     }
     
+    public void cancelModes() {
+        if (addModeView) {
+            addModeView = false;
+        }
+
+        if (editModeView) {
+            editModeView = false;
+        }
+
+    /*    if (selectedBook != null) {
+            selectedBook.setUploadedContent(null);
+            selectedBook.setUploadedImage(null);
+        }
+
+        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
+*/
+    }
+    
     public void switchEditMode() {
         editModeView = true;
 //        RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
 
     }
     
+     public void switchAddMode() {
+        addModeView = true;
+        selectedBook = new BookExt();
+        //RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
+
+}
     
     //<editor-fold defaultstate="collapsed" desc="получение всего русского алфавита getRussianLetters">
     public Character[] getRussianLetters() {

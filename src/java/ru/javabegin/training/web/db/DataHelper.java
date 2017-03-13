@@ -243,6 +243,10 @@ public class DataHelper {
         int result = query.executeUpdate();
     }
     
+    public void addBook(Book book) {
+        getSession().save(book);
+    }
+    
      public void rateBook(Book book, String username, int currentRatingVoice) {
         Vote vote = new Vote();
         vote.setBook(book);
