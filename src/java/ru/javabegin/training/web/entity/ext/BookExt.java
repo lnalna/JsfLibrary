@@ -41,10 +41,10 @@ public class BookExt extends Book implements Serializable{
     public Book getBook(){
         Book book = new Book();
         book.setAuthor(getAuthor());
-       // book.setContent(getUploadedContent());// записываем загруженный контент
+        book.setContent(getContent());// записываем загруженный контент
         //book.setDescr(getDescr());
         book.setGenre(getGenre());
-        //book.setImage(getUploadedImage());// записываем загруженное изображение
+        book.setImage(getImage());// записываем загруженное изображение
         book.setIsbn(getIsbn());
         book.setName(getName());
         book.setPageCount(getPageCount());
