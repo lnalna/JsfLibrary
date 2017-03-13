@@ -104,7 +104,7 @@
                             </p:panel>
                             
 
-                           <p:commandLink actionListener="#{bookListController.updateBooks}" styleClass="button-update" title="#{msg.Save}"  type="button"  onclick="PF('dlgEditBook').hide()"
+                           <p:commandLink actionListener="#{bookListController.saveBook}" styleClass="button-update" title="#{msg.Save}"  type="button"  onclick="PF('dlgEditBook').hide()"
                                 update=":formEditBook  :booksForm:booksList :genresList :lettersForm :growlMessage">
                                 <h:graphicImage library="images" name="edit.jpg" />
                                 <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>

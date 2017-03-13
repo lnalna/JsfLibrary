@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -21,7 +20,6 @@ public class ImageController implements Serializable{
     
     private final int IMAGE_MAX_SIZE = 204800;
     private byte[] uploadedImage;
-    private boolean showImage;
     
     @ManagedProperty(value = "#{bookListController}")
     private BookListController bookListController;
@@ -39,18 +37,12 @@ public class ImageController implements Serializable{
     }
     
     public StreamedContent getUploadedImage(){
-        return getStreamedContent(uploadedImage);
+        return getStreamedContent(bookListController.getSelectedBook().getUploadedImage());
     }
     
     public void handleFileUpload(FileUploadEvent event){
-        uploadedImage = event.getFile().getContents();
-        
-        if (uploadedImage != null){
-            showImage = true;
-            
-            bookListController.getSelectedBook().setImage(uploadedImage);
-            bookListController.getSelectedBook().setImageEdited(showImage);
-        }
+         uploadedImage = event.getFile().getContents();
+         bookListController.getSelectedBook().setUploadedImage(uploadedImage);
     }
     
     private DefaultStreamedContent getStreamedContent(byte[] image){
@@ -73,27 +65,13 @@ public class ImageController implements Serializable{
         }
     }
     
-    public void clearImage(){
-        uploadedImage = null;
-        RequestContext.getCurrentInstance().execute("dlgEditBook.hide()");
-    }
     
-    public void updateImage(){
-        if (uploadedImage != null){
-            bookListController.getSelectedBook().setImage(uploadedImage);
-            bookListController.getSelectedBook().setImageEdited(true);
-        }
-        clearImage();
-    }
     
     public int getImageMaxSize(){
         return IMAGE_MAX_SIZE;
-    }
-    
+    }    
+ 
     public byte[] getUploadedImageBytes(){
         return uploadedImage;
-    }
-    public boolean isShowImage(){
-        return showImage;
     }
 }

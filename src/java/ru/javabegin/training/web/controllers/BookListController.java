@@ -153,11 +153,15 @@ public class BookListController implements Serializable{
 //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="update таблицы library.book  метод updateBooks">
-    public void updateBooks(){
+    public void saveBook(){
          
-        dataHelper.updateBook(selectedBook);
+        if (editModeView){
+            dataHelper.updateBook(selectedBook);
+        }else if (addModeView){
+           dataHelper.addBook(selectedBook.getBook()); 
+        }
         
-        cancelEditModeView();
+        cancelModes();
         
         dataHelper.populateList();
         
@@ -245,6 +249,20 @@ public class BookListController implements Serializable{
 
     }
     
+    public void cancelModes() {
+        if (addModeView) {
+            addModeView = false;
+        }
+
+        if (editModeView) {
+            editModeView = false;
+        }
+
+        if (selectedBook != null) {
+            selectedBook.setUploadedContent(null);
+            selectedBook.setUploadedImage(null);
+        }        
+    }
     
     //<editor-fold defaultstate="collapsed" desc="получение всего русского алфавита getRussianLetters">
     public Character[] getRussianLetters() {

@@ -133,9 +133,12 @@
                     <h1><p:outputLabel id="booksCount" value="#{msg.book_count}  #{bookListController.pager.totalBooksCount}" /></h1>
 
 
-
-                    <h:outputLink rendered="#{request.isUserInRole('admin')}" value="#"><h:outputText value="#{msg.add_book}"/></h:outputLink>
-
+                    
+                    <p:commandLink  styleClass="mr" actionListener="#{bookListController.switchAddMode}" type="button" onclick="PF('dlgEditBook').show()" title="#{msg.add_book}" update=":formEditBook:bookDetails">  
+                        <p class="edit">#{msg.add_book}</p>
+                              <f:setPropertyActionListener value="#{b}"  target="#{bookListController.selectedBook}"/>  
+                    </p:commandLink> 
+                    
 
                 </div>
                 

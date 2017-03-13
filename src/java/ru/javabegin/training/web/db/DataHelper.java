@@ -195,7 +195,7 @@ public class DataHelper {
         queryBuilder.append("update Book ");
         queryBuilder.append("set name = :name, ");
         
-        if (book.isContentEdited())
+        if (book.getUploadedContent() != null)
             queryBuilder.append("content = :content, ");
         
         queryBuilder.append("pageCount = :pageCount, ");
@@ -205,7 +205,7 @@ public class DataHelper {
         queryBuilder.append("publishYear = :publishYear, ");
         queryBuilder.append("publisher = :publisher, ");
         
-        if(book.isImageEdited())
+        if(book.getUploadedImage() != null)
             queryBuilder.append("image = :image, ");
         
         queryBuilder.append("description = :description ");
@@ -225,7 +225,7 @@ public class DataHelper {
         
         query.setParameter("name", book.getName());
         
-        if (book.isContentEdited()){
+        if (book.getUploadedContent() != null){
             query.setParameter("content", book.getContent());
         }
         query.setParameter("pageCount", book.getPageCount());
@@ -237,10 +237,14 @@ public class DataHelper {
         query.setParameter("description", book.getDescription());
         query.setParameter("id", book.getId());    
         
-        if (book.isImageEdited()){
+        if (book.getUploadedImage() != null){
             query.setParameter("image", book.getImage());
         }
         int result = query.executeUpdate();
+    }
+    
+    public void addBook(Book book) {
+        getSession().save(book);
     }
     
      public void rateBook(Book book, String username, int currentRatingVoice) {
