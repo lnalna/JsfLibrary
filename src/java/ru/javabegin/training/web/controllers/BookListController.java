@@ -238,6 +238,13 @@ public class BookListController implements Serializable{
 
     }
     
+    public void switchAddMode() {
+        addModeView = true;
+        selectedBook = new BookExt();
+        //RequestContext.getCurrentInstance().execute("dlgEditBook.show()");
+
+    }
+    
     
     //<editor-fold defaultstate="collapsed" desc="получение всего русского алфавита getRussianLetters">
     public Character[] getRussianLetters() {
