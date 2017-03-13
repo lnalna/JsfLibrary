@@ -11,6 +11,9 @@ import org.primefaces.event.FileUploadEvent;
 @SessionScoped
 public class ContentController  implements Serializable{
     
+    
+    private byte[] uploadedContent;
+    private boolean showContent = false;
         
     @ManagedProperty(value = "#{bookListController}")
     private BookListController bookListController;
@@ -24,19 +27,21 @@ public class ContentController  implements Serializable{
     }
     
     public void handleFileUpload(FileUploadEvent event){
-        bookListController.getSelectedBook().setUploadedContent(event.getFile().getContents());
+        uploadedContent = event.getFile().getContents();
+        bookListController.getSelectedBook().setUploadedContent(uploadedContent);
     }
     
     
     public boolean isShowContent(){
-    //   if (bookListController.getSelectedBook().getUploadedContent() != null) {
-            return true;
-      //  }
+     if (bookListController.getSelectedBook().getUploadedContent() != null) {
+            showContent = true;
+        }
+     else showContent = false;
 
-        //return false;
+        return showContent;
     }
     
     public byte[] getUploadedContent(){
-        return bookListController.getSelectedBook().getUploadedContent();
+        return uploadedContent;
     }
 }
