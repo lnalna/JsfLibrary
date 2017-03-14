@@ -43,6 +43,8 @@ public class GenreController implements Serializable, Converter {
         genreMap = new HashMap<Long, GenreExt>();
         genreList = dataHelper.getAllGenres();
         Collections.sort(genreList, ListComparator.getInstance());
+        
+        genreList.add(0, createEmptyGenre());
 
         for (GenreExt genre : genreList) {
             genreMap.put(genre.getId(), genre);
@@ -76,5 +78,14 @@ public class GenreController implements Serializable, Converter {
 
     public void setBookListController(BookListController bookListController) {
         this.bookListController = bookListController;
+    }
+    
+    private GenreExt createEmptyGenre(){
+        
+        GenreExt genre = new GenreExt();
+        genre.setId(-1L);
+        genre.setName("");
+        
+        return genre;
     }
 }

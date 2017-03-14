@@ -42,6 +42,8 @@ public class PublisherController implements Serializable, Converter {
         publisherList = dataHelper.getAllPublishers();
         
         Collections.sort(publisherList, ListComparator.getInstance());
+        
+        publisherList.add(0, createEmptyPublisher());
 
         for (PublisherExt publisher : publisherList) {
             publisherMap.put(publisher.getId(), publisher);
@@ -73,5 +75,14 @@ public class PublisherController implements Serializable, Converter {
 
     public void setBookListController(BookListController bookListController) {
         this.bookListController = bookListController;
+    }
+    
+    private PublisherExt createEmptyPublisher(){
+        
+        PublisherExt publisher = new PublisherExt();
+        publisher.setId(-1L);
+        publisher.setName("");
+        
+        return publisher;
     }
 }

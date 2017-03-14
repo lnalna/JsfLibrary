@@ -46,6 +46,8 @@ public class AuthorController implements Serializable, Converter{
         authorList = dataHelper.getAllAuthors();
         Collections.sort(authorList, ListComparator.getInstance());
         
+        authorList.add(0, createEmptyAuthor());
+        
         for(AuthorExt authorExt : authorList){
             authorMap.put(authorExt.getId(), authorExt);
             selectItems.add(new SelectItem(authorExt, authorExt.getFio()));
@@ -78,6 +80,15 @@ public class AuthorController implements Serializable, Converter{
 
     public void setBookListController(BookListController bookListController) {
         this.bookListController = bookListController;
+    }
+    
+    private AuthorExt createEmptyAuthor(){
+        
+        AuthorExt author = new AuthorExt();
+        author.setId(-1L);
+        author.setFio("");
+        
+        return author;
     }
     
 }
