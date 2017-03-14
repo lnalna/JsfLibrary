@@ -14,6 +14,7 @@ import ru.javabegin.training.web.entity.ext.BookExt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ValueChangeEvent;
 import org.primefaces.component.datagrid.DataGrid;
 import org.primefaces.event.FileUploadEvent;
@@ -54,7 +55,9 @@ public class BookListController implements Serializable{
     //номер строки (номер книги в списке книг)
     private transient int row = -1;
     
-      
+    private ImageController imageController;  
+    
+    private ContentController contentController;
     
     
     public BookListController(){
@@ -62,6 +65,11 @@ public class BookListController implements Serializable{
         dataHelper = new DataHelper(pager);
         bookListModel = new BookListDataModel(dataHelper, pager);
     }
+    
+    
+    
+    
+    
     
     public DataHelper getDataHelper() {
         return dataHelper;
@@ -175,7 +183,8 @@ public class BookListController implements Serializable{
         dataTable.setFirst(calcSelectedPage());
     
     //    uploadedImage = null;
-        
+        imageController.clear();
+        contentController.clear();        
     }
     
     public void deleteBook() {

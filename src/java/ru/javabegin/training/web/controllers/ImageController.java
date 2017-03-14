@@ -96,4 +96,9 @@ public class ImageController implements Serializable{
     public boolean isShowImage(){
         return showImage;
     }
+    
+    public void clear(){
+        uploadedImage = null;
+        showImage = false;
+    }
 }

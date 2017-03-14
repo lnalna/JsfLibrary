@@ -52,4 +52,5 @@ public class ContentController  implements Serializable{
     public byte[] getUploadedContent(){
         return uploadedContent;
     }
+    
 }
