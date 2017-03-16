@@ -7,7 +7,7 @@
 
     <context-param>
         <param-name>mail.SUPPORT</param-name>
-        <param-value>lnalna28@gmail.com</param-value>
+        <param-value>lnalna@yandex.ru</param-value>
     </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
