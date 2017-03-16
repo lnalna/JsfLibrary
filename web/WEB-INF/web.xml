@@ -2,6 +2,10 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <!--Фильтры FileUpload должны быть выше других фильтров-->
 
+    <context-param>
+        <param-name>mail.SUPPORT</param-name>
+        <param-value>lnalna28@gmail.com</param-value>
+    </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>
@@ -78,7 +82,12 @@
         <param-value>library</param-value>
     </context-param>
     
-    
+    <resource-ref>
+        <res-ref-name>mail/GMAIL</res-ref-name>
+        <res-type>javax.mail.Session</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
     
     
 </web-app>

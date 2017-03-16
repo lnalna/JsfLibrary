@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+    
+    <h:body>
+
+
+       
+        <p:dialog id="sendMailDialog" modal="true" widgetVar="dlgSendMail" dynamic="false" resizable="false" header="#{msg.send_mail}" closable="false" height="400" width="600">
+
+
+            <h:form id="formSendMail">
+
+                <div class="popup-info">
+
+                    <div class="ava-info">
+                        <div class="block">
+                            <p>#{msg.mail_subject}</p>	
+
+                            <div class="ava-form">
+                                <p:inputText id="inputSubject" value="#{mailController.subject}" styleClass="mail-subject"/>
+                            </div> 
+                        </div>
+
+                        <div class="block">
+                            <p>#{msg.mail_text} <span><h:outputText id="counter" /></span></p>	
+
+                            <div class="ava-form">
+                                <p:inputTextarea id="inputMailText" styleClass="mail-message" value="#{mailController.message}" cols="70" rows="20" maxlength="1500" counter="counter" counterTemplate="{0} #{msg.letters_left}" autoResize="false"  />
+
+                            </div> 
+                        </div>	
+
+                    </div>
+
+
+
+
+
+                    <div class="bottom-info">
+                        <div class="error-div"> <h:messages styleClass="error" id="validationError"/></div>
+
+                        <div class="button-right">
+
+                            
+                            
+                            
+                            <p:commandLink id="sendButton"  actionListener="#{mailController.sendMessage()}" type="button" onclick="PF('dlgSendMail').hide()" oncomplete="this.disabled=false"  styleClass="save" value="#{msg.send}" update=":formSendMail :growlMessage" />                            
+
+                            
+                            
+                           <p:commandLink  type="button" onclick="PF('dlgSendMail').hide()" oncomplete="this.disabled=false"  styleClass="cancel" value="#{msg.Cancel}"  immediate="true" global="false"/>  
+
+                        </div>
+                    </div>	
+
+                </div>
+
+            </h:form> 
+
+        </p:dialog>
+        
+
+
+
+
+    </h:body>
+</html>
